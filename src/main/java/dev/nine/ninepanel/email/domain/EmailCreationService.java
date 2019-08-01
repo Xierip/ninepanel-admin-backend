@@ -23,9 +23,6 @@ class EmailCreationService {
     return this.templateEngine.process(templatePath, context);
   }
 
-  public String createResetPasswordTemplate(String link, String username) {
-    return createTemplateAsString("reset-password-email.html", Map.of("link", link, "username", username));
-  }
 
   public String createPasswordChangeTemplate() {
     return createTemplateAsString("change-password-email.html", Collections.emptyMap());

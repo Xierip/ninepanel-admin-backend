@@ -6,8 +6,6 @@ import com.icegreen.greenmail.util.ServerSetup
 import dev.nine.ninepanel.AppRunner
 import dev.nine.ninepanel.authentication.domain.dto.SignInDto
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections
-import dev.nine.ninepanel.user.addressdetails.AddressDetails
-import dev.nine.ninepanel.user.agreementsdetails.AgreementsDetails
 import dev.nine.ninepanel.user.domain.UserFacade
 import dev.nine.ninepanel.user.domain.dto.SignUpDto
 import dev.nine.ninepanel.user.domain.dto.UserDto
@@ -84,11 +82,6 @@ abstract class IntegrationSpec extends Specification {
         "authuser@security.com",
         "securePass123",
         "test",
-        "test2",
-        "123 456 789",
-        new AddressDetails("a", "12323", "Poland", "xd"),
-        new AgreementsDetails(true),
-        null,
         "testCaptcha")
 
     authenticatedUser = userFacade.register(signUpDto)

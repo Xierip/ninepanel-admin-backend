@@ -1,12 +1,8 @@
 package dev.nine.ninepanel.user.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import dev.nine.ninepanel.user.addressdetails.AddressDetails;
-import dev.nine.ninepanel.user.companydetails.CompanyDetails;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,14 +25,6 @@ public class UserDto {
 
   private String name;
   private String surname;
-  private String phoneNumber;
 
-  private AddressDetails addressDetails;
-  @JsonInclude(Include.NON_NULL)
-  private CompanyDetails companyDetails;
-
-  public boolean isCompany() {
-    return companyDetails != null;
-  }
 
 }

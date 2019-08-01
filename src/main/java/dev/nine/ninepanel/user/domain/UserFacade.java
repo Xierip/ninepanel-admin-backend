@@ -3,7 +3,6 @@ package dev.nine.ninepanel.user.domain;
 import dev.nine.ninepanel.user.changepassword.dto.ChangePasswordDto;
 import dev.nine.ninepanel.user.domain.dto.SignUpDto;
 import dev.nine.ninepanel.user.domain.dto.UserDto;
-import dev.nine.ninepanel.user.domain.dto.UserUpdateDto;
 import org.bson.types.ObjectId;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -43,7 +42,4 @@ public class UserFacade {
     return userService.updatePasswordWithCheck(userDto.getId(), changePasswordDto, userDto.getPassword()).dto();
   }
 
-  public UserDto updateUserData(ObjectId objectId, UserUpdateDto userUpdateDto) {
-    return userService.updateUser(objectId, userUpdateDto).dto();
-  }
 }

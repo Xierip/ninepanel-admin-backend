@@ -1,8 +1,6 @@
 package dev.nine.ninepanel.user.domain;
 
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections;
-import dev.nine.ninepanel.user.addressdetails.AddressDetails;
-import dev.nine.ninepanel.user.companydetails.CompanyDetails;
 import dev.nine.ninepanel.user.domain.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,10 +26,6 @@ class User {
 
   private String name;
   private String surname;
-  private String phoneNumber;
-
-  private AddressDetails address;
-  private CompanyDetails companyDetails;
 
   UserDto dto() {
     return UserDto
@@ -41,13 +35,6 @@ class User {
         .password(password)
         .name(name)
         .surname(surname)
-        .phoneNumber(phoneNumber)
-        .addressDetails(address)
-        .companyDetails(companyDetails)
         .build();
-  }
-
-  public boolean isCompany() {
-    return companyDetails != null;
   }
 }

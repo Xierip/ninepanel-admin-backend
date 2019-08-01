@@ -24,9 +24,4 @@ class UserActionsController {
     this.captchaFacade = captchaFacade;
   }
 
-  @PostMapping("register")
-  ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto dto, HttpServletRequest request) {
-    captchaFacade.validate(request, dto.getGRecaptchaResponse());
-    return ResponseEntity.ok(this.userFacade.register(dto));
-  }
 }
