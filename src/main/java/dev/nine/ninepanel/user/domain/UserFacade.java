@@ -9,8 +9,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserFacade {
 
   private final UserRepository userRepository;
-  private final UserCreator userCreator;
-  private final UserService userService;
+  private final UserCreator    userCreator;
+  private final UserService    userService;
 
   UserFacade(UserRepository userRepository, UserCreator userCreator, UserService userService) {
     this.userRepository = userRepository;

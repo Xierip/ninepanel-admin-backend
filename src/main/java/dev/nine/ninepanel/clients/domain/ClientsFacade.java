@@ -1,5 +1,10 @@
 package dev.nine.ninepanel.clients.domain;
 
-class ClientsFacade {
+public class ClientsFacade {
 
+  private final ClientsRepository clientsRepository;
+
+  public ClientsFacade(ClientsRepository clientsRepository) {
+    this.clientsRepository = clientsRepository;
+  }
 }
