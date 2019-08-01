@@ -7,7 +7,7 @@ import dev.nine.ninepanel.AppRunner
 import dev.nine.ninepanel.authentication.domain.dto.SignInDto
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections
 import dev.nine.ninepanel.user.domain.UserFacade
-import dev.nine.ninepanel.user.domain.dto.SignUpDto
+import dev.nine.ninepanel.user.domain.dto.UserCreationDto
 import dev.nine.ninepanel.user.domain.dto.UserDto
 import groovy.transform.TypeChecked
 import org.springframework.beans.factory.annotation.Autowired
@@ -78,13 +78,13 @@ abstract class IntegrationSpec extends Specification {
 
   Map<String, String> obtainTokens() throws Exception {
 
-    SignUpDto signUpDto = new SignUpDto(
+    UserCreationDto signUpDto = new UserCreationDto(
         "authuser@security.com",
         "securePass123",
         "test",
         "testCaptcha")
 
-    authenticatedUser = userFacade.register(signUpDto)
+    authenticatedUser = userFacade.create(signUpDto)
     authenticatedUser.setPassword(signUpDto.password)
 
     SignInDto signInDto = SignInDto

@@ -1,10 +1,10 @@
 package dev.nine.ninepanel.user.domain;
 
-import dev.nine.ninepanel.user.domain.dto.SignUpDto;
+import dev.nine.ninepanel.user.domain.dto.UserCreationDto;
 
 class UserCreator {
 
-  User from(SignUpDto userRegisterCommandDto) {
+  User from(UserCreationDto userRegisterCommandDto) {
     return User
         .builder()
         .email(userRegisterCommandDto.getEmail().toLowerCase())

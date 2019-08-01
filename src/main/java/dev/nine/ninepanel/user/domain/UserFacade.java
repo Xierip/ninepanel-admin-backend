@@ -1,7 +1,7 @@
 package dev.nine.ninepanel.user.domain;
 
 import dev.nine.ninepanel.user.changepassword.dto.ChangePasswordDto;
-import dev.nine.ninepanel.user.domain.dto.SignUpDto;
+import dev.nine.ninepanel.user.domain.dto.UserCreationDto;
 import dev.nine.ninepanel.user.domain.dto.UserDto;
 import org.bson.types.ObjectId;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,7 +18,7 @@ public class UserFacade {
     this.userService = userService;
   }
 
-  public UserDto register(SignUpDto dto) {
+  public UserDto create(UserCreationDto dto) {
     return userService.create(userCreator.from(dto)).dto();
   }
 

@@ -1,6 +1,6 @@
 package dev.nine.ninepanel.user.domain
 
-import dev.nine.ninepanel.user.domain.dto.SignUpDto
+import dev.nine.ninepanel.user.domain.dto.UserCreationDto
 import dev.nine.ninepanel.user.domain.dto.UserDto
 
 trait SampleUsers {
@@ -9,7 +9,7 @@ trait SampleUsers {
       "pass123456",
       "Andrzej",
       "Kowalski")
-  SignUpDto sampleSignUpDto = new SignUpDto(
+  UserCreationDto sampleSignUpDto = new UserCreationDto(
       "test123@test.com",
       "password123",
       "Test",
