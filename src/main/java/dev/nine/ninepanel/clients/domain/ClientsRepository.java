@@ -3,9 +3,9 @@ package dev.nine.ninepanel.clients.domain;
 import dev.nine.ninepanel.clients.domain.exception.ClientNotFoundException;
 import java.util.Optional;
 import org.bson.types.ObjectId;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-interface ClientsRepository extends CrudRepository<Client, ObjectId> {
+interface ClientsRepository extends MongoRepository<Client, ObjectId> {
 
   default Client findByIdOrThrow(ObjectId id) {
     return this.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
