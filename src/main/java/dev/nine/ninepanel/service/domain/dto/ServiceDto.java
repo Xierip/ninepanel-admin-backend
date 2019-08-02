@@ -2,7 +2,7 @@ package dev.nine.ninepanel.service.domain.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import dev.nine.ninepanel.service.type.ServiceTypeDto;
+import dev.nine.ninepanel.service.type.domain.dto.ServiceTypeDto;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
