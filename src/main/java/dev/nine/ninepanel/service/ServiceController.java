@@ -45,9 +45,10 @@ class ServiceController {
   ResponseEntity<ServiceDto> create(@RequestBody @Valid ServiceDto serviceDto) {
     return ResponseEntity.ok(serviceFacade.add(serviceDto));
   }
+
   @RequiresAuthenticated
-  @PutMapping
-  ResponseEntity<ServiceDto> update(@RequestBody @Valid ServiceDto serviceDto) {
-    return ResponseEntity.ok(serviceFacade.update(serviceDto));
+  @PutMapping("{serviceId}")
+  ResponseEntity<ServiceDto> update(@PathVariable ObjectId serviceId, @RequestBody @Valid ServiceDto serviceDto) {
+    return ResponseEntity.ok(serviceFacade.update(serviceId, serviceDto));
   }
 }
