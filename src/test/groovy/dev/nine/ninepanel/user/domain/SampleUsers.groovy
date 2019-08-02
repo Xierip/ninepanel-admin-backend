@@ -9,6 +9,7 @@ trait SampleUsers {
       "pass123456",
       "Andrzej",
       "Kowalski")
+
   UserCreationDto sampleSignUpDto = new UserCreationDto(
       "test123@test.com",
       "password123",

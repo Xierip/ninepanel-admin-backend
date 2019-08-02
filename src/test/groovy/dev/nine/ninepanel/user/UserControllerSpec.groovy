@@ -5,7 +5,7 @@ import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.token.domain.TokenFacade
 import dev.nine.ninepanel.user.changepassword.dto.ChangePasswordDto
 import dev.nine.ninepanel.user.domain.SampleUsers
-
+import dev.nine.ninepanel.user.domain.dto.UserCreationDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
@@ -63,6 +63,31 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
 
     then: "the request should fail"
       request.andExpect(status().isUnprocessableEntity())
+  }
+
+  def "successful user creation scenario"() {
+    given: "i have valid user creation data"
+    when: "i register a new user"
+      ResultActions request = requestAsUser(post("/api/users")
+          .content(objectToJson(sampleSignUpDto))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+    then: "the user should be registered"
+      request.andExpect(status().isOk())
+
+    and: "i should be able to log in as the created user"
+      logIn(sampleSignUpDto.email, sampleSignUpDto.password)
+  }
+
+  def "fail user creation scenario"() {
+    given: "i have invalid user register data"
+      UserCreationDto signUpDto = sampleSignUpDto
+      signUpDto.password = "bad"
+    when: "i try to register a new user with invalid data"
+      ResultActions request = requestAsUser(post("/api/users")
+          .content(objectToJson(signUpDto))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+    then: "the request should fail"
+      request.andExpect(status().isBadRequest())
   }
 
   private void logIn(String email, String password) {
