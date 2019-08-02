@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,5 +44,11 @@ class HostingController {
   @PostMapping
   ResponseEntity<HostingDto> create(@Valid @RequestBody HostingDto hostingDto) {
     return ResponseEntity.ok(hostingFacade.add(hostingDto));
+  }
+
+  @RequiresAuthenticated
+  @PutMapping("{hostingId}")
+  ResponseEntity<HostingDto> update(@PathVariable ObjectId hostingId, @Valid @RequestBody HostingDto hostingDto) {
+    return ResponseEntity.ok(hostingFacade.update(hostingId, hostingDto));
   }
 }
