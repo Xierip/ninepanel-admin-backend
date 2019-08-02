@@ -3,6 +3,7 @@ package dev.nine.ninepanel.clients;
 import dev.nine.ninepanel.clients.domain.ClientsFacade;
 import dev.nine.ninepanel.clients.domain.dto.ClientDto;
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers;
+import javax.validation.Valid;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,7 +40,7 @@ class ClientsController {
   }
 
   @PutMapping("{clientId}")
-  ResponseEntity<?> update(@PathVariable ObjectId clientId, ClientDto clientDto) {
+  ResponseEntity<?> update(@PathVariable ObjectId clientId, @RequestBody @Valid ClientDto clientDto) {
     return ResponseEntity.ok(clientsFacade.update(clientId, clientDto));
   }
 }
