@@ -15,6 +15,13 @@ interface ClientsRepository extends MongoRepository<Client, ObjectId> {
     return this.findByEmail(email).orElseThrow(() -> new ClientNotFoundException(email));
   }
 
+  default void deleteByIdOrThrow(ObjectId id) {
+    if(!existsById(id)) {
+      throw new ClientNotFoundException(id);
+    }
+    deleteById(id);
+  }
+
   Optional<Client> findByEmail(String email);
 
   boolean existsByEmail(String email);

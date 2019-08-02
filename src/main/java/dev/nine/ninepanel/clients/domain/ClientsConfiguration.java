@@ -8,6 +8,6 @@ class ClientsConfiguration {
 
   @Bean
   ClientsFacade clientsFacade(ClientsRepository clientsRepository) {
-    return new ClientsFacade(clientsRepository);
+    return new ClientsFacade(clientsRepository, new ClientCreator());
   }
 }
