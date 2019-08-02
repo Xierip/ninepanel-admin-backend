@@ -29,4 +29,11 @@ interface HostingRepository extends MongoRepository<Hosting, ObjectId> {
     }
     return save(hosting);
   }
+
+  default void deleteByIdOrThrow(ObjectId hostingId) {
+    if (!existsById(hostingId)) {
+      throw new HostingNotFoundException(hostingId);
+    }
+    deleteById(hostingId);
+  }
 }

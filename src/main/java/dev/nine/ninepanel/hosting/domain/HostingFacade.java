@@ -45,4 +45,8 @@ public class HostingFacade {
     Hosting oldHosting = hostingRepository.findByIdOrThrow(hostingId);
     return hostingRepository.updateOrThrow(hostingCreator.from(hostingDto, oldHosting)).dto();
   }
+
+  public void delete(ObjectId hostingId) {
+    hostingRepository.deleteByIdOrThrow(hostingId);
+  }
 }
