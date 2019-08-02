@@ -1,12 +1,13 @@
 package dev.nine.ninepanel.hosting.domain;
 
 import dev.nine.ninepanel.hosting.domain.exception.HostingNotFoundException;
-import java.util.List;
 import java.util.Optional;
 import org.bson.types.ObjectId;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-interface HostingRepository extends Repository<Hosting, ObjectId> {
+interface HostingRepository extends MongoRepository<Hosting, ObjectId> {
 
   default Hosting findByIdOrThrow(ObjectId id) {
     return this.findById(id).orElseThrow(HostingNotFoundException::new);
@@ -20,8 +21,6 @@ interface HostingRepository extends Repository<Hosting, ObjectId> {
 
   Optional<Hosting> findById(ObjectId id);
 
-  List<Hosting> findAllByClientId(ObjectId clientId);
+  Page<Hosting> findAllByClientId(ObjectId clientId, Pageable pageable);
 
-  //Only for tests
-  Hosting save(Hosting Hosting);
 }

@@ -1,12 +1,13 @@
 package dev.nine.ninepanel.service.domain;
 
 import dev.nine.ninepanel.service.domain.exceptions.ServiceNotFoundException;
-import java.util.List;
 import java.util.Optional;
 import org.bson.types.ObjectId;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-interface ServiceRepository extends Repository<Service, ObjectId> {
+interface ServiceRepository extends MongoRepository<Service, ObjectId> {
 
   default Service findByIdOrThrow(ObjectId id) {
     return this.findById(id).orElseThrow(ServiceNotFoundException::new);
@@ -20,7 +21,6 @@ interface ServiceRepository extends Repository<Service, ObjectId> {
 
   Optional<Service> findById(ObjectId id);
 
-  List<Service> findAllByClientId(ObjectId clientId);
+  Page<Service> findAllByClientId(ObjectId clientId, Pageable pageable);
 
-  Service save(Service service);
 }
