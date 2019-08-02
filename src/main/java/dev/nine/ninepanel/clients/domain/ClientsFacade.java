@@ -22,7 +22,7 @@ public class ClientsFacade {
     return clientsRepository.findByIdOrThrow(clientId).dto();
   }
 
-  public void checkIfUserExists(ObjectId clientId) {
+  public void checkIfExists(ObjectId clientId) {
     if (!clientsRepository.existsById(clientId)) {
       throw new ClientNotFoundException(clientId);
     }

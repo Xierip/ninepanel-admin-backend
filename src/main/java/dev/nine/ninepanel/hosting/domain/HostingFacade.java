@@ -35,7 +35,7 @@ public class HostingFacade {
   }
 
   public HostingDto add(HostingDto hostingDto) {
-    clientsFacade.checkIfUserExists(hostingDto.getClientId());
+    clientsFacade.checkIfExists(hostingDto.getClientId());
     return hostingRepository.save(hostingCreator.from(hostingDto)).dto();
   }
 }

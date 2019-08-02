@@ -35,7 +35,7 @@ public class ServiceFacade {
   }
 
   public ServiceDto add(ServiceDto serviceDto) {
-    clientsFacade.checkIfUserExists(serviceDto.getClientId());
+    clientsFacade.checkIfExists(serviceDto.getClientId());
     return serviceRepository.save(serviceCreator.from(serviceDto)).dto();
   }
 }
