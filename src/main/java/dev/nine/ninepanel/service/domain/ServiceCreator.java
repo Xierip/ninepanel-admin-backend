@@ -15,7 +15,7 @@ class ServiceCreator {
 
   Service from(ServiceDto serviceDto, Service service) {
     return Service.builder()
-        .id(serviceDto.getId())
+        .id(service.getId())
         .clientId(serviceDto.getClientId())
         .description(serviceDto.getDescription())
         .title(serviceDto.getTitle())
