@@ -1,6 +1,7 @@
 package dev.nine.ninepanel.clients.domain;
 
 import dev.nine.ninepanel.clients.domain.dto.ClientDto;
+import dev.nine.ninepanel.clients.domain.exception.ClientNotFoundException;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,5 +20,11 @@ public class ClientsFacade {
 
   public ClientDto showById(ObjectId clientId) {
     return clientsRepository.findByIdOrThrow(clientId).dto();
+  }
+
+  public void checkIfExists(ObjectId clientId) {
+    if (!clientsRepository.existsById(clientId)) {
+      throw new ClientNotFoundException(clientId);
+    }
   }
 }
