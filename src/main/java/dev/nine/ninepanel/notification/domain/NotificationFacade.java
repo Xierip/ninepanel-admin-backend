@@ -3,6 +3,7 @@ package dev.nine.ninepanel.notification.domain;
 import dev.nine.ninepanel.notification.domain.dto.NotificationDto;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.bson.types.ObjectId;
 
 public class NotificationFacade {
 
@@ -21,5 +22,9 @@ public class NotificationFacade {
 
   public NotificationDto addNotification(NotificationDto notificationDto) {
     return notificationRepository.save(notificationCreator.fromDto(notificationDto)).dto();
+  }
+
+  public void deleteNotification(ObjectId id) {
+    notificationRepository.deleteById(id);
   }
 }
