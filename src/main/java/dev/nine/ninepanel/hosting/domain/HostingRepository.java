@@ -23,4 +23,19 @@ interface HostingRepository extends MongoRepository<Hosting, ObjectId> {
 
   Page<Hosting> findAllByClientId(ObjectId clientId, Pageable pageable);
 
+  default Hosting updateOrThrow(Hosting hosting) {
+    checkIfExistOrThrow(hosting.getId());
+    return save(hosting);
+  }
+
+  default void deleteByIdOrThrow(ObjectId hostingId) {
+    checkIfExistOrThrow(hostingId);
+    deleteById(hostingId);
+  }
+
+  private void checkIfExistOrThrow(ObjectId hostingId) {
+    if (!existsById(hostingId)) {
+      throw new HostingNotFoundException(hostingId);
+    }
+  }
 }

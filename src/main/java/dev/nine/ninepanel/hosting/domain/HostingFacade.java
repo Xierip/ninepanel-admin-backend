@@ -18,9 +18,8 @@ public class HostingFacade {
     this.clientsFacade = clientsFacade;
   }
 
-
-  public HostingDto showForClient(ObjectId serviceId, ObjectId clientId) {
-    return hostingRepository.findByIdAndClientIdOrThrow(serviceId, clientId).dto();
+  public HostingDto showForClient(ObjectId hostingId, ObjectId clientId) {
+    return hostingRepository.findByIdAndClientIdOrThrow(hostingId, clientId).dto();
   }
 
   public Page<HostingDto> showAll(Pageable pageable, ObjectId userId) {
@@ -30,12 +29,22 @@ public class HostingFacade {
     return hostingRepository.findAll(pageable).map(Hosting::dto);
   }
 
-  public HostingDto show(ObjectId serviceId) {
-    return hostingRepository.findByIdOrThrow(serviceId).dto();
+  public HostingDto show(ObjectId hostingId) {
+    return hostingRepository.findByIdOrThrow(hostingId).dto();
   }
 
   public HostingDto add(HostingDto hostingDto) {
     clientsFacade.checkIfExists(hostingDto.getClientId());
     return hostingRepository.save(hostingCreator.from(hostingDto)).dto();
+  }
+
+  public HostingDto update(ObjectId hostingId, HostingDto hostingDto) {
+    clientsFacade.checkIfExists(hostingDto.getClientId());
+    Hosting oldHosting = hostingRepository.findByIdOrThrow(hostingId);
+    return hostingRepository.updateOrThrow(hostingCreator.from(hostingDto, oldHosting)).dto();
+  }
+
+  public void delete(ObjectId hostingId) {
+    hostingRepository.deleteByIdOrThrow(hostingId);
   }
 }
