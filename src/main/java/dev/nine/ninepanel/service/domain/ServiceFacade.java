@@ -38,4 +38,14 @@ public class ServiceFacade {
     clientsFacade.checkIfExists(serviceDto.getClientId());
     return serviceRepository.save(serviceCreator.from(serviceDto)).dto();
   }
+
+  public ServiceDto update(ObjectId serviceId, ServiceDto serviceDto) {
+    serviceDto.setId(serviceId);
+    clientsFacade.checkIfExists(serviceDto.getClientId());
+    return serviceRepository.updateOrThrow(serviceCreator.from(serviceDto, serviceRepository.findByIdOrThrow(serviceDto.getId()))).dto();
+  }
+
+  public void delete(ObjectId serviceId) {
+    serviceRepository.deleteByIdOrThrow(serviceId);
+  }
 }

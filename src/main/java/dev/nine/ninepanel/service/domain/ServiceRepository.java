@@ -23,4 +23,19 @@ interface ServiceRepository extends MongoRepository<Service, ObjectId> {
 
   Page<Service> findAllByClientId(ObjectId clientId, Pageable pageable);
 
+  default void deleteByIdOrThrow(ObjectId serviceId) {
+    checkIfExistsOrThrow(serviceId);
+    deleteById(serviceId);
+  }
+
+  default Service updateOrThrow(Service service) {
+    checkIfExistsOrThrow(service.getId());
+    return save(service);
+  }
+
+  private void checkIfExistsOrThrow(ObjectId serviceId) {
+    if (!this.existsById(serviceId)) {
+      throw new ServiceNotFoundException(serviceId);
+    }
+  }
 }
