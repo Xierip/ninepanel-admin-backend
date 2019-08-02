@@ -29,14 +29,14 @@ class HostingController {
 
   @RequiresAuthenticated
   @GetMapping
-  ResponseEntity<Page<HostingDto>> showAllServices(Pageable pageable, @RequestParam(required = false) ObjectId userId) {
+  ResponseEntity<Page<HostingDto>> showAllHostings(Pageable pageable, @RequestParam(required = false) ObjectId userId) {
     return ResponseEntity.ok(hostingFacade.showAll(pageable, userId));
   }
 
   @RequiresAuthenticated
   @GetMapping("{hostingId}")
-  ResponseEntity<HostingDto> showService(@PathVariable ObjectId serviceId) {
-    return ResponseEntity.ok(hostingFacade.show(serviceId));
+  ResponseEntity<HostingDto> showHosting(@PathVariable ObjectId hostingId) {
+    return ResponseEntity.ok(hostingFacade.show(hostingId));
   }
 
   @RequiresAuthenticated
