@@ -21,7 +21,6 @@ import org.bson.types.ObjectId;
 public class NotificationDto {
 
   @JsonSerialize(using = ToStringSerializer.class)
-  @JsonProperty(access = Access.READ_ONLY)
   private ObjectId         id;
   @NotEmpty
   private String           message;

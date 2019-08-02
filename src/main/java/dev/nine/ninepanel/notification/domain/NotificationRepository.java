@@ -10,11 +10,10 @@ interface NotificationRepository extends CrudRepository<Notification, ObjectId> 
   List<Notification> findAll();
 
   default void deleteByIdOrThrow(ObjectId id) {
-    if (existsById(id)) {
-      deleteById(id);
-    } else {
+    if (!existsById(id)) {
       throw new NotificationNotFoundException(id);
     }
+    deleteById(id);
   }
 
 }
