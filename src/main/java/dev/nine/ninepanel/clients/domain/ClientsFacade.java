@@ -9,9 +9,11 @@ import org.springframework.data.domain.Pageable;
 public class ClientsFacade {
 
   private final ClientsRepository clientsRepository;
+  private final ClientCreator     clientCreator;
 
-  public ClientsFacade(ClientsRepository clientsRepository) {
+  public ClientsFacade(ClientsRepository clientsRepository, ClientCreator clientCreator) {
     this.clientsRepository = clientsRepository;
+    this.clientCreator = clientCreator;
   }
 
   public Page<ClientDto> showAll(Pageable pageable) {
@@ -26,5 +28,14 @@ public class ClientsFacade {
     if (!clientsRepository.existsById(clientId)) {
       throw new ClientNotFoundException(clientId);
     }
+  }
+
+  public void delete(ObjectId clientId) {
+    clientsRepository.deleteByIdOrThrow(clientId);
+  }
+
+  public ClientDto update(ObjectId clientId, ClientDto clientDto) {
+    Client oldClient = clientsRepository.findByIdOrThrow(clientId);
+    return clientsRepository.save(clientCreator.from(clientDto, oldClient)).dto();
   }
 }
