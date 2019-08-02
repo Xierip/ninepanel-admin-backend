@@ -43,7 +43,7 @@ class NotificationController {
   @DeleteMapping
   ResponseEntity<?> deleteNotification(@PathVariable ObjectId id) {
     notificationFacade.deleteNotification(id);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 
 }
