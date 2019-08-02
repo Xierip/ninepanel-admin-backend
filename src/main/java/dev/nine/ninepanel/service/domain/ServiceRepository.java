@@ -29,4 +29,11 @@ interface ServiceRepository extends MongoRepository<Service, ObjectId> {
     }
     deleteById(serviceId);
   }
+
+  default Service updateOrThrow(Service service) {
+    if (!this.existsById(service.getId())) {
+      throw new ServiceNotFoundException(service.getId());
+    }
+    return save(service);
+  }
 }

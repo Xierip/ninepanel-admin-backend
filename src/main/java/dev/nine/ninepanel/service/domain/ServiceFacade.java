@@ -42,7 +42,7 @@ public class ServiceFacade {
   public ServiceDto update(ObjectId serviceId, ServiceDto serviceDto) {
     serviceDto.setId(serviceId);
     clientsFacade.checkIfExists(serviceDto.getClientId());
-    return serviceRepository.save(serviceCreator.from(serviceDto, serviceRepository.findByIdOrThrow(serviceDto.getId()))).dto();
+    return serviceRepository.updateOrThrow(serviceCreator.from(serviceDto, serviceRepository.findByIdOrThrow(serviceDto.getId()))).dto();
   }
 
   public void delete(ObjectId serviceId) {
