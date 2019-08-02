@@ -25,6 +25,6 @@ public class NotificationFacade {
   }
 
   public void deleteNotification(ObjectId id) {
-    notificationRepository.deleteById(id);
+    notificationRepository.deleteByIdOrThrow(id);
   }
 }
