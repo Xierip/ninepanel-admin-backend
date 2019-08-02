@@ -38,14 +38,14 @@ class ServiceTypeController {
   }
 
   @RequiresAuthenticated
-  @DeleteMapping("{id")
+  @DeleteMapping("{id}")
   ResponseEntity<?> deleteServiceType(@PathVariable ObjectId id) {
     serviceTypeFacade.delete(id);
     return ResponseEntity.noContent().build();
   }
 
   @RequiresAuthenticated
-  @PutMapping("{id")
+  @PutMapping("{id}")
   ResponseEntity<?> updateServiceType(@PathVariable ObjectId serviceTypeId, @RequestBody ServiceTypeDto serviceTypeDto) {
     return ResponseEntity.ok(serviceTypeFacade.update(serviceTypeId, serviceTypeDto));
   }
