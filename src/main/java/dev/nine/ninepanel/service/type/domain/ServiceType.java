@@ -1,7 +1,8 @@
-package dev.nine.ninepanel.service.type;
+package dev.nine.ninepanel.service.type.domain;
 
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections;
 import dev.nine.ninepanel.service.milestone.Milestone;
+import dev.nine.ninepanel.service.type.domain.dto.ServiceTypeDto;
 import java.util.LinkedHashSet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @AllArgsConstructor
 @Builder
-/* THIS WILL BE MOVED TO ADMIN'S APP */
 class ServiceType {
 
   @Id

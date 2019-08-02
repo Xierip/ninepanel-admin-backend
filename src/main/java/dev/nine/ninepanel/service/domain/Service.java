@@ -2,7 +2,7 @@ package dev.nine.ninepanel.service.domain;
 
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections;
 import dev.nine.ninepanel.service.domain.dto.ServiceDto;
-import dev.nine.ninepanel.service.type.ServiceTypeDto;
+import dev.nine.ninepanel.service.type.domain.dto.ServiceTypeDto;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
