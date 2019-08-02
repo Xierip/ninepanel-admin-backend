@@ -44,4 +44,8 @@ public class ServiceFacade {
     clientsFacade.checkIfExists(serviceDto.getClientId());
     return serviceRepository.save(serviceCreator.from(serviceDto, serviceRepository.findByIdOrThrow(serviceDto.getId()))).dto();
   }
+
+  public void delete(ObjectId serviceId) {
+    serviceRepository.deleteByIdOrThrow(serviceId);
+  }
 }

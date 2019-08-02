@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,5 +51,12 @@ class ServiceController {
   @PutMapping("{serviceId}")
   ResponseEntity<ServiceDto> update(@PathVariable ObjectId serviceId, @RequestBody @Valid ServiceDto serviceDto) {
     return ResponseEntity.ok(serviceFacade.update(serviceId, serviceDto));
+  }
+
+  @RequiresAuthenticated
+  @DeleteMapping("{serviceId}")
+  ResponseEntity<?> delete(@PathVariable ObjectId serviceId) {
+    serviceFacade.delete(serviceId);
+    return ResponseEntity.noContent().build();
   }
 }
