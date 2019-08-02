@@ -18,7 +18,6 @@ public class HostingFacade {
     this.clientsFacade = clientsFacade;
   }
 
-
   public HostingDto showForClient(ObjectId hostingId, ObjectId clientId) {
     return hostingRepository.findByIdAndClientIdOrThrow(hostingId, clientId).dto();
   }
@@ -41,7 +40,6 @@ public class HostingFacade {
 
   public HostingDto update(ObjectId hostingId, HostingDto hostingDto) {
     clientsFacade.checkIfExists(hostingDto.getClientId());
-    hostingDto.setId(hostingId);
     Hosting oldHosting = hostingRepository.findByIdOrThrow(hostingId);
     return hostingRepository.updateOrThrow(hostingCreator.from(hostingDto, oldHosting)).dto();
   }
