@@ -1,7 +1,5 @@
 package dev.nine.ninepanel.service.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import dev.nine.ninepanel.service.type.ServiceTypeDto;
@@ -21,7 +19,6 @@ import org.bson.types.ObjectId;
 public class ServiceDto {
 
   @JsonSerialize(using = ToStringSerializer.class)
-  @JsonProperty(access = Access.READ_ONLY)
   private ObjectId       id;
   @JsonSerialize(using = ToStringSerializer.class)
   @NotNull
@@ -30,8 +27,8 @@ public class ServiceDto {
   private String         title;
   @NotEmpty
   private String         description;
+  @NotNull
   private ServiceTypeDto type;
-  @JsonProperty(access = Access.READ_ONLY)
   private LocalDateTime  createdAt;
 
 }

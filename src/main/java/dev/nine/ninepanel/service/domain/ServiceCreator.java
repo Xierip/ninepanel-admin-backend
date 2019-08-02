@@ -12,4 +12,15 @@ class ServiceCreator {
         .type(serviceDto.getType())
         .build();
   }
+
+  Service from(ServiceDto serviceDto, Service service) {
+    return Service.builder()
+        .id(serviceDto.getId())
+        .clientId(serviceDto.getClientId())
+        .description(serviceDto.getDescription())
+        .title(serviceDto.getTitle())
+        .type(serviceDto.getType())
+        .createdAt(service.getCreatedAt())
+        .build();
+  }
 }

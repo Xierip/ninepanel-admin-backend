@@ -1,6 +1,7 @@
 package dev.nine.ninepanel.service.domain;
 
 import dev.nine.ninepanel.service.domain.dto.ServiceDto;
+import dev.nine.ninepanel.service.domain.exceptions.ServiceNotFoundException;
 import dev.nine.ninepanel.user.domain.UserFacade;
 import dev.nine.ninepanel.user.domain.dto.UserDto;
 import org.bson.types.ObjectId;
@@ -38,5 +39,15 @@ public class ServiceFacade {
   public ServiceDto add(ServiceDto serviceDto) {
     UserDto userDto = userFacade.showUserById(serviceDto.getClientId());
     return serviceRepository.save(serviceCreator.from(serviceDto)).dto();
+  }
+
+  public ServiceDto update(ServiceDto serviceDto) {
+    UserDto userDto = userFacade.showUserById(serviceDto.getClientId());
+    if (serviceDto.getId() == null) {
+      throw new ServiceNotFoundException();
+    }
+    Service service = serviceRepository.findByIdOrThrow(serviceDto.getId());
+    serviceCreator.from(serviceDto, service);
+    return null;
   }
 }
