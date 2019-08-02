@@ -2,7 +2,6 @@ package dev.nine.ninepanel.user.domain;
 
 import dev.nine.ninepanel.email.domain.EmailFacade;
 import dev.nine.ninepanel.user.changepassword.dto.ChangePasswordDto;
-import dev.nine.ninepanel.user.domain.dto.UserUpdateDto;
 import dev.nine.ninepanel.user.domain.exception.UserAccountTypeException;
 import dev.nine.ninepanel.user.domain.exception.UserAlreadyExistsException;
 import dev.nine.ninepanel.user.domain.exception.UserPasswordDoesntMatchException;
@@ -50,19 +49,4 @@ class UserService {
     return userRepository.save(user);
   }
 
-  User updateUser(ObjectId userId, UserUpdateDto userUpdateDto) {
-    User user = userRepository.findByIdOrThrow(userId);
-    if (!passwordEncoder.matches(userUpdateDto.getPassword(), user.getPassword())) {
-      throw new UserPasswordDoesntMatchException();
-    }
-    if (user.isCompany() != userUpdateDto.isCompany()) {
-      throw new UserAccountTypeException();
-    }
-    user.setName(userUpdateDto.getName());
-    user.setSurname(userUpdateDto.getSurname());
-    user.setPhoneNumber(userUpdateDto.getPhoneNumber());
-    user.setAddress(userUpdateDto.getAddressDetails());
-    user.setCompanyDetails(userUpdateDto.getCompanyDetails());
-    return userRepository.save(user);
-  }
 }

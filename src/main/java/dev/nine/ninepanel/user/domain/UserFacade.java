@@ -1,17 +1,16 @@
 package dev.nine.ninepanel.user.domain;
 
 import dev.nine.ninepanel.user.changepassword.dto.ChangePasswordDto;
-import dev.nine.ninepanel.user.domain.dto.SignUpDto;
+import dev.nine.ninepanel.user.domain.dto.UserCreationDto;
 import dev.nine.ninepanel.user.domain.dto.UserDto;
-import dev.nine.ninepanel.user.domain.dto.UserUpdateDto;
 import org.bson.types.ObjectId;
 import org.springframework.web.server.ResponseStatusException;
 
 public class UserFacade {
 
   private final UserRepository userRepository;
-  private final UserCreator userCreator;
-  private final UserService userService;
+  private final UserCreator    userCreator;
+  private final UserService    userService;
 
   UserFacade(UserRepository userRepository, UserCreator userCreator, UserService userService) {
     this.userRepository = userRepository;
@@ -19,7 +18,7 @@ public class UserFacade {
     this.userService = userService;
   }
 
-  public UserDto register(SignUpDto dto) {
+  public UserDto create(UserCreationDto dto) {
     return userService.create(userCreator.from(dto)).dto();
   }
 
@@ -43,7 +42,4 @@ public class UserFacade {
     return userService.updatePasswordWithCheck(userDto.getId(), changePasswordDto, userDto.getPassword()).dto();
   }
 
-  public UserDto updateUserData(ObjectId objectId, UserUpdateDto userUpdateDto) {
-    return userService.updateUser(objectId, userUpdateDto).dto();
-  }
 }

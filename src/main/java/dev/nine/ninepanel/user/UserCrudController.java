@@ -8,7 +8,6 @@ import dev.nine.ninepanel.user.changepassword.dto.ChangePasswordDto;
 import dev.nine.ninepanel.user.domain.UserFacade;
 import dev.nine.ninepanel.user.domain.UserHelper;
 import dev.nine.ninepanel.user.domain.dto.UserDto;
-import dev.nine.ninepanel.user.domain.dto.UserUpdateDto;
 import javax.validation.Valid;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
@@ -25,25 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 class UserCrudController {
 
   private final UserFacade  userFacade;
-  private final TokenFacade tokenFacade;
 
-  public UserCrudController(UserFacade userFacade, TokenFacade tokenFacade) {
+  public UserCrudController(UserFacade userFacade) {
     this.userFacade = userFacade;
-    this.tokenFacade = tokenFacade;
   }
 
   @RequiresAuthenticated
   @GetMapping("me")
   ResponseEntity<UserDto> fetchCurrentUser(@AuthenticatedUser UserDetails userDetails) {
     return ResponseEntity.ok(this.userFacade.showUserById(UserHelper.getUserId(userDetails)));
-  }
-
-  @RequiresAuthenticated
-  @PutMapping("me")
-  ResponseEntity<?> update(@AuthenticatedUser UserDetails userDetails, @Valid @RequestBody UserUpdateDto userUpdateDto) {
-    ObjectId userId = UserHelper.getUserId(userDetails);
-    UserDto userDto = this.userFacade.updateUserData(userId, userUpdateDto);
-    return ResponseEntity.ok(userDto);
   }
 
   @RequiresAuthenticated

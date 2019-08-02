@@ -1,4 +1,4 @@
-package dev.nine.ninepanel.user.agreementsdetails;
+package dev.nine.ninepanel.clients.agreementsdetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
