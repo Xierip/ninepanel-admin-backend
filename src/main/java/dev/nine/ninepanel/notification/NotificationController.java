@@ -40,7 +40,7 @@ class NotificationController {
   }
 
   @RequiresAuthenticated
-  @DeleteMapping
+  @DeleteMapping("{id}")
   ResponseEntity<?> deleteNotification(@PathVariable ObjectId id) {
     notificationFacade.deleteNotification(id);
     return ResponseEntity.noContent().build();
