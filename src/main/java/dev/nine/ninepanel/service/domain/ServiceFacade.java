@@ -1,8 +1,7 @@
 package dev.nine.ninepanel.service.domain;
 
+import dev.nine.ninepanel.clients.domain.ClientsFacade;
 import dev.nine.ninepanel.service.domain.dto.ServiceDto;
-import dev.nine.ninepanel.user.domain.UserFacade;
-import dev.nine.ninepanel.user.domain.dto.UserDto;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,12 +10,12 @@ public class ServiceFacade {
 
   private ServiceRepository serviceRepository;
   private ServiceCreator    serviceCreator;
-  private UserFacade        userFacade;
+  private ClientsFacade     clientsFacade;
 
-  public ServiceFacade(ServiceRepository serviceRepository, ServiceCreator serviceCreator, UserFacade userFacade) {
+  public ServiceFacade(ServiceRepository serviceRepository, ServiceCreator serviceCreator, ClientsFacade clientsFacade) {
     this.serviceRepository = serviceRepository;
     this.serviceCreator = serviceCreator;
-    this.userFacade = userFacade;
+    this.clientsFacade = clientsFacade;
   }
 
 
@@ -36,7 +35,7 @@ public class ServiceFacade {
   }
 
   public ServiceDto add(ServiceDto serviceDto) {
-    UserDto userDto = userFacade.showUserById(serviceDto.getClientId());
+    clientsFacade.checkIfExists(serviceDto.getClientId());
     return serviceRepository.save(serviceCreator.from(serviceDto)).dto();
   }
 }
