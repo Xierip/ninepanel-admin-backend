@@ -14,7 +14,6 @@ import org.bson.types.ObjectId;
 @AllArgsConstructor
 @Getter
 @Setter
-/* THIS WILL STAY AS A VALUE OBJECT, PROBABLY RENAMED TO ServiceType FOR READABILITY */
 public class ServiceTypeDto {
 
   private ObjectId id;

@@ -30,7 +30,6 @@ public class ServiceDto {
   private String         title;
   @NotEmpty
   private String         description;
-  @NotEmpty
   private ServiceTypeDto type;
   @JsonProperty(access = Access.READ_ONLY)
   private LocalDateTime  createdAt;
