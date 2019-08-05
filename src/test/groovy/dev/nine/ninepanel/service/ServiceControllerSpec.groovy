@@ -26,10 +26,10 @@ class ServiceControllerSpec extends IntegrationSpec {
     when: "i ask system for services"
       ResultActions request = requestAsUser(get(ApiLayers.SERVICES))
 
-    then: "i see all my services"
+    then: "i see all services"
       request
           .andExpect(status().isOk())
-          .andExpect(jsonPath("\$", hasSize(2)))
+          .andExpect(jsonPath("\$.content", hasSize(3)))
   }
 
   def "fail services list access scenario"() {
@@ -59,7 +59,7 @@ class ServiceControllerSpec extends IntegrationSpec {
           .andExpect(content().json(objectToJson(serviceDto)))
   }
 
-  def "fail service access as anonymous scenario"() {
+  def "fail service access scenario"() {
     given: "system has one service"
       ServiceDto serviceDto = serviceRepository.save(Service.builder().clientId(authenticatedUser.id).title("1").build()).dto()
 
@@ -71,15 +71,30 @@ class ServiceControllerSpec extends IntegrationSpec {
           .andExpect(status().isUnauthorized())
   }
 
-  def "fail service access of other user scenario"() {
-    given: "system has one service"
-      ServiceDto serviceDto = serviceRepository.save(Service.builder().clientId(new ObjectId()).title("1").build()).dto()
+  def "successful service add scenario"() {
 
-    when: "i ask system for specific service"
-      ResultActions request = requestAsAnonymous(get(ApiLayers.SERVICES + "/${serviceDto.id.toHexString()}"))
-
-    then: "i cannot see this service"
-      request
-          .andExpect(status().isUnauthorized())
   }
+
+  def "fail service add scenario"() {
+
+  }
+
+  def "successful service update scenario"() {
+
+  }
+
+  def "fail service update scenario"() {
+
+  }
+
+  def "successful service delete scenario"() {
+
+  }
+
+  def "fail service delete scenario"() {
+
+  }
+
+
+
 }

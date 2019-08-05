@@ -24,10 +24,10 @@ class HostingControllerSpec extends IntegrationSpec {
       hostingRepository.save(Hosting.builder().clientId(new ObjectId()).title("3").build())
     when: "i ask system for hostings"
       ResultActions request = requestAsUser(get(ApiLayers.HOSTINGS))
-    then: "i see all my hostings"
+    then: "i see all hostings"
       request
           .andExpect(status().isOk())
-          .andExpect(jsonPath("\$", hasSize(2)))
+          .andExpect(jsonPath("\$.content", hasSize(3)))
   }
 
   def "fail hostings list access scenario"() {

@@ -3,11 +3,9 @@ package dev.nine.ninepanel.service.type
 import dev.nine.ninepanel.service.milestone.Milestone
 import dev.nine.ninepanel.service.type.domain.dto.ServiceTypeDto
 
-import java.time.LocalDateTime
-
 trait ServiceTypeData {
 
-  LinkedHashSet<Milestone> milestones = new LinkedHashSet<>(Arrays.asList(new Milestone("Test", false, LocalDateTime.now())))
+  LinkedHashSet<Milestone> milestones = new LinkedHashSet<>(Arrays.asList(new Milestone("Test", false, null)))
 
   ServiceTypeDto validServiceTypeDto = ServiceTypeDto.builder()
       .id(null)
