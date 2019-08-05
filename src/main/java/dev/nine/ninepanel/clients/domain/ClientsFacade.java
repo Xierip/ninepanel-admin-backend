@@ -38,4 +38,5 @@ public class ClientsFacade {
     Client oldClient = clientsRepository.findByIdOrThrow(clientId);
     return clientsRepository.save(clientCreator.from(clientDto, oldClient)).dto();
   }
+
 }

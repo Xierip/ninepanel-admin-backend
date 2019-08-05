@@ -2,19 +2,18 @@ package dev.nine.ninepanel.service
 
 import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers
-import dev.nine.ninepanel.service.domain.Service
 import dev.nine.ninepanel.service.domain.ServiceFacade
-import dev.nine.ninepanel.service.domain.ServiceRepository
 import dev.nine.ninepanel.service.domain.dto.ServiceDto
-import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
 import static org.hamcrest.Matchers.hasSize
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-class ServiceControllerSpec extends IntegrationSpec implements ServiceData{
+class ServiceControllerSpec extends IntegrationSpec implements ServiceData {
   @Autowired
   ServiceFacade serviceFacade
 
@@ -75,11 +74,35 @@ class ServiceControllerSpec extends IntegrationSpec implements ServiceData{
   }
 
   def "successful service add scenario"() {
-
+    given: "there are no services in the system"
+    when: "i post the service data to add route"
+      ResultActions request = requestAsUser(post(ApiLayers.SERVICES)
+          .content(objectToJson(validServiceDto1))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+    then: "the request should be ok"
+      request.andExpect(status().isOk())
+    when: "i fetch all services"
+      ResultActions request2 = requestAsUser(get(ApiLayers.SERVICES))
+    then: "there should be one service"
+      request2
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("\$.content", hasSize(1)))
   }
 
   def "fail service add scenario"() {
+    when: "i post invalid service data to add route"
+      ResultActions request = requestAsUser(post(ApiLayers.SERVICES)
+          .content(objectToJson(invalidServiceDto))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+    then: "the request should fail"
+      request.andExpect(status().isBadRequest())
 
+    when: "i post service data with nonexistent client id"
+      ResultActions request2 = requestAsUser(post(ApiLayers.SERVICES)
+          .content(objectToJson(noClientServiceDto))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+    then: "the request should return 404 not found"
+      request2.andExpect(status().isNotFound())
   }
 
   def "successful service update scenario"() {
@@ -97,7 +120,6 @@ class ServiceControllerSpec extends IntegrationSpec implements ServiceData{
   def "fail service delete scenario"() {
 
   }
-
 
 
 }

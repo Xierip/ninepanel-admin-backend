@@ -29,8 +29,8 @@ class ServiceTypeControllerSpec extends IntegrationSpec implements ServiceTypeDa
   }
 
   def "successful add service type scenario"() {
-    given: "i have valid service type creation data"
-    when: "i post it to add route"
+    given: "there are no service types in the system"
+    when: "i post valid service type data to add route"
       ResultActions request = requestAsUser(post("/api/service-types")
           .content(objectToJson(validServiceTypeDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))

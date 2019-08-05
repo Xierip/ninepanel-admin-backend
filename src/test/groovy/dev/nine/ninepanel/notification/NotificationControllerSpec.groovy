@@ -35,8 +35,8 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
   }
 
   def "successful add notification scenario"() {
-    given: "i have valid notification creation data"
-    when: "i post it to add route"
+    given: "there are no notifications in the system"
+    when: "i post valid notification data to add route"
       ResultActions request = requestAsUser(post("/api/notifications")
           .content(objectToJson(validNotificationDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))

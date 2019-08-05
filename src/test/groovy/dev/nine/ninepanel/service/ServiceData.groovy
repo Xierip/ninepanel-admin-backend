@@ -1,21 +1,25 @@
 package dev.nine.ninepanel.service
 
-import dev.nine.ninepanel.clients.domain.ClientsFacade
+import com.mongodb.BasicDBObject
+import dev.nine.ninepanel.infrastructure.constant.MongoCollections
 import dev.nine.ninepanel.service.domain.dto.ServiceDto
 import dev.nine.ninepanel.service.milestone.Milestone
 import dev.nine.ninepanel.service.type.domain.dto.ServiceTypeDto
 import org.bson.types.ObjectId
-import org.mockito.Mockito
-import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.mongodb.core.MongoTemplate
 
 trait ServiceData {
-  @MockBean
-  ClientsFacade clientsFacade
 
+  @Autowired
+  MongoTemplate mongoTemplate
   ObjectId clientId = new ObjectId()
 
   void setupServices() {
-    Mockito.doNothing().when(clientsFacade).checkIfExists(clientId)
+    Map<String, Object> client = new HashMap<>()
+    client.put("_id", clientId)
+
+    mongoTemplate.insert(new BasicDBObject(client), MongoCollections.CLIENTS)
   }
 
   ServiceTypeDto serviceTypeDto = ServiceTypeDto.builder()
@@ -27,18 +31,21 @@ trait ServiceData {
   ServiceDto validServiceDto1 = ServiceDto.builder()
       .clientId(clientId)
       .title("1")
+      .description("lol")
       .type(serviceTypeDto)
       .build()
 
   ServiceDto validServiceDto2 = ServiceDto.builder()
       .clientId(clientId)
       .title("2")
+      .description("lol")
       .type(serviceTypeDto)
       .build()
 
-  ServiceDto inValidServiceDto = ServiceDto.builder()
+  ServiceDto invalidServiceDto = ServiceDto.builder()
       .clientId(clientId)
       .title("1")
+      .description("lol")
       .type(null)
       .build()
 
