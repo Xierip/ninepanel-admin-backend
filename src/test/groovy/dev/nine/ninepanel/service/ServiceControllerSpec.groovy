@@ -3,6 +3,7 @@ package dev.nine.ninepanel.service
 import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers
 import dev.nine.ninepanel.service.domain.Service
+import dev.nine.ninepanel.service.domain.ServiceFacade
 import dev.nine.ninepanel.service.domain.ServiceRepository
 import dev.nine.ninepanel.service.domain.dto.ServiceDto
 import org.bson.types.ObjectId
@@ -13,15 +14,18 @@ import static org.hamcrest.Matchers.hasSize
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-class ServiceControllerSpec extends IntegrationSpec {
+class ServiceControllerSpec extends IntegrationSpec implements ServiceData{
   @Autowired
-  private ServiceRepository serviceRepository
+  ServiceFacade serviceFacade
+
+  void setup() {
+    setupServices()
+  }
 
   def "successful services list access scenario"() {
-    given: "system has three services"
-      serviceRepository.save(Service.builder().clientId(authenticatedUser.id).title("1").build())
-      serviceRepository.save(Service.builder().clientId(authenticatedUser.id).title("2").build())
-      serviceRepository.save(Service.builder().clientId(new ObjectId()).title("3").build())
+    given: "system has two services"
+      serviceFacade.add(validServiceDto1)
+      serviceFacade.add(validServiceDto2)
 
     when: "i ask system for services"
       ResultActions request = requestAsUser(get(ApiLayers.SERVICES))
@@ -29,14 +33,13 @@ class ServiceControllerSpec extends IntegrationSpec {
     then: "i see all services"
       request
           .andExpect(status().isOk())
-          .andExpect(jsonPath("\$.content", hasSize(3)))
+          .andExpect(jsonPath("\$.content", hasSize(2)))
   }
 
   def "fail services list access scenario"() {
-    given: "system has three services"
-      serviceRepository.save(Service.builder().clientId(authenticatedUser.id).title("1").build())
-      serviceRepository.save(Service.builder().clientId(authenticatedUser.id).title("2").build())
-      serviceRepository.save(Service.builder().clientId(new ObjectId()).title("3").build())
+    given: "system has two services"
+      serviceFacade.add(validServiceDto1)
+      serviceFacade.add(validServiceDto2)
 
     when: "i ask system for services as guest"
       ResultActions request = requestAsAnonymous(get(ApiLayers.SERVICES))
@@ -48,7 +51,7 @@ class ServiceControllerSpec extends IntegrationSpec {
 
   def "successful service access scenario"() {
     given: "system has one service"
-      ServiceDto serviceDto = serviceRepository.save(Service.builder().clientId(authenticatedUser.id).title("1").build()).dto()
+      ServiceDto serviceDto = serviceFacade.add(validServiceDto1)
 
     when: "i ask system for specific service"
       ResultActions request = requestAsUser(get(ApiLayers.SERVICES + "/${serviceDto.id.toHexString()}"))
@@ -61,7 +64,7 @@ class ServiceControllerSpec extends IntegrationSpec {
 
   def "fail service access scenario"() {
     given: "system has one service"
-      ServiceDto serviceDto = serviceRepository.save(Service.builder().clientId(authenticatedUser.id).title("1").build()).dto()
+      ServiceDto serviceDto = serviceFacade.add(validServiceDto1)
 
     when: "i ask system for specific service"
       ResultActions request = requestAsAnonymous(get(ApiLayers.SERVICES + "/${serviceDto.id.toHexString()}"))

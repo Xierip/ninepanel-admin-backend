@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 
 @Builder
 @NoArgsConstructor
@@ -31,6 +32,7 @@ public class ServiceDto {
   private String         description;
   @NotNull
   private ServiceTypeDto type;
+  @CreatedDate
   private LocalDateTime  createdAt;
 
 }
