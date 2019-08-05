@@ -65,6 +65,7 @@ abstract class IntegrationSpec extends Specification {
   void cleanup() {
     mongoTemplate.dropCollection(MongoCollections.RESET_PASSWORD_REQUESTS)
     mongoTemplate.dropCollection(MongoCollections.SERVICES)
+    mongoTemplate.dropCollection(MongoCollections.SERVICE_TYPES)
     mongoTemplate.dropCollection(MongoCollections.TOKENS)
     mongoTemplate.dropCollection(MongoCollections.USERS)
     mongoTemplate.dropCollection(MongoCollections.NOTIFICATIONS)

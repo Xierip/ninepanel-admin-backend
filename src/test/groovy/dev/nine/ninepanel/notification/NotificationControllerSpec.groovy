@@ -2,12 +2,12 @@ package dev.nine.ninepanel.notification;
 
 import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.notification.domain.NotificationFacade
-import dev.nine.ninepanel.notification.domain.dto.NotificationDto
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
+import static org.hamcrest.Matchers.hasSize
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -18,15 +18,13 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
 
   def "successful fetch notification scenario"() {
     given: "there is a notification in the system"
-      notificationFacade.addNotification(validNotificationDto)
+      notificationFacade.add(validNotificationDto)
     when: "i access the notification endpoint"
       ResultActions request = requestAsUser(get("/api/notifications"))
     then: "the request should be okay"
       request.andExpect(status().isOk())
     and: "i should get a list with 1 notification"
-      String resultString = request.andReturn().getResponse().getContentAsString()
-      List<NotificationDto> list = objectMapper.readValue(resultString, List.class)
-      list.size() == 1
+      request.andExpect(jsonPath("\$", hasSize(1)))
   }
 
   def "fail fetch notification scenario"() {
@@ -44,8 +42,12 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should be ok"
       request.andExpect(status().isOk())
-      //and: "the notification should be added"
-      // request.andExpect(content().json(objectToJson(validNotificationDto)))
+    when: "i fetch the notifications"
+      ResultActions request2 = requestAsUser(get("/api/notifications"))
+    then: "there should be one notification in the system"
+      request2
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("\$", hasSize(1)))
   }
 
   def "fail add notification scenario"() {
@@ -60,11 +62,17 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
 
   def "successful delete notification scenario"() {
     given: "there is a notification in the system"
-      String id = notificationFacade.addNotification(validNotificationDto).id
+      String id = notificationFacade.add(validNotificationDto).id
     when: "i try to delete the notification"
       ResultActions request = requestAsUser(delete("/api/notifications/${id}"))
     then: "the request should result no content"
       request.andExpect(status().isNoContent())
+    when: "i fetch the notifications"
+      ResultActions request2 = requestAsUser(get("/api/notifications"))
+    then: "there should be zero notification in the system"
+      request2
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("\$", hasSize(0)))
   }
 
   def "fail delete notification scenario"() {
