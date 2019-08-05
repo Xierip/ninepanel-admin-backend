@@ -49,4 +49,11 @@ trait ServiceData {
       .type(null)
       .build()
 
+  ServiceDto noClientServiceDto = ServiceDto.builder()
+      .clientId(new ObjectId())
+      .title("1")
+      .description("lol")
+      .type(serviceTypeDto)
+      .build()
+
 }

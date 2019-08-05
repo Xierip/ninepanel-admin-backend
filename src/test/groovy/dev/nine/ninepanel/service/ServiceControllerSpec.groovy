@@ -4,13 +4,16 @@ import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers
 import dev.nine.ninepanel.service.domain.ServiceFacade
 import dev.nine.ninepanel.service.domain.dto.ServiceDto
+import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
 import static org.hamcrest.Matchers.hasSize
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 class ServiceControllerSpec extends IntegrationSpec implements ServiceData {
@@ -53,7 +56,7 @@ class ServiceControllerSpec extends IntegrationSpec implements ServiceData {
       ServiceDto serviceDto = serviceFacade.add(validServiceDto1)
 
     when: "i ask system for specific service"
-      ResultActions request = requestAsUser(get(ApiLayers.SERVICES + "/${serviceDto.id.toHexString()}"))
+      ResultActions request = requestAsUser(get(ApiLayers.SERVICES + "/${serviceDto.id}"))
 
     then: "i see all my services"
       request
@@ -66,11 +69,17 @@ class ServiceControllerSpec extends IntegrationSpec implements ServiceData {
       ServiceDto serviceDto = serviceFacade.add(validServiceDto1)
 
     when: "i ask system for specific service"
-      ResultActions request = requestAsAnonymous(get(ApiLayers.SERVICES + "/${serviceDto.id.toHexString()}"))
+      ResultActions request = requestAsAnonymous(get(ApiLayers.SERVICES + "/${serviceDto.id}"))
 
     then: "i cannot see any service"
       request
           .andExpect(status().isUnauthorized())
+
+    when: "i ask for a service that doesn't exist"
+      ResultActions request2 = requestAsUser(get(ApiLayers.SERVICES + "/${new ObjectId()}"))
+
+    then: "the request should return 404 not found"
+      request2.andExpect(status().isNotFound())
   }
 
   def "successful service add scenario"() {
@@ -106,19 +115,59 @@ class ServiceControllerSpec extends IntegrationSpec implements ServiceData {
   }
 
   def "successful service update scenario"() {
-
+    given: "there is a service in the system"
+      ServiceDto serviceDto = serviceFacade.add(validServiceDto1)
+    when: "I update the service with valid data"
+      serviceDto.setDescription("newDescription")
+      ResultActions request = requestAsUser(put(ApiLayers.SERVICES + "/${serviceDto.id}")
+          .content(objectToJson(serviceDto))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+    then: "the request should be ok"
+      request.andExpect(status().isOk())
+    and: "the service should be updated"
+      request.andExpect(content().json(objectToJson(serviceDto)))
   }
 
   def "fail service update scenario"() {
+    given: "there are two services in the system"
+      ServiceDto serviceDto = serviceFacade.add(validServiceDto1)
+      ServiceDto serviceDto2 = serviceFacade.add(validServiceDto2)
 
+    when: "I update first service with invalid data"
+      serviceDto.setDescription(null)
+      ResultActions request = requestAsUser(put(ApiLayers.SERVICES + "/${serviceDto.id}")
+          .content(objectToJson(serviceDto))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+    then: "the request should be ok"
+      request.andExpect(status().isBadRequest())
+
+    when: "i update second service with non existent client id"
+      serviceDto2.setClientId(new ObjectId())
+      ResultActions request2 = requestAsUser(put(ApiLayers.SERVICES + "/${serviceDto2.id}")
+          .content(objectToJson(serviceDto2))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+    then: "the request should return 404 not found"
+      request2.andExpect(status().isNotFound())
   }
 
   def "successful service delete scenario"() {
-
+    given: "there is a service in the system"
+      ServiceDto serviceDto = serviceFacade.add(validServiceDto1)
+    when: "i try to delete the service"
+      ResultActions request = requestAsUser(delete(ApiLayers.SERVICES + "/${serviceDto.id}"))
+    then: "the request should return no content"
+      request.andExpect(status().isNoContent())
+    when: "i ask the system for the deleted service"
+      ResultActions request2 = requestAsUser(get(ApiLayers.SERVICES + "/${serviceDto.id}"))
+    then: "the request should return 404 not found"
+      request2.andExpect(status().isNotFound())
   }
 
   def "fail service delete scenario"() {
-
+    when: "i try to delete a service that doesn't exist"
+      ResultActions request = requestAsUser(delete(ApiLayers.SERVICES + "/${new ObjectId()}"))
+    then: "the request should return 404 not found"
+      request.andExpect(status().isNotFound())
   }
 
 
