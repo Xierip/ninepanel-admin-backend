@@ -18,6 +18,14 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
   @Autowired
   TokenFacade tokenFacade
 
+  void setup() {
+    smtpServer.start()
+  }
+
+  void cleanup() {
+    smtpServer.stop()
+  }
+
   def "successful user info access scenario"() {
     given: "i am a user in the system"
     when: "i request user info with access token"
