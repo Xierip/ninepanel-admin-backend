@@ -1,9 +1,7 @@
 package dev.nine.ninepanel.hosting
 
 import dev.nine.ninepanel.base.IntegrationSpec
-import dev.nine.ninepanel.hosting.domain.Hosting
 import dev.nine.ninepanel.hosting.domain.HostingFacade
-import dev.nine.ninepanel.hosting.domain.HostingRepository
 import dev.nine.ninepanel.hosting.domain.dto.HostingDto
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers
 import org.bson.types.ObjectId

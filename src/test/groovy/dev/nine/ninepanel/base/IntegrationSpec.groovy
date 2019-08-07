@@ -69,6 +69,7 @@ abstract class IntegrationSpec extends Specification {
     mongoTemplate.dropCollection(MongoCollections.TOKENS)
     mongoTemplate.dropCollection(MongoCollections.USERS)
     mongoTemplate.dropCollection(MongoCollections.NOTIFICATIONS)
+    mongoTemplate.dropCollection(MongoCollections.CLIENTS)
 
     smtpServer.stop()
   }

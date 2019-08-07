@@ -28,6 +28,15 @@ class ServiceTypeControllerSpec extends IntegrationSpec implements ServiceTypeDa
       request.andExpect(jsonPath("\$", hasSize(1)))
   }
 
+  def "fail fetch service types scenario"() {
+    given: "there is a service type in the system"
+      serviceTypeFacade.add(validServiceTypeDto)
+    when: "i access the service types endpoint"
+      ResultActions request = requestAsAnonymous(get("/api/service-types"))
+    then: "the request should be unauthorized"
+      request.andExpect(status().isUnauthorized())
+  }
+
   def "successful add service type scenario"() {
     given: "there are no service types in the system"
     when: "i post valid service type data to add route"

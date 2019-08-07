@@ -16,7 +16,7 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
   @Autowired
   NotificationFacade notificationFacade
 
-  def "successful fetch notification scenario"() {
+  def "successful fetch notifications scenario"() {
     given: "there is a notification in the system"
       notificationFacade.add(validNotificationDto)
     when: "i access the notification endpoint"
@@ -27,7 +27,7 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
       request.andExpect(jsonPath("\$", hasSize(1)))
   }
 
-  def "fail fetch notification scenario"() {
+  def "fail fetch notifications scenario"() {
     when: "i try to access notifications and im not logged in"
       ResultActions request = requestAsAnonymous(get("/api/notifications"))
     then: "the request should fail"
