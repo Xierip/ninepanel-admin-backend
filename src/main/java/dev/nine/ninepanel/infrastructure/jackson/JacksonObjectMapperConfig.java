@@ -1,6 +1,5 @@
 package dev.nine.ninepanel.infrastructure.jackson;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.time.format.DateTimeFormatter;
@@ -10,15 +9,16 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 class JacksonObjectMapperConfig {
-  private static final String dateFormat = "yyyy-MM-dd";
-  private static final String dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss";
+
+  private static final String DATE_FORMAT      = "yyyy-MM-dd";
+  private static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
   @Bean
   public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
     return builder -> {
-      builder.simpleDateFormat(dateTimeFormat);
-      builder.serializers(new LocalDateSerializer(DateTimeFormatter.ofPattern(dateFormat)));
-      builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(dateTimeFormat)));
+      builder.simpleDateFormat(DATE_TIME_FORMAT);
+      builder.serializers(new LocalDateSerializer(DateTimeFormatter.ofPattern(DATE_FORMAT)));
+      builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)));
     };
   }
 }
