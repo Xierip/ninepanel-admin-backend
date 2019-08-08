@@ -16,15 +16,15 @@ public class NotificationFacade {
     this.notificationCreator = notificationCreator;
   }
 
-  public List<NotificationDto> getNotifications() {
+  public List<NotificationDto> showAll() {
     return notificationRepository.findAll().stream().map(Notification::dto).collect(Collectors.toList());
   }
 
-  public NotificationDto addNotification(NotificationDto notificationDto) {
+  public NotificationDto add(NotificationDto notificationDto) {
     return notificationRepository.save(notificationCreator.fromDto(notificationDto)).dto();
   }
 
-  public void deleteNotification(ObjectId id) {
+  public void delete(ObjectId id) {
     notificationRepository.deleteByIdOrThrow(id);
   }
 }

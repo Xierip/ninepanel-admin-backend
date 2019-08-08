@@ -29,20 +29,20 @@ class NotificationController {
   @RequiresAuthenticated
   @GetMapping
   ResponseEntity<?> getNotifications() {
-    List<NotificationDto> notifications = notificationFacade.getNotifications();
+    List<NotificationDto> notifications = notificationFacade.showAll();
     return ResponseEntity.ok(notifications);
   }
 
   @RequiresAuthenticated
   @PostMapping
   ResponseEntity<?> addNotification(@Valid @RequestBody NotificationDto notificationDto) {
-    return ResponseEntity.ok(notificationFacade.addNotification(notificationDto));
+    return ResponseEntity.ok(notificationFacade.add(notificationDto));
   }
 
   @RequiresAuthenticated
   @DeleteMapping("{id}")
   ResponseEntity<?> deleteNotification(@PathVariable ObjectId id) {
-    notificationFacade.deleteNotification(id);
+    notificationFacade.delete(id);
     return ResponseEntity.noContent().build();
   }
 

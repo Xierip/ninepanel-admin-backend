@@ -4,6 +4,7 @@ import dev.nine.ninepanel.authentication.domain.annotation.RequiresAuthenticated
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers;
 import dev.nine.ninepanel.service.type.domain.ServiceTypeFacade;
 import dev.nine.ninepanel.service.type.domain.dto.ServiceTypeDto;
+import javax.validation.Valid;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +34,7 @@ class ServiceTypeController {
 
   @RequiresAuthenticated
   @PostMapping
-  ResponseEntity<?> addServiceType(@RequestBody ServiceTypeDto serviceTypeDto) {
+  ResponseEntity<?> addServiceType(@RequestBody @Valid ServiceTypeDto serviceTypeDto) {
     return ResponseEntity.ok(serviceTypeFacade.add(serviceTypeDto));
   }
 
@@ -46,8 +47,8 @@ class ServiceTypeController {
 
   @RequiresAuthenticated
   @PutMapping("{id}")
-  ResponseEntity<?> updateServiceType(@PathVariable ObjectId serviceTypeId, @RequestBody ServiceTypeDto serviceTypeDto) {
-    return ResponseEntity.ok(serviceTypeFacade.update(serviceTypeId, serviceTypeDto));
+  ResponseEntity<?> updateServiceType(@PathVariable ObjectId id, @RequestBody @Valid ServiceTypeDto serviceTypeDto) {
+    return ResponseEntity.ok(serviceTypeFacade.update(id, serviceTypeDto));
   }
 
 }

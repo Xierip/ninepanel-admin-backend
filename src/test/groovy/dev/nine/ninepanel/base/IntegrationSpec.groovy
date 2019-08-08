@@ -59,15 +59,17 @@ abstract class IntegrationSpec extends Specification {
     accessToken = tokens.get("accessToken")
 
     smtpServer = new GreenMail(new ServerSetup(2525, null, "smtp"))
-    smtpServer.start()
   }
 
   void cleanup() {
     mongoTemplate.dropCollection(MongoCollections.RESET_PASSWORD_REQUESTS)
     mongoTemplate.dropCollection(MongoCollections.SERVICES)
+    mongoTemplate.dropCollection(MongoCollections.HOSTINGS)
+    mongoTemplate.dropCollection(MongoCollections.SERVICE_TYPES)
     mongoTemplate.dropCollection(MongoCollections.TOKENS)
     mongoTemplate.dropCollection(MongoCollections.USERS)
     mongoTemplate.dropCollection(MongoCollections.NOTIFICATIONS)
+    mongoTemplate.dropCollection(MongoCollections.CLIENTS)
 
     smtpServer.stop()
   }

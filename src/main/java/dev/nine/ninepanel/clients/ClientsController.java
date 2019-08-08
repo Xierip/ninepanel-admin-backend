@@ -1,5 +1,6 @@
 package dev.nine.ninepanel.clients;
 
+import dev.nine.ninepanel.authentication.domain.annotation.RequiresAuthenticated;
 import dev.nine.ninepanel.clients.domain.ClientsFacade;
 import dev.nine.ninepanel.clients.domain.dto.ClientDto;
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping(ApiLayers.CLIENTS)
@@ -23,22 +23,30 @@ class ClientsController {
 
   private ClientsFacade clientsFacade;
 
+  ClientsController(ClientsFacade clientsFacade) {
+    this.clientsFacade = clientsFacade;
+  }
+
+  @RequiresAuthenticated
   @GetMapping
   ResponseEntity<Page<ClientDto>> showAll(Pageable pageable) {
     return ResponseEntity.ok(clientsFacade.showAll(pageable));
   }
 
+  @RequiresAuthenticated
   @GetMapping("{clientId}")
-  ResponseEntity<ClientDto> show(@RequestParam ObjectId clientId) {
+  ResponseEntity<ClientDto> show(@PathVariable ObjectId clientId) {
     return ResponseEntity.ok(clientsFacade.showById(clientId));
   }
 
+  @RequiresAuthenticated
   @DeleteMapping("{clientId}")
   ResponseEntity<?> delete(@PathVariable ObjectId clientId) {
     clientsFacade.delete(clientId);
     return ResponseEntity.noContent().build();
   }
 
+  @RequiresAuthenticated
   @PutMapping("{clientId}")
   ResponseEntity<?> update(@PathVariable ObjectId clientId, @RequestBody @Valid ClientDto clientDto) {
     return ResponseEntity.ok(clientsFacade.update(clientId, clientDto));

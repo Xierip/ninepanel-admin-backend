@@ -2,7 +2,7 @@ package dev.nine.ninepanel.clients.domain;
 
 import dev.nine.ninepanel.clients.domain.dto.ClientDto;
 
-public class ClientCreator {
+class ClientCreator {
 
   Client from(ClientDto clientDto, Client oldClient) {
     return Client.builder()

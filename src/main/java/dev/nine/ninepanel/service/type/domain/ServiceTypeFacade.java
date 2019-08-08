@@ -29,6 +29,6 @@ public class ServiceTypeFacade {
 
   public ServiceTypeDto update(ObjectId serviceTypeId, ServiceTypeDto serviceTypeDto) {
     ServiceType oldServiceType = serviceTypeRepository.findByIdOrThrow(serviceTypeId);
-    return serviceTypeRepository.save(serviceTypeCreator.from(serviceTypeDto, oldServiceType)).dto();
+    return serviceTypeRepository.updateOrThrow(serviceTypeCreator.from(serviceTypeDto, oldServiceType)).dto();
   }
 }
