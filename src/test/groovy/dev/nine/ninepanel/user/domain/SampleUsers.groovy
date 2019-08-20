@@ -16,6 +16,14 @@ trait SampleUsers {
       "Test",
       "testCaptcha"
   )
+
+
+  UserCreationDto sampleSignUpDto1 = new UserCreationDto(
+      "test666@test.com",
+      "password666",
+      "Test666",
+      "testCaptcha"
+  )
   
   static private createUserDto(String email, String password, String name, String surname) {
     return UserDto.builder()

@@ -4,14 +4,14 @@ import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.UNAUTHORIZED)
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class UserNotFoundException extends RuntimeException {
 
   public UserNotFoundException(ObjectId id) {
-    super("Bad credentials");
+    super("Not found user with id '" + id.toHexString() + "'");
   }
 
   public UserNotFoundException(String email) {
-    super("Bad credentials");
+    super("Not found user with email '" + email + "'");
   }
 }

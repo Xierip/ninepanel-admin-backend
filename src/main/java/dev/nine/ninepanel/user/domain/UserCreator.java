@@ -1,6 +1,7 @@
 package dev.nine.ninepanel.user.domain;
 
 import dev.nine.ninepanel.user.domain.dto.UserCreationDto;
+import dev.nine.ninepanel.user.domain.dto.UserDto;
 
 class UserCreator {
 
@@ -11,6 +12,17 @@ class UserCreator {
         .name(userRegisterCommandDto.getName())
         .surname(userRegisterCommandDto.getSurname())
         .password(userRegisterCommandDto.getPassword())
+        .build();
+  }
+
+  User from(UserDto userDto, UserDto oldUserDto) {
+    return User
+        .builder()
+        .id(oldUserDto.getId())
+        .email(userDto.getEmail().toLowerCase())
+        .name(userDto.getName())
+        .surname(userDto.getSurname())
+        .password(oldUserDto.getPassword())
         .build();
   }
 }

@@ -1,11 +1,12 @@
 package dev.nine.ninepanel.user.domain;
 
+import dev.nine.ninepanel.user.domain.exception.UserBadCredentialsException;
 import dev.nine.ninepanel.user.domain.exception.UserNotFoundException;
 import java.util.Optional;
 import org.bson.types.ObjectId;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-interface UserRepository extends CrudRepository<User, ObjectId> {
+interface UserRepository extends MongoRepository<User, ObjectId> {
 
   default User findByIdOrThrow(ObjectId id) {
     return this.findById(id).orElseThrow(() -> new UserNotFoundException(id));
@@ -19,4 +20,18 @@ interface UserRepository extends CrudRepository<User, ObjectId> {
 
   boolean existsByEmail(String email);
 
+  default void deleteByIdOrThrow(ObjectId userId) {
+    if (!existsById(userId)) {
+      throw new UserNotFoundException(userId);
+    }
+    deleteById(userId);
+  }
+
+  default User findByIdOrThrowBadCredentials(ObjectId id) {
+    return this.findById(id).orElseThrow(UserBadCredentialsException::new);
+  }
+
+  default User findByEmailOrThrowBadCredentials(String email) {
+    return this.findByEmail(email).orElseThrow(UserBadCredentialsException::new);
+  }
 }
