@@ -10,6 +10,7 @@ public final class ApiLayers {
   public static final String SERVICE_TYPES = API_ROOT + "service-types";
   public static final String NOTIFICATIONS = API_ROOT + "notifications";
   public static final String HOSTINGS      = API_ROOT + "hostings";
+  public static final String MESSAGES      = API_ROOT + "messages";
 
   private ApiLayers() {
   }
