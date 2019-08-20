@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
+import static org.hamcrest.Matchers.hasSize
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 class UserControllerSpec extends IntegrationSpec implements SampleUsers {
 
@@ -125,6 +125,33 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
     then: "i shouldn't be able to fetch this user"
       requestAsUser(get("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
           .andExpect(status().isNotFound())
+  }
+
+  def "success fetch all users scenario"() {
+    given: "system has two users"
+      UserDto otherUser = userFacade.create(sampleSignUpDto1)
+    when: "i ask system for users"
+      ResultActions request = requestAsUser(get(ApiLayers.USERS))
+    then: "i should see one"
+      request
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("\$", hasSize(2)))
+  }
+
+  def "success update user scenario"() {
+    given: "system has other user"
+      UserDto otherUser = userFacade.create(sampleSignUpDto1)
+    when: "i send updated user"
+      otherUser.surname = "pickles"
+      ResultActions request = requestAsUser(put("${ApiLayers.USERS}/${otherUser.id.toHexString()}")
+          .content(objectToJson(otherUser))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+          .andExpect(status().isOk())
+    and: "i fetch this user"
+      request = requestAsUser(get("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
+          .andExpect(status().isOk())
+    then: "users should be equals"
+      request.andExpect(content().json(objectToJson(otherUser)))
   }
 
   private void logIn(String email, String password) {

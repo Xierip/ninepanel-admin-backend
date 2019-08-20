@@ -62,7 +62,7 @@ class UserCrudController {
 
   @RequiresAuthenticated
   @PutMapping("{userId}")
-  ResponseEntity<?> updateUser(@PathVariable ObjectId userId, @Valid UserDto userDto) {
+  ResponseEntity<?> updateUser(@PathVariable ObjectId userId, @RequestBody @Valid UserDto userDto) {
     return ResponseEntity.ok(userFacade.update(userId, userDto));
   }
 
