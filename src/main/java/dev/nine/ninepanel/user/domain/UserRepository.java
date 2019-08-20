@@ -19,4 +19,10 @@ interface UserRepository extends CrudRepository<User, ObjectId> {
 
   boolean existsByEmail(String email);
 
+  default void deleteByIdOrThrow(ObjectId userId) {
+    if (!existsById(userId)) {
+      throw new UserNotFoundException(userId);
+    }
+    deleteById(userId);
+  }
 }

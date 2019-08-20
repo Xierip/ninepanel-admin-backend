@@ -42,4 +42,7 @@ public class UserFacade {
     return userService.updatePasswordWithCheck(userDto.getId(), changePasswordDto, userDto.getPassword()).dto();
   }
 
+  public void delete(ObjectId userId) {
+    this.userRepository.deleteByIdOrThrow(userId);
+  }
 }
