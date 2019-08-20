@@ -51,4 +51,9 @@ public class UserFacade {
   public Set<UserDto> showAll() {
     return this.userRepository.findAll().stream().map(User::dto).collect(Collectors.toSet());
   }
+
+  public UserDto update(ObjectId userId, UserDto userDto) {
+    UserDto oldUserDto = userRepository.findByIdOrThrow(userId).dto();
+    return this.userRepository.save(userCreator.from(userDto, oldUserDto)).dto();
+  }
 }
