@@ -2,16 +2,19 @@ package dev.nine.ninepanel.user
 
 import dev.nine.ninepanel.authentication.domain.dto.SignInDto
 import dev.nine.ninepanel.base.IntegrationSpec
+import dev.nine.ninepanel.infrastructure.constant.ApiLayers
 import dev.nine.ninepanel.token.domain.TokenFacade
 import dev.nine.ninepanel.user.changepassword.dto.ChangePasswordDto
 import dev.nine.ninepanel.user.domain.SampleUsers
 import dev.nine.ninepanel.user.domain.dto.UserCreationDto
+import dev.nine.ninepanel.user.domain.dto.UserDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 class UserControllerSpec extends IntegrationSpec implements SampleUsers {
 
@@ -96,6 +99,32 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should fail"
       request.andExpect(status().isBadRequest())
+  }
+
+  def "success other user password change scenario"() {
+    given: "system has other user"
+      UserDto otherUser = userFacade.create(sampleSignUpDto1)
+    when: "i change his password"
+      ResultActions request = requestAsUser(post("${ApiLayers.USERS}/${otherUser.id.toHexString()}/change-password")
+          .content(objectToJson(Map.of("password", "otherPass")))
+          .contentType(MediaType.APPLICATION_JSON_UTF8))
+    and: "the password should be changed"
+      request.andExpect(status().isNoContent())
+    then: "he should be able to log in with new password"
+      logIn(otherUser.email, "otherPass")
+
+  }
+
+  def "success user delete scenario"() {
+    given: "system has other user"
+      UserDto otherUser = userFacade.create(sampleSignUpDto1)
+    when: "i delete this user by id"
+      ResultActions request = requestAsUser(delete("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
+    and: "the user should be deleted"
+      request.andExpect(status().isNoContent())
+    then: "i shouldn't be able to fetch this user"
+      requestAsUser(get("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
+          .andExpect(status().isNotFound())
   }
 
   private void logIn(String email, String password) {

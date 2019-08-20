@@ -1,5 +1,6 @@
 package dev.nine.ninepanel.user.domain;
 
+import dev.nine.ninepanel.user.domain.exception.UserBadCredentialsException;
 import dev.nine.ninepanel.user.domain.exception.UserNotFoundException;
 import java.util.Optional;
 import org.bson.types.ObjectId;
@@ -24,5 +25,13 @@ interface UserRepository extends MongoRepository<User, ObjectId> {
       throw new UserNotFoundException(userId);
     }
     deleteById(userId);
+  }
+
+  default User findByIdOrThrowBadCredentials(ObjectId id) {
+    return this.findById(id).orElseThrow(UserBadCredentialsException::new);
+  }
+
+  default User findByEmailOrThrowBadCredentials(String email) {
+    return this.findByEmail(email).orElseThrow(UserBadCredentialsException::new);
   }
 }

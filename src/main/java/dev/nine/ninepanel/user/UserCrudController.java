@@ -40,6 +40,12 @@ class UserCrudController {
   }
 
   @RequiresAuthenticated
+  @GetMapping("{userId}")
+  ResponseEntity<UserDto> fetchUser(@PathVariable ObjectId userId) {
+    return ResponseEntity.ok(this.userFacade.showUserById(userId));
+  }
+
+  @RequiresAuthenticated
   @PostMapping("/change-password")
   ResponseEntity<?> changePassword(@AuthenticatedUser UserDetails userDetails, @RequestBody @Valid ChangePasswordDto changePasswordDto) {
     UserDto userDto = this.userFacade.showUserByEmail(userDetails.getUsername());

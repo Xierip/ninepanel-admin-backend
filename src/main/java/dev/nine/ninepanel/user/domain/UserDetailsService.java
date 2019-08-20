@@ -14,13 +14,13 @@ class UserDetailsService implements AuthenticationUserDetailsService {
 
   @Override
   public UserDetails loadUserById(ObjectId id) {
-    User user = this.userRepository.findByIdOrThrow(id);
+    User user = this.userRepository.findByIdOrThrowBadCredentials(id);
     return dev.nine.ninepanel.user.domain.UserDetails.of(user);
   }
 
   @Override
   public UserDetails loadUserByUsername(String username) {
-    User user = this.userRepository.findByEmailOrThrow(username);
+    User user = this.userRepository.findByEmailOrThrowBadCredentials(username);
     return dev.nine.ninepanel.user.domain.UserDetails.of(user);
   }
 
