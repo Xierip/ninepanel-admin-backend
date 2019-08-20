@@ -7,6 +7,7 @@ import dev.nine.ninepanel.user.changepassword.dto.ChangePasswordDto;
 import dev.nine.ninepanel.user.domain.UserFacade;
 import dev.nine.ninepanel.user.domain.UserHelper;
 import dev.nine.ninepanel.user.domain.dto.UserDto;
+import java.util.Set;
 import javax.validation.Valid;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
@@ -50,4 +51,9 @@ class UserCrudController {
     return ResponseEntity.noContent().build();
   }
 
+  @RequiresAuthenticated
+  @GetMapping
+  ResponseEntity<Set<UserDto>> showAll() {
+    return ResponseEntity.ok(this.userFacade.showAll());
+  }
 }
