@@ -2,6 +2,8 @@ package dev.nine.ninepanel.clients.domain;
 
 import dev.nine.ninepanel.clients.domain.dto.ClientDto;
 import dev.nine.ninepanel.clients.domain.exception.ClientNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +39,13 @@ public class ClientsFacade {
   public ClientDto update(ObjectId clientId, ClientDto clientDto) {
     Client oldClient = clientsRepository.findByIdOrThrow(clientId);
     return clientsRepository.save(clientCreator.from(clientDto, oldClient)).dto();
+  }
+
+  public List<ClientDto> showAllMatching(String searchTerm) {
+    return clientsRepository.findAllByNameLikeOrSurnameLikeOrEmailLike(searchTerm, searchTerm, searchTerm)
+        .stream()
+        .map(Client::dto)
+        .collect(Collectors.toList());
   }
 
 }
