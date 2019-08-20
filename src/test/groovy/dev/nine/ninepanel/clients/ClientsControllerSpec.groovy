@@ -7,8 +7,6 @@ import org.bson.types.ObjectId
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
-import javax.xml.transform.Result
-
 import static org.hamcrest.Matchers.hasSize
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -96,6 +94,20 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
       ResultActions request = requestAsUser(delete(ApiLayers.CLIENTS + "/${new ObjectId()}"))
     then: "the request should return 404 not found"
       request.andExpect(status().isNotFound())
+  }
+
+  def "successful fetch clients list with search term scenario"() {
+    given: "there are 2 clients in the system"
+      setUpClient("someguy@test.com")
+      setUpClient("otherguy@test.com")
+    when: "i ask the system for a list of clients matching my search term"
+      ResultActions request = requestAsUser(get(ApiLayers.CLIENTS)
+          .param("search", "other"))
+      request.andExpect(status().isOk())
+    then: "i should get a list of 1 clients"
+      request
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("\$", hasSize(1)))
   }
 
 }
