@@ -18,7 +18,7 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
       setUpClient("client1@test.com")
       setUpClient("client2@test.com")
     when: "i ask the system for a list of clients"
-      ResultActions request = requestAsUser(get(ApiLayers.CLIENTS))
+      ResultActions request = requestAsROOT(get(ApiLayers.CLIENTS))
       request.andExpect(status().isOk())
     then: "i should get a list of 2 clients"
       request
@@ -37,7 +37,7 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
     given: "there is a client in the system"
       ClientDto clientDto = setUpClient("test@test.com")
     when: "i ask for the client"
-      ResultActions request = requestAsUser(get(ApiLayers.CLIENTS + "/${clientDto.id}"))
+      ResultActions request = requestAsROOT(get(ApiLayers.CLIENTS + "/${clientDto.id}"))
     then: "i should get the specified client"
       request
           .andExpect(status().isOk())
@@ -46,7 +46,7 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
 
   def "fail fetch client scenario"() {
     when: "i ask for a client that doesn't exist"
-      ResultActions request = requestAsUser(get(ApiLayers.USERS + "/${new ObjectId()}"))
+      ResultActions request = requestAsROOT(get(ApiLayers.USERS + "/${new ObjectId()}"))
     then: "the request should return 404 not found"
       request.andExpect(status().isNotFound())
   }
@@ -56,7 +56,7 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
       ClientDto clientDto = setUpClient("test@test.com")
     when: "i update the client with valid data"
       clientDto.name = "New Client Name"
-      ResultActions request = requestAsUser(put(ApiLayers.CLIENTS + "/${clientDto.id}")
+      ResultActions request = requestAsROOT(put(ApiLayers.CLIENTS + "/${clientDto.id}")
           .content(objectToJson(clientDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the client should be updated"
@@ -69,7 +69,7 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
     given: "there is a client in the system"
       ClientDto clientDto = setUpClient("test@test.com")
     when: "i try to update a client that doesn't exist"
-      ResultActions request2 = requestAsUser(put(ApiLayers.CLIENTS + "/${new ObjectId()}")
+      ResultActions request2 = requestAsROOT(put(ApiLayers.CLIENTS + "/${new ObjectId()}")
           .content(objectToJson(clientDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should return 404 not found"
@@ -80,18 +80,18 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
     given: "there is a client in the system"
       ClientDto clientDto = setUpClient("test@lmao.com")
     when: "i try to delete the client"
-      ResultActions request = requestAsUser(delete(ApiLayers.CLIENTS + "/${clientDto.id}"))
+      ResultActions request = requestAsROOT(delete(ApiLayers.CLIENTS + "/${clientDto.id}"))
     then: "the request should return no content"
       request.andExpect(status().isNoContent())
     when: "i ask for the deleted client"
-      ResultActions request2 = requestAsUser(get(ApiLayers.CLIENTS + "/${clientDto.id}"))
+      ResultActions request2 = requestAsROOT(get(ApiLayers.CLIENTS + "/${clientDto.id}"))
     then: "the request should return 404 not found"
       request2.andExpect(status().isNotFound())
   }
 
   def "fail delete client scenario"() {
     when: "i try to delete a client that doesn't exist"
-      ResultActions request = requestAsUser(delete(ApiLayers.CLIENTS + "/${new ObjectId()}"))
+      ResultActions request = requestAsROOT(delete(ApiLayers.CLIENTS + "/${new ObjectId()}"))
     then: "the request should return 404 not found"
       request.andExpect(status().isNotFound())
   }
@@ -101,7 +101,7 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
       setUpClient("someguy@test.com")
       setUpClient("otherguy@test.com")
     when: "i ask the system for a list of clients matching my search term"
-      ResultActions request = requestAsUser(get(ApiLayers.CLIENTS)
+      ResultActions request = requestAsROOT(get(ApiLayers.CLIENTS)
           .param("search", "other"))
       request.andExpect(status().isOk())
     then: "i should get a list of 1 clients"

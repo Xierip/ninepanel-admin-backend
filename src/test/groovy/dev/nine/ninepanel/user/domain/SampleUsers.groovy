@@ -14,7 +14,8 @@ trait SampleUsers {
       "test123@test.com",
       "password123",
       "Test",
-      "testCaptcha"
+      "testCaptcha",
+      UserRoles.ROOT
   )
 
 
@@ -22,7 +23,8 @@ trait SampleUsers {
       "test666@test.com",
       "password666",
       "Test666",
-      "testCaptcha"
+      "testCaptcha",
+      UserRoles.ROOT
   )
   
   static private createUserDto(String email, String password, String name, String surname) {

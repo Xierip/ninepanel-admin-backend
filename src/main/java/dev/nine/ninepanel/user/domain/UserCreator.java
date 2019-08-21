@@ -12,6 +12,7 @@ class UserCreator {
         .name(userRegisterCommandDto.getName())
         .surname(userRegisterCommandDto.getSurname())
         .password(userRegisterCommandDto.getPassword())
+        .role(userRegisterCommandDto.getRole())
         .build();
   }
 
@@ -23,6 +24,7 @@ class UserCreator {
         .name(userDto.getName())
         .surname(userDto.getSurname())
         .password(oldUserDto.getPassword())
+        .role(userDto.getRole())
         .build();
   }
 }

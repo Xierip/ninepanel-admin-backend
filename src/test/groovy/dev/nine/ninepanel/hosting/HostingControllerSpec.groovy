@@ -10,10 +10,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
 import static org.hamcrest.Matchers.hasSize
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 class HostingControllerSpec extends IntegrationSpec implements HostingData {
@@ -29,7 +26,7 @@ class HostingControllerSpec extends IntegrationSpec implements HostingData {
       hostingFacade.add(validHostingDto1)
       hostingFacade.add(validHostingDto2)
     when: "i ask system for hostings"
-      ResultActions request = requestAsUser(get(ApiLayers.HOSTINGS))
+      ResultActions request = requestAsROOT(get(ApiLayers.HOSTINGS))
     then: "i see all hostings"
       request
           .andExpect(status().isOk())
@@ -51,7 +48,7 @@ class HostingControllerSpec extends IntegrationSpec implements HostingData {
     given: "system has one hosting"
       HostingDto hostingDto = hostingFacade.add(validHostingDto1)
     when: "i ask system for specific hosting"
-      ResultActions request = requestAsUser(get(ApiLayers.HOSTINGS + "/${hostingDto.id}"))
+      ResultActions request = requestAsROOT(get(ApiLayers.HOSTINGS + "/${hostingDto.id}"))
     then: "i see all my hostings"
       request
           .andExpect(status().isOk())
@@ -67,7 +64,7 @@ class HostingControllerSpec extends IntegrationSpec implements HostingData {
       request
           .andExpect(status().isUnauthorized())
     when: "i ask the system for a hosting that doest exist"
-      ResultActions request2 = requestAsUser(get(ApiLayers.HOSTINGS + "/${new ObjectId()}"))
+      ResultActions request2 = requestAsROOT(get(ApiLayers.HOSTINGS + "/${new ObjectId()}"))
     then: "the request should return 404 not found"
       request2.andExpect(status().isNotFound())
   }
@@ -75,13 +72,13 @@ class HostingControllerSpec extends IntegrationSpec implements HostingData {
   def "successful hosting add scenario"() {
     given: "there are no hostings in the system"
     when: "i post the hosting data to add route"
-      ResultActions request = requestAsUser(post(ApiLayers.HOSTINGS)
+      ResultActions request = requestAsROOT(post(ApiLayers.HOSTINGS)
           .content(objectToJson(validHostingDto1))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should be ok"
       request.andExpect(status().isOk())
     when: "i fetch all hostings"
-      ResultActions request2 = requestAsUser(get(ApiLayers.HOSTINGS))
+      ResultActions request2 = requestAsROOT(get(ApiLayers.HOSTINGS))
     then: "there should be one hosting"
       request2
           .andExpect(status().isOk())
@@ -90,14 +87,14 @@ class HostingControllerSpec extends IntegrationSpec implements HostingData {
 
   def "fail hosting add scenario"() {
     when: "i post invalid hosting data to add route"
-      ResultActions request = requestAsUser(post(ApiLayers.HOSTINGS)
+      ResultActions request = requestAsROOT(post(ApiLayers.HOSTINGS)
           .content(objectToJson(invalidHostingDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should fail"
       request.andExpect(status().isBadRequest())
 
     when: "i post hosting data with nonexistent client id"
-      ResultActions request2 = requestAsUser(post(ApiLayers.HOSTINGS)
+      ResultActions request2 = requestAsROOT(post(ApiLayers.HOSTINGS)
           .content(objectToJson(noClientHostingDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should return 404 not found"
@@ -109,7 +106,7 @@ class HostingControllerSpec extends IntegrationSpec implements HostingData {
       HostingDto hostingDto = hostingFacade.add(validHostingDto1)
     when: "I update the hosting with valid data"
       hostingDto.setDescription("newDescription")
-      ResultActions request = requestAsUser(put(ApiLayers.HOSTINGS + "/${hostingDto.id}")
+      ResultActions request = requestAsROOT(put(ApiLayers.HOSTINGS + "/${hostingDto.id}")
           .content(objectToJson(hostingDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should be ok"
@@ -125,7 +122,7 @@ class HostingControllerSpec extends IntegrationSpec implements HostingData {
 
     when: "I update first hosting with invalid data"
       hostingDto.setDescription(null)
-      ResultActions request = requestAsUser(put(ApiLayers.HOSTINGS + "/${hostingDto.id}")
+      ResultActions request = requestAsROOT(put(ApiLayers.HOSTINGS + "/${hostingDto.id}")
           .content(objectToJson(hostingDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should be ok"
@@ -133,7 +130,7 @@ class HostingControllerSpec extends IntegrationSpec implements HostingData {
 
     when: "i update second hosting with non existent client id"
       hostingDto2.setClientId(new ObjectId())
-      ResultActions request2 = requestAsUser(put(ApiLayers.HOSTINGS + "/${hostingDto2.id}")
+      ResultActions request2 = requestAsROOT(put(ApiLayers.HOSTINGS + "/${hostingDto2.id}")
           .content(objectToJson(hostingDto2))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should return 404 not found"
@@ -144,18 +141,18 @@ class HostingControllerSpec extends IntegrationSpec implements HostingData {
     given: "there is a hosting in the system"
       HostingDto hostingDto = hostingFacade.add(validHostingDto1)
     when: "i try to delete the hosting"
-      ResultActions request = requestAsUser(delete(ApiLayers.HOSTINGS + "/${hostingDto.id}"))
+      ResultActions request = requestAsROOT(delete(ApiLayers.HOSTINGS + "/${hostingDto.id}"))
     then: "the request should return no content"
       request.andExpect(status().isNoContent())
     when: "i ask the system for the deleted hosting"
-      ResultActions request2 = requestAsUser(get(ApiLayers.HOSTINGS + "/${hostingDto.id}"))
+      ResultActions request2 = requestAsROOT(get(ApiLayers.HOSTINGS + "/${hostingDto.id}"))
     then: "the request should return 404 not found"
       request2.andExpect(status().isNotFound())
   }
 
   def "fail hosting delete scenario"() {
     when: "i try to delete a hosting that doesn't exist"
-      ResultActions request = requestAsUser(delete(ApiLayers.HOSTINGS + "/${new ObjectId()}"))
+      ResultActions request = requestAsROOT(delete(ApiLayers.HOSTINGS + "/${new ObjectId()}"))
     then: "the request should return 404 not found"
       request.andExpect(status().isNotFound())
   }
