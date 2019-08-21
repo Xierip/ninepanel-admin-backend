@@ -29,6 +29,7 @@ class Client {
   private String name;
   private String surname;
   private String phoneNumber;
+  private String displayName;
 
   private AddressDetails address;
   private CompanyDetails companyDetails;
@@ -44,6 +45,7 @@ class Client {
         .phoneNumber(phoneNumber)
         .addressDetails(address)
         .companyDetails(companyDetails)
+        .displayName(displayName)
         .build();
   }
 

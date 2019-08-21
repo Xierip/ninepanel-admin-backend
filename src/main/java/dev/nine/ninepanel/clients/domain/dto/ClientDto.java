@@ -30,6 +30,7 @@ public class ClientDto {
   private String name;
   private String surname;
   private String phoneNumber;
+  private String displayName;
 
   private AddressDetails addressDetails;
   @JsonInclude(Include.NON_NULL)

@@ -24,7 +24,7 @@ interface ClientsRepository extends MongoRepository<Client, ObjectId> {
     deleteById(id);
   }
 
-  List<Client> findAllByNameLikeOrSurnameLikeOrEmailLike(String name, String surname, String email);
+  List<Client> findAllByDisplayNameLikeOrEmailLike(String displayName, String email);
 
   Optional<Client> findByEmail(String email);
 
