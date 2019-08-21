@@ -45,6 +45,7 @@ class Client {
         .phoneNumber(phoneNumber)
         .addressDetails(address)
         .companyDetails(companyDetails)
+        .displayName(displayName)
         .build();
   }
 
