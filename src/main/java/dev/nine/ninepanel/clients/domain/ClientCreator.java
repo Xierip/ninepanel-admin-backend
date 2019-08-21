@@ -14,6 +14,7 @@ class ClientCreator {
         .password(oldClient.getPassword())
         .phoneNumber(clientDto.getPhoneNumber())
         .surname(clientDto.getSurname())
+        .displayName(clientDto.getName() + " " + clientDto.getSurname())
         .build();
   }
 
