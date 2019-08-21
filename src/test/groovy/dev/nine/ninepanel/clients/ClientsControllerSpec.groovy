@@ -55,7 +55,7 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
     given: "there is a client in the system"
       ClientDto clientDto = setUpClient("test@test.com")
     when: "i update the client with valid data"
-      clientDto.name = "New Client Name"
+      clientDto.phoneNumber = "121 123 827"
       ResultActions request = requestAsUser(put(ApiLayers.CLIENTS + "/${clientDto.id}")
           .content(objectToJson(clientDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
