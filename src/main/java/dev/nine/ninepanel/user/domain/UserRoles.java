@@ -1,10 +1,8 @@
 package dev.nine.ninepanel.user.domain;
 
 import java.util.Set;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.web.server.ResponseStatusException;
 
 public final class UserRoles {
 
@@ -15,9 +13,7 @@ public final class UserRoles {
   private UserRoles() {
   }
 
-  public static void validate(GrantedAuthority authority) {
-    if (!VALUES.contains(authority)) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-    }
+  public static boolean isValid(GrantedAuthority authority) {
+    return VALUES.contains(authority);
   }
 }

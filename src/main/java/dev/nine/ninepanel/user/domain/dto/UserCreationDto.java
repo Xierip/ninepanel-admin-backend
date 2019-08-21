@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import dev.nine.ninepanel.infrastructure.jackson.GrantedAuthorityDeserializer;
+import dev.nine.ninepanel.infrastructure.validation.role.IsValidRole;
+import dev.nine.ninepanel.infrastructure.validation.role.RoleType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -38,6 +40,7 @@ public class UserCreationDto {
   @NotNull
   @JsonDeserialize(using = GrantedAuthorityDeserializer.class)
   @JsonSerialize(using = ToStringSerializer.class)
+  @IsValidRole(RoleType.USER)
   private GrantedAuthority role;
 
 }
