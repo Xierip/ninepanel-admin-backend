@@ -34,7 +34,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 	implementation("com.squareup.okhttp3:okhttp:4.0.1")
-	implementation group: 'com.pusher', name: 'pusher-http-java', version: '1.0.0'
+
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile('org.springframework.boot:spring-boot-starter-amqp')
+	compile('org.springframework.boot:spring-boot-starter-reactor-netty')
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
