@@ -9,6 +9,7 @@ import dev.nine.ninepanel.clients.addressdetails.AddressDetails;
 import dev.nine.ninepanel.clients.companydetails.CompanyDetails;
 import dev.nine.ninepanel.infrastructure.validation.role.IsValidRole;
 import dev.nine.ninepanel.infrastructure.validation.role.RoleType;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,12 +27,16 @@ public class ClientDto {
 
   @JsonSerialize(using = ToStringSerializer.class)
   private ObjectId id;
+  @NotEmpty
   private String   email;
   @JsonIgnore
   private String   password;
 
+  @NotEmpty
   private String name;
+  @NotEmpty
   private String surname;
+  @NotEmpty
   private String phoneNumber;
 
   private AddressDetails   addressDetails;
