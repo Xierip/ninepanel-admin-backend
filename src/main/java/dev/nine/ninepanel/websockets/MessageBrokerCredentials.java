@@ -1,4 +1,4 @@
-package dev.nine.ninepanel.infrastructure.socket;
+package dev.nine.ninepanel.websockets;
 
 import lombok.Getter;
 import lombok.Setter;
