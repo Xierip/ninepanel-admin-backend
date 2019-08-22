@@ -1,5 +1,6 @@
 package dev.nine.ninepanel.infrastructure.validation.role;
 
+import dev.nine.ninepanel.clients.domain.ClientRoles;
 import dev.nine.ninepanel.user.domain.UserRoles;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -21,8 +22,7 @@ class IsValidRoleValidator implements ConstraintValidator<IsValidRole, GrantedAu
       case USER:
         return UserRoles.isValid(value);
       case CLIENT:
-        //TODO add clients roles
-        return false;
+        return ClientRoles.isValid(value);
     }
     return false;
   }
