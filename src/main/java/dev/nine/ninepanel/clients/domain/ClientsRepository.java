@@ -18,7 +18,7 @@ interface ClientsRepository extends MongoRepository<Client, ObjectId> {
 
 
   default void deleteByIdOrThrow(ObjectId id) {
-    if(!existsById(id)) {
+    if (!existsById(id)) {
       throw new ClientNotFoundException(id);
     }
     deleteById(id);

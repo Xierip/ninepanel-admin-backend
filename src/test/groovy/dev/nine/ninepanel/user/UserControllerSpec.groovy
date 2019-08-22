@@ -32,7 +32,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
   def "successful user info access scenario"() {
     given: "i am a user in the system"
     when: "i request user info with access token"
-      ResultActions request2 = requestAsROOT(get("/api/users/me"))
+      ResultActions request2 = requestAsRoot(get("/api/users/me"))
     then: "i should get user info"
       request2.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
     and: "the user info should match with database"
@@ -52,7 +52,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
       ChangePasswordDto changePasswordDto = new ChangePasswordDto(authenticatedUser.password, newPassword)
 
     when: "i send a request to update password"
-      ResultActions request = requestAsROOT(post("/api/users/change-password")
+      ResultActions request = requestAsRoot(post("/api/users/change-password")
           .content(objectToJson(changePasswordDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
@@ -68,7 +68,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
       ChangePasswordDto changePasswordDto = new ChangePasswordDto("wrongPassword", "newPassword")
 
     when: "i send a request to update password with a wrong user password"
-      ResultActions request = requestAsROOT(post("/api/users/change-password")
+      ResultActions request = requestAsRoot(post("/api/users/change-password")
           .content(objectToJson(changePasswordDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
@@ -79,7 +79,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
   def "successful user creation scenario"() {
     given: "i have valid user creation data"
     when: "i register a new user"
-      ResultActions request = requestAsROOT(post("/api/users")
+      ResultActions request = requestAsRoot(post("/api/users")
           .content(objectToJson(sampleSignUpDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the user should be registered"
@@ -94,7 +94,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
       UserCreationDto signUpDto = sampleSignUpDto
       signUpDto.password = "bad"
     when: "i try to register a new user with invalid data"
-      ResultActions request = requestAsROOT(post("/api/users")
+      ResultActions request = requestAsRoot(post("/api/users")
           .content(objectToJson(signUpDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should fail"
@@ -105,7 +105,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
     given: "system has other user"
       UserDto otherUser = userFacade.create(sampleSignUpDto1)
     when: "i change his password"
-      ResultActions request = requestAsROOT(post("${ApiLayers.USERS}/${otherUser.id.toHexString()}/change-password")
+      ResultActions request = requestAsRoot(post("${ApiLayers.USERS}/${otherUser.id.toHexString()}/change-password")
           .content(objectToJson(Map.of("password", "otherPass")))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     and: "the password should be changed"
@@ -119,11 +119,11 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
     given: "system has other user"
       UserDto otherUser = userFacade.create(sampleSignUpDto1)
     when: "i delete this user by id"
-      ResultActions request = requestAsROOT(delete("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
+      ResultActions request = requestAsRoot(delete("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
     and: "the user should be deleted"
       request.andExpect(status().isNoContent())
     then: "i shouldn't be able to fetch this user"
-      requestAsROOT(get("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
+      requestAsRoot(get("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
           .andExpect(status().isNotFound())
   }
 
@@ -131,7 +131,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
     given: "system has two users"
       UserDto otherUser = userFacade.create(sampleSignUpDto1)
     when: "i ask system for users"
-      ResultActions request = requestAsROOT(get(ApiLayers.USERS))
+      ResultActions request = requestAsRoot(get(ApiLayers.USERS))
     then: "i should see one"
       request
           .andExpect(status().isOk())
@@ -143,12 +143,12 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
       UserDto otherUser = userFacade.create(sampleSignUpDto1)
     when: "i send updated user"
       otherUser.surname = "pickles"
-      ResultActions request = requestAsROOT(put("${ApiLayers.USERS}/${otherUser.id.toHexString()}")
+      ResultActions request = requestAsRoot(put("${ApiLayers.USERS}/${otherUser.id.toHexString()}")
           .content(objectToJson(otherUser))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
           .andExpect(status().isOk())
     and: "i fetch this user"
-      request = requestAsROOT(get("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
+      request = requestAsRoot(get("${ApiLayers.USERS}/${otherUser.id.toHexString()}"))
           .andExpect(status().isOk())
     then: "users should be equals"
       request.andExpect(content().json(objectToJson(otherUser)))

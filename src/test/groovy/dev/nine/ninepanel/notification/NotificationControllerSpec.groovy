@@ -21,7 +21,7 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
     given: "there is a notification in the system"
       notificationFacade.add(validNotificationDto)
     when: "i access the notification endpoint"
-      ResultActions request = requestAsROOT(get("/api/notifications"))
+      ResultActions request = requestAsRoot(get("/api/notifications"))
     then: "the request should be okay"
       request.andExpect(status().isOk())
     and: "i should get a list with 1 notification"
@@ -38,13 +38,13 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
   def "successful add notification scenario"() {
     given: "there are no notifications in the system"
     when: "i post valid notification data to add route"
-      ResultActions request = requestAsROOT(post("/api/notifications")
+      ResultActions request = requestAsRoot(post("/api/notifications")
           .content(objectToJson(validNotificationDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should be ok"
       request.andExpect(status().isOk())
     when: "i fetch the notifications"
-      ResultActions request2 = requestAsROOT(get("/api/notifications"))
+      ResultActions request2 = requestAsRoot(get("/api/notifications"))
     then: "there should be one notification in the system"
       request2
           .andExpect(status().isOk())
@@ -54,7 +54,7 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
   def "fail add notification scenario"() {
     given: "i have invalid notification creation date"
     when: "i post it to add route"
-      ResultActions request = requestAsROOT(post("/api/notifications")
+      ResultActions request = requestAsRoot(post("/api/notifications")
           .content(objectToJson(invalidNotificationDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should fail"
@@ -65,11 +65,11 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
     given: "there is a notification in the system"
       String id = notificationFacade.add(validNotificationDto).id
     when: "i try to delete the notification"
-      ResultActions request = requestAsROOT(delete("/api/notifications/${id}"))
+      ResultActions request = requestAsRoot(delete("/api/notifications/${id}"))
     then: "the request should result no content"
       request.andExpect(status().isNoContent())
     when: "i fetch the notifications"
-      ResultActions request2 = requestAsROOT(get("/api/notifications"))
+      ResultActions request2 = requestAsRoot(get("/api/notifications"))
     then: "there should be zero notification in the system"
       request2
           .andExpect(status().isOk())
@@ -78,7 +78,7 @@ class NotificationControllerSpec extends IntegrationSpec implements Notification
 
   def "fail delete notification scenario"() {
     when: "i try to delete a notification that doesn't exist"
-      ResultActions request = requestAsROOT(delete("/api/notifications/${new ObjectId()}"))
+      ResultActions request = requestAsRoot(delete("/api/notifications/${new ObjectId()}"))
     then: "the request should return 404 not found"
       request.andExpect(status().isNotFound())
   }

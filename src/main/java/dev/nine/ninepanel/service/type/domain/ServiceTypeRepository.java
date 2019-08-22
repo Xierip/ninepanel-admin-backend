@@ -17,7 +17,7 @@ interface ServiceTypeRepository extends CrudRepository<ServiceType, ObjectId> {
   }
 
   default ServiceType updateOrThrow(ServiceType serviceType) {
-    if(!existsById(serviceType.getId())) {
+    if (!existsById(serviceType.getId())) {
       throw new ServiceTypeNotFoundException(serviceType.getId());
     }
     return save(serviceType);

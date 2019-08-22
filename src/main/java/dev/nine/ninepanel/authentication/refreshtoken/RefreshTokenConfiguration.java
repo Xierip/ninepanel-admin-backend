@@ -1,6 +1,5 @@
 package dev.nine.ninepanel.authentication.refreshtoken;
 
-import dev.nine.ninepanel.infrastructure.converter.ObjectToMapConverter;
 import dev.nine.ninepanel.token.domain.TokenFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

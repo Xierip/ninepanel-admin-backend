@@ -20,11 +20,11 @@ import org.bson.types.ObjectId;
 @Setter
 public class ServiceTypeDto {
 
+  @NotNull
+  LinkedHashSet<Milestone> milestones;
   @JsonSerialize(using = ToStringSerializer.class)
   private ObjectId id;
   @NotEmpty
   private String   name;
-  @NotNull
-  LinkedHashSet<Milestone> milestones;
 
 }

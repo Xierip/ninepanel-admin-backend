@@ -21,7 +21,7 @@ class ServiceTypeControllerSpec extends IntegrationSpec implements ServiceTypeDa
     given: "there is a service type in the system"
       serviceTypeFacade.add(validServiceTypeDto)
     when: "i access the service types endpoint"
-      ResultActions request = requestAsROOT(get("/api/service-types"))
+      ResultActions request = requestAsRoot(get("/api/service-types"))
     then: "the request should be okay"
       request.andExpect(status().isOk())
     and: "i should get a list with 1 service type"
@@ -40,13 +40,13 @@ class ServiceTypeControllerSpec extends IntegrationSpec implements ServiceTypeDa
   def "successful add service type scenario"() {
     given: "there are no service types in the system"
     when: "i post valid service type data to add route"
-      ResultActions request = requestAsROOT(post("/api/service-types")
+      ResultActions request = requestAsRoot(post("/api/service-types")
           .content(objectToJson(validServiceTypeDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should be ok"
       request.andExpect(status().isOk())
     when: "i fetch the service types"
-      ResultActions request2 = requestAsROOT(get("/api/service-types"))
+      ResultActions request2 = requestAsRoot(get("/api/service-types"))
     then: "there should be one service type in the system"
       request2
           .andExpect(status().isOk())
@@ -56,7 +56,7 @@ class ServiceTypeControllerSpec extends IntegrationSpec implements ServiceTypeDa
   def "fail add service type scenario"() {
     given: "i have invalid service type creation data"
     when: "i post it to add route"
-      ResultActions request = requestAsROOT(post("/api/service-types")
+      ResultActions request = requestAsRoot(post("/api/service-types")
           .content(objectToJson(invalidServiceTypeDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should fail"
@@ -68,7 +68,7 @@ class ServiceTypeControllerSpec extends IntegrationSpec implements ServiceTypeDa
       ServiceTypeDto serviceTypeDto = serviceTypeFacade.add(validServiceTypeDto)
     when: "i update the service type with valid data"
       serviceTypeDto.name = "NewName"
-      ResultActions request = requestAsROOT(put("/api/service-types/${serviceTypeDto.id}")
+      ResultActions request = requestAsRoot(put("/api/service-types/${serviceTypeDto.id}")
           .content(objectToJson(serviceTypeDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the service type should be updated"
@@ -81,14 +81,14 @@ class ServiceTypeControllerSpec extends IntegrationSpec implements ServiceTypeDa
     given: "there is a service type in the system"
       ServiceTypeDto serviceTypeDto = serviceTypeFacade.add(validServiceTypeDto)
     when: "i update the service type with invalid data"
-      ResultActions request = requestAsROOT(put("/api/service-types/${serviceTypeDto.id}")
+      ResultActions request = requestAsRoot(put("/api/service-types/${serviceTypeDto.id}")
           .content(objectToJson(invalidServiceTypeDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should fail"
       request.andExpect(status().isBadRequest())
 
     when: "i try to update a service type that doesn't exist"
-      ResultActions request2 = requestAsROOT(put("/api/service-types/${new ObjectId()}")
+      ResultActions request2 = requestAsRoot(put("/api/service-types/${new ObjectId()}")
       .content(objectToJson(validServiceTypeDto))
       .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should return 404 not found"
@@ -99,12 +99,12 @@ class ServiceTypeControllerSpec extends IntegrationSpec implements ServiceTypeDa
     given: "there is a service type in the system"
       ServiceTypeDto serviceTypeDto = serviceTypeFacade.add(validServiceTypeDto)
     when: "i delete the service type"
-      ResultActions request = requestAsROOT(delete("/api/service-types/${serviceTypeDto.id}"))
+      ResultActions request = requestAsRoot(delete("/api/service-types/${serviceTypeDto.id}"))
     then: "the request should return no content"
       request.andExpect(status().isNoContent())
 
     when: "i fetch the service types"
-      ResultActions request2 = requestAsROOT(get("/api/service-types"))
+      ResultActions request2 = requestAsRoot(get("/api/service-types"))
     then: "there should be zero service types in the system"
       request2
           .andExpect(status().isOk())
@@ -114,7 +114,7 @@ class ServiceTypeControllerSpec extends IntegrationSpec implements ServiceTypeDa
 
   def "fail delete service type scenario"() {
     when: "i try to delete a service type that doesn't exist"
-      ResultActions request = requestAsROOT(delete("/api/service-types/${new ObjectId()}"))
+      ResultActions request = requestAsRoot(delete("/api/service-types/${new ObjectId()}"))
     then: "the request should return 404 not found"
       request.andExpect(status().isNotFound())
   }

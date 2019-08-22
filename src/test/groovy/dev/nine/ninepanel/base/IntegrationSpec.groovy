@@ -115,11 +115,11 @@ abstract class IntegrationSpec extends Specification {
     return mockMvc.perform(requestBuilder)
   }
 
-  ResultActions requestAsROOT(MockHttpServletRequestBuilder requestBuilder) {
+  ResultActions requestAsRoot(MockHttpServletRequestBuilder requestBuilder) {
     return mockMvc.perform(requestBuilder.header("Authorization", "Bearer ${accessToken}"))
   }
 
-  ResultActions requestAsROOT(MockHttpServletRequestBuilder requestBuilder, String accessToken) {
+  ResultActions requestAsRoot(MockHttpServletRequestBuilder requestBuilder, String accessToken) {
     return mockMvc.perform(requestBuilder.header("Authorization", "Bearer ${accessToken}"))
   }
 

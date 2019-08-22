@@ -1,6 +1,5 @@
 package dev.nine.ninepanel.email.domain;
 
-import dev.nine.ninepanel.user.domain.dto.UserDto;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Value;
 
