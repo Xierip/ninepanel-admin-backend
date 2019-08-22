@@ -30,6 +30,7 @@ class Client {
   private String name;
   private String surname;
   private String phoneNumber;
+  private String displayName;
 
   private AddressDetails   address;
   private CompanyDetails   companyDetails;
@@ -45,8 +46,9 @@ class Client {
         .surname(surname)
         .phoneNumber(phoneNumber)
         .addressDetails(address)
-        .companyDetails(companyDetails)
+        .companyDetails(companyDetails)roles
         .role(role)
+        .displayName(displayName)
         .build();
   }
 

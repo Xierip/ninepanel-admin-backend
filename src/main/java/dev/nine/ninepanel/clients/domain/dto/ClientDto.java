@@ -38,6 +38,7 @@ public class ClientDto {
   private String surname;
   @NotEmpty
   private String phoneNumber;
+  private String displayName;
 
   private AddressDetails   addressDetails;
   @JsonInclude(Include.NON_NULL)
