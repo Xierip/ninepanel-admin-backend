@@ -46,7 +46,7 @@ class Client {
         .surname(surname)
         .phoneNumber(phoneNumber)
         .addressDetails(address)
-        .companyDetails(companyDetails)roles
+        .companyDetails(companyDetails)
         .role(role)
         .displayName(displayName)
         .build();

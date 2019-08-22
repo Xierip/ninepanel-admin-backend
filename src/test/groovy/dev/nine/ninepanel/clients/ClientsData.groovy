@@ -2,6 +2,7 @@ package dev.nine.ninepanel.clients
 
 import com.mongodb.BasicDBObject
 import dev.nine.ninepanel.clients.addressdetails.AddressDetails
+import dev.nine.ninepanel.clients.domain.ClientRoles
 import dev.nine.ninepanel.clients.domain.dto.ClientDto
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections
 import org.bson.types.ObjectId
@@ -34,6 +35,7 @@ trait ClientsData {
         .addressDetails(addressDetails)
         .companyDetails(null)
         .displayName("test name test surname")
+        .role(ClientRoles.DEMO)
         .build()
 
     client.put("_id", id)
@@ -45,6 +47,7 @@ trait ClientsData {
     client.put("address", dto.addressDetails)
     client.put("companyDetails", dto.companyDetails)
     client.put("displayName", dto.name + " " + dto.surname)
+    client.put("role", ClientRoles.DEMO)
 
     mongoTemplate.insert(new BasicDBObject(client), MongoCollections.CLIENTS)
     return dto

@@ -3,13 +3,16 @@ package dev.nine.ninepanel.clients.domain.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import dev.nine.ninepanel.clients.addressdetails.AddressDetails;
 import dev.nine.ninepanel.clients.companydetails.CompanyDetails;
+import dev.nine.ninepanel.infrastructure.jackson.GrantedAuthorityDeserializer;
 import dev.nine.ninepanel.infrastructure.validation.role.IsValidRole;
 import dev.nine.ninepanel.infrastructure.validation.role.RoleType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,10 +43,15 @@ public class ClientDto {
   private String phoneNumber;
   private String displayName;
 
-  private AddressDetails   addressDetails;
+  private AddressDetails addressDetails;
+
   @JsonInclude(Include.NON_NULL)
-  private CompanyDetails   companyDetails;
+  private CompanyDetails companyDetails;
+
+  @JsonDeserialize(using = GrantedAuthorityDeserializer.class)
+  @JsonSerialize(using = ToStringSerializer.class)
   @IsValidRole(RoleType.CLIENT)
+  @NotNull
   private GrantedAuthority role;
 
   public boolean isCompany() {
