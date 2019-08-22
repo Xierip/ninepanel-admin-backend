@@ -8,7 +8,7 @@ import org.bson.types.ObjectId;
 public class NotificationFacade {
 
   private NotificationRepository notificationRepository;
-  private NotificationCreator notificationCreator;
+  private NotificationCreator    notificationCreator;
 
   public NotificationFacade(NotificationRepository notificationRepository,
       NotificationCreator notificationCreator) {

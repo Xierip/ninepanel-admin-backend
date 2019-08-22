@@ -2,7 +2,6 @@ package dev.nine.ninepanel.user.domain;
 
 import dev.nine.ninepanel.email.domain.EmailFacade;
 import dev.nine.ninepanel.user.changepassword.dto.ChangePasswordDto;
-import dev.nine.ninepanel.user.domain.exception.UserAccountTypeException;
 import dev.nine.ninepanel.user.domain.exception.UserAlreadyExistsException;
 import dev.nine.ninepanel.user.domain.exception.UserPasswordDoesntMatchException;
 import org.bson.types.ObjectId;

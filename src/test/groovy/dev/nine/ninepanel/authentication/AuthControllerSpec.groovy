@@ -48,7 +48,7 @@ class AuthControllerSpec extends IntegrationSpec {
       Map<String, String> refreshTokenMap = ["refreshToken": refreshToken]
 
     when: "i try to delete my token"
-      ResultActions request = requestAsUser(delete("/api/sessions")
+      ResultActions request = requestAsRoot(delete("/api/sessions")
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
@@ -61,7 +61,7 @@ class AuthControllerSpec extends IntegrationSpec {
       Map<String, String> refreshTokenMap = ["refreshToken": "lmaoImNotAToken"]
 
     when: "i try to delete a non-existent token"
-      ResultActions request = requestAsUser(delete("/api/sessions")
+      ResultActions request = requestAsRoot(delete("/api/sessions")
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
@@ -77,7 +77,7 @@ class AuthControllerSpec extends IntegrationSpec {
 
     when: "i don't send a token"
       refreshTokenMap.remove("refreshToken")
-      ResultActions request3 = requestAsUser(delete("/api/sessions")
+      ResultActions request3 = requestAsRoot(delete("/api/sessions")
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should fail"
@@ -97,7 +97,7 @@ class AuthControllerSpec extends IntegrationSpec {
       String resultString = request2.andReturn().getResponse().getContentAsString()
       Map<String, String> tokens = objectMapper.readValue(resultString, Map.class)
     when: "i try to get my data using new token"
-      ResultActions request3 = requestAsUser(get("/api/users/me"), tokens.get("accessToken") as String)
+      ResultActions request3 = requestAsRoot(get("/api/users/me"), tokens.get("accessToken") as String)
     then: "i should get user info"
       request3.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
     and: "the user info should match with database"

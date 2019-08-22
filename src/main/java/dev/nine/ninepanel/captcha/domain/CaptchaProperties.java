@@ -35,6 +35,7 @@ class CaptchaProperties {
 
   public @Data
   static class Security {
+
     private int      captchaFailuresThreshold;
     private TimeUnit captchaFailuresTimeUnit;
     private int      captchaFailuresDuration;

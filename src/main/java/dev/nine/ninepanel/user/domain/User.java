@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
 
 @Builder
 @NoArgsConstructor
@@ -27,6 +28,8 @@ class User {
   private String name;
   private String surname;
 
+  private GrantedAuthority role;
+
   UserDto dto() {
     return UserDto
         .builder()
@@ -35,6 +38,7 @@ class User {
         .password(password)
         .name(name)
         .surname(surname)
+        .role(role)
         .build();
   }
 }

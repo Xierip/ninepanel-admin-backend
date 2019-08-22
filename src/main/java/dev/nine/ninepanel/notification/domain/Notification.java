@@ -23,11 +23,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 class Notification {
 
   @Id
-  private ObjectId id;
-  private String message;
+  private ObjectId         id;
+  private String           message;
   private NotificationType type;
   @CreatedDate
-  private LocalDateTime createdDate;
+  private LocalDateTime    createdDate;
 
   NotificationDto dto() {
     return NotificationDto

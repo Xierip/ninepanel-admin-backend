@@ -22,10 +22,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 class ServiceType {
 
+  LinkedHashSet<Milestone> milestones;
   @Id
   private ObjectId id;
-  private String name;
-  LinkedHashSet<Milestone> milestones;
+  private String   name;
 
   ServiceTypeDto dto() {
     return ServiceTypeDto

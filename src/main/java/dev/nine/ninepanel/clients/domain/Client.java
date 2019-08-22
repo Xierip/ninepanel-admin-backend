@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
 
 @Document(MongoCollections.CLIENTS)
 @Builder
@@ -31,8 +32,9 @@ class Client {
   private String phoneNumber;
   private String displayName;
 
-  private AddressDetails address;
-  private CompanyDetails companyDetails;
+  private AddressDetails   address;
+  private CompanyDetails   companyDetails;
+  private GrantedAuthority role;
 
   ClientDto dto() {
     return ClientDto
@@ -45,6 +47,7 @@ class Client {
         .phoneNumber(phoneNumber)
         .addressDetails(address)
         .companyDetails(companyDetails)
+        .role(role)
         .displayName(displayName)
         .build();
   }

@@ -7,6 +7,7 @@ import dev.nine.ninepanel.AppRunner
 import dev.nine.ninepanel.authentication.domain.dto.SignInDto
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections
 import dev.nine.ninepanel.user.domain.UserFacade
+import dev.nine.ninepanel.user.domain.UserRoles
 import dev.nine.ninepanel.user.domain.dto.UserCreationDto
 import dev.nine.ninepanel.user.domain.dto.UserDto
 import groovy.transform.TypeChecked
@@ -44,7 +45,7 @@ abstract class IntegrationSpec extends Specification {
   @Autowired
   protected MongoTemplate mongoTemplate
 
-  GreenMail smtpServer;
+  GreenMail smtpServer
   MockMvc mockMvc
   String accessToken
   String refreshToken
@@ -84,7 +85,8 @@ abstract class IntegrationSpec extends Specification {
         "authuser@security.com",
         "securePass123",
         "test",
-        "testCaptcha")
+        "testCaptcha",
+        UserRoles.ROOT)
 
     authenticatedUser = userFacade.create(signUpDto)
     authenticatedUser.setPassword(signUpDto.password)
@@ -113,11 +115,11 @@ abstract class IntegrationSpec extends Specification {
     return mockMvc.perform(requestBuilder)
   }
 
-  ResultActions requestAsUser(MockHttpServletRequestBuilder requestBuilder) {
+  ResultActions requestAsRoot(MockHttpServletRequestBuilder requestBuilder) {
     return mockMvc.perform(requestBuilder.header("Authorization", "Bearer ${accessToken}"))
   }
 
-  ResultActions requestAsUser(MockHttpServletRequestBuilder requestBuilder, String accessToken) {
+  ResultActions requestAsRoot(MockHttpServletRequestBuilder requestBuilder, String accessToken) {
     return mockMvc.perform(requestBuilder.header("Authorization", "Bearer ${accessToken}"))
   }
 
