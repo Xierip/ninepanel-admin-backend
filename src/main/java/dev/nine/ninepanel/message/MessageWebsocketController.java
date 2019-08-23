@@ -1,8 +1,9 @@
 package dev.nine.ninepanel.message;
 
+import dev.nine.ninepanel.infrastructure.websockets.StompPrincipal;
 import dev.nine.ninepanel.message.domain.MessageFacade;
 import dev.nine.ninepanel.message.domain.dto.MessageCreationDto;
-import dev.nine.ninepanel.message.domain.dto.MessageDto;
+import java.security.Principal;
 import org.bson.types.ObjectId;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -10,7 +11,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class MessageWebsocketController {
+class MessageWebsocketController {
 
   private final MessageFacade         messageFacade;
   private final SimpMessagingTemplate simpMessagingTemplate;
@@ -21,9 +22,16 @@ public class MessageWebsocketController {
   }
 
   @MessageMapping("/chat.{userId}")
-  void chatMessage(MessageCreationDto messageCreationDto, @DestinationVariable ObjectId userId) throws Exception {
-    MessageDto messageDto = messageFacade.add(messageCreationDto.getBody(), userId);
-    simpMessagingTemplate.convertAndSend("/topic/chat." + userId, messageDto);
+  void chatMessage(Principal principal, MessageCreationDto messageCreationDto, @DestinationVariable ObjectId userId) {
+    StompPrincipal user = (StompPrincipal) principal;
+    if (user.getAdmin()) {
+      simpMessagingTemplate.convertAndSend("/topic/chat." + userId,
+          messageFacade.addAdminMessage(messageCreationDto.getBody(), userId));
+    } else {
+      simpMessagingTemplate.convertAndSend("/topic/chat." + userId,
+          messageFacade.addClientMessage(messageCreationDto.getBody(), userId));
+    }
+
   }
 
 }

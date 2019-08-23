@@ -31,4 +31,6 @@ interface TokenRepository extends CrudRepository<Token, ObjectId> {
   boolean existsByBody(String body);
 
   boolean existsByBodyAndUserIdAndTokenType(String body, ObjectId userId, TokenType tokenType);
+
+  boolean existsByUserIdAndTokenType(ObjectId userId, TokenType tokenType);
 }

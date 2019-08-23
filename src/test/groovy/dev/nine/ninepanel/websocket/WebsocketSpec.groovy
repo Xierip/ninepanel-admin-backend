@@ -4,7 +4,10 @@ import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.clients.ClientsData
 import dev.nine.ninepanel.clients.domain.dto.ClientDto
 import dev.nine.ninepanel.message.domain.dto.MessageCreationDto
+import dev.nine.ninepanel.message.websockettoken.WebSocketTokenFacade
+import dev.nine.ninepanel.token.domain.dto.TokenDto
 import org.junit.Assert
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.messaging.converter.MappingJackson2MessageConverter
@@ -24,6 +27,9 @@ import java.util.concurrent.TimeUnit
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class WebsocketSpec extends IntegrationSpec implements ClientsData {
+
+  @Autowired
+  WebSocketTokenFacade webSocketTokenFacade;
 
   @Value("\${local.server.port}")
   String port
@@ -45,9 +51,11 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
             )
         )
     )
+
+    TokenDto token = webSocketTokenFacade.getMaybeCreateToken(authenticatedUser.id)
     stompClient.setMessageConverter(new MappingJackson2MessageConverter())
     webSocketHttpHeaders = new WebSocketHttpHeaders()
-    webSocketHttpHeaders.setBearerAuth(accessToken)
+    webSocketHttpHeaders.set("Authorization", "PIZDA ${token.body}")
     connectHeaders = new StompHeaders()
   }
 

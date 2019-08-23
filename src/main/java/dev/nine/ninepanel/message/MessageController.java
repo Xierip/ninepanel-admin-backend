@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiLayers.MESSAGES)
-public class MessageController {
+class MessageController {
 
   private final MessageFacade messageFacade;
 

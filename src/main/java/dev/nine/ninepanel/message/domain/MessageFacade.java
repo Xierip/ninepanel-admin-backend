@@ -24,9 +24,14 @@ public class MessageFacade {
     return messageRepository.findAllBySenderIdOrRecipientIdOrderByCreatedDateDesc(pageable, userId, userId).map(Message::dto);
   }
 
-  public MessageDto add(String messageBody, ObjectId recipientId) {
+  public MessageDto addAdminMessage(String messageBody, ObjectId recipientId) {
     clientsFacade.checkIfExists(recipientId);
-    return messageRepository.save(messageCreator.from(messageBody, recipientId)).dto();
+    return messageRepository.save(messageCreator.from(messageBody, recipientId, null)).dto();
+  }
+
+  public MessageDto addClientMessage(String messageBody, ObjectId senderId) {
+    clientsFacade.checkIfExists(senderId);
+    return messageRepository.save(messageCreator.from(messageBody, null, senderId)).dto();
   }
 
   public void readNewFrom(ObjectId userId) {

@@ -58,4 +58,8 @@ public class TokenFacade {
   public boolean checkIfSpecifiedTokenExistForUser(ObjectId userId, TokenType tokenType, String tokenBody) {
     return tokenRepository.existsByBodyAndUserIdAndTokenType(tokenBody, userId, tokenType);
   }
+
+  public boolean checkIfSpecifiedTokenExistForUser(ObjectId userId, TokenType tokenType) {
+    return tokenRepository.existsByUserIdAndTokenType(userId, tokenType);
+  }
 }
