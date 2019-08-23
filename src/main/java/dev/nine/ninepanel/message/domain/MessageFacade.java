@@ -1,7 +1,6 @@
 package dev.nine.ninepanel.message.domain;
 
 import dev.nine.ninepanel.clients.domain.ClientsFacade;
-import dev.nine.ninepanel.message.domain.dto.MessageCreationDto;
 import dev.nine.ninepanel.message.domain.dto.MessageDto;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
@@ -25,9 +24,9 @@ public class MessageFacade {
     return messageRepository.findAllBySenderIdOrRecipientIdOrderByCreatedDateDesc(pageable, userId, userId).map(Message::dto);
   }
 
-  public MessageDto add(MessageCreationDto messageCreationDto) {
-    clientsFacade.checkIfExists(messageCreationDto.getRecipientId());
-    return messageRepository.save(messageCreator.from(messageCreationDto)).dto();
+  public MessageDto add(String messageBody, ObjectId recipientId) {
+    clientsFacade.checkIfExists(recipientId);
+    return messageRepository.save(messageCreator.from(messageBody, recipientId)).dto();
   }
 
   public void readNewFrom(ObjectId userId) {

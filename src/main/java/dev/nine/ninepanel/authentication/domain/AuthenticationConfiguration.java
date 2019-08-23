@@ -34,13 +34,4 @@ class AuthenticationConfiguration {
     return new AuthenticationTokenFilter(tokenProperties, tokenValidator, tokenProvider, userDetailsService);
   }
 
-  @Bean
-  WebSocketAuthenticationTokenFilter WebSocketAuthenticationTokenFilter(AuthenticationProperties tokenProperties,
-      AuthenticationUserDetailsService userDetailsService) {
-    AuthenticationTokenValidator tokenValidator = new AuthenticationTokenValidator();
-    AuthenticationTokenProvider tokenProvider = new AuthenticationTokenProvider();
-
-    return new WebSocketAuthenticationTokenFilter(tokenProperties, tokenValidator, tokenProvider, userDetailsService);
-  }
-
 }
