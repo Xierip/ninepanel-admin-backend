@@ -42,7 +42,7 @@ public class ClientsFacade {
   }
 
   public List<ClientDto> showAllMatching(String searchTerm) {
-    return clientsRepository.findAllByDisplayNameLikeOrEmailLike(searchTerm, searchTerm)
+    return clientsRepository.findAllByDisplayNameLikeOrEmailLikeOrPhoneNumberLike(searchTerm, searchTerm, searchTerm)
         .stream()
         .map(Client::dto)
         .collect(Collectors.toList());
