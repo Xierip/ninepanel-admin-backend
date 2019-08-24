@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
-public class UnauthorizedSubscriptionException extends RuntimeException {
+public class UnauthorizedChannelAccessException extends RuntimeException {
 
-  public UnauthorizedSubscriptionException() {
-    super("You can't subscribe to this channel");
+  public UnauthorizedChannelAccessException() {
+    super("You can't access this channel");
   }
 
 

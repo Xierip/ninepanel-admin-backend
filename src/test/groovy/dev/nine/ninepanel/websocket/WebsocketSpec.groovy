@@ -4,6 +4,8 @@ import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.clients.ClientsData
 import dev.nine.ninepanel.clients.domain.dto.ClientDto
 import dev.nine.ninepanel.message.domain.dto.MessageCreationDto
+import dev.nine.ninepanel.token.domain.TokenFacade
+import dev.nine.ninepanel.token.domain.TokenType
 import dev.nine.ninepanel.token.domain.dto.TokenDto
 import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade
 import org.junit.Assert
@@ -30,6 +32,8 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
 
   @Autowired
   WebSocketTokenFacade webSocketTokenFacade;
+  @Autowired
+  TokenFacade tokenFacade;
 
   @Value("\${local.server.port}")
   String port
@@ -52,11 +56,15 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
         )
     )
 
+    /* client token */
+    TokenDto tokenDto = tokenFacade.addToken(TokenDto.builder().userId(clientDto.id).tokenType(TokenType.WEBSOCKET_TOKEN).build())
+
+    /* admin token */
     TokenDto token = webSocketTokenFacade.getMaybeCreateToken(authenticatedUser.id)
+
     stompClient.setMessageConverter(new MappingJackson2MessageConverter())
     webSocketHttpHeaders = new WebSocketHttpHeaders()
-    webSocketHttpHeaders.set("Authorization", "PIZDA ${token.body}")
-    connectHeaders = new StompHeaders()
+    webSocketHttpHeaders.set("Authorization", "PIZDA ${tokenDto.body}")
   }
 
   def "test websocket endpoint"() {
@@ -69,11 +77,11 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
       stompSession.isConnected()
 
     when: "i subscribe to an endpoint"
-      stompSession.subscribe("/topic/chat.${clientDto.id}", new MessageStompFrameHandler())
+      stompSession.subscribe("/topic/chat.${clientDto.id.toHexString()}", new MessageStompFrameHandler())
 
     and: "i send a message to that endpoint"
       MessageCreationDto messageCreationDto = MessageCreationDto.builder().body("test").build()
-      stompSession.send("/app/chat.${clientDto.id}", messageCreationDto)
+      stompSession.send("/app/chat.${clientDto.id.toHexString()}", messageCreationDto)
 
     then: "i should receive this message from my subscription"
       Assert.assertNotNull(completableFuture.get(1, TimeUnit.SECONDS))

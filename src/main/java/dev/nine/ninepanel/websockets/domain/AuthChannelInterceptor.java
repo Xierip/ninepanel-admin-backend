@@ -1,6 +1,6 @@
 package dev.nine.ninepanel.websockets.domain;
 
-import dev.nine.ninepanel.websockets.domain.exception.UnauthorizedSubscriptionException;
+import dev.nine.ninepanel.websockets.domain.exception.UnauthorizedChannelAccessException;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -21,16 +21,16 @@ class AuthChannelInterceptor implements ChannelInterceptor {
   public Message<?> preSend(final Message<?> message, final MessageChannel channel) throws AuthenticationException {
     final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
-    if (StompCommand.SUBSCRIBE.equals(accessor.getCommand())) {
+    if (StompCommand.SUBSCRIBE.equals(accessor.getCommand()) || StompCommand.SEND.equals(accessor.getCommand())) {
 
       StompPrincipal user = (StompPrincipal) accessor.getUser();
 
       if (user == null) {
-        throw new UnauthorizedSubscriptionException();
+        throw new UnauthorizedChannelAccessException();
       }
 
       if (!user.getAdmin() && !channelUserIdMatcher.matches(user, accessor.getDestination())) {
-        throw new UnauthorizedSubscriptionException();
+        throw new UnauthorizedChannelAccessException();
       }
 
     }

@@ -28,9 +28,9 @@ class WebSocketTokenProvider {
         tokenDto.getOptionalData().get("role").equals("admin");
 
     return StompPrincipal.builder()
-        .name(tokenDto.getId().toHexString())
+        .id(tokenDto.getUserId())
+        .name(tokenDto.getUserId().toHexString())
         .admin(admin)
-        .id(tokenDto.getId())
         .build();
   }
 
