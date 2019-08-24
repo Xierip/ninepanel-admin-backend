@@ -1,4 +1,4 @@
-package dev.nine.ninepanel.infrastructure.websockets;
+package dev.nine.ninepanel.websockets.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

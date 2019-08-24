@@ -1,8 +1,8 @@
 package dev.nine.ninepanel.message;
 
-import dev.nine.ninepanel.infrastructure.websockets.StompPrincipal;
 import dev.nine.ninepanel.message.domain.MessageFacade;
 import dev.nine.ninepanel.message.domain.dto.MessageCreationDto;
+import dev.nine.ninepanel.websockets.domain.StompPrincipal;
 import java.security.Principal;
 import org.bson.types.ObjectId;
 import org.springframework.messaging.handler.annotation.DestinationVariable;

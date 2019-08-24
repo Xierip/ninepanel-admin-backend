@@ -1,7 +1,7 @@
-package dev.nine.ninepanel.infrastructure.websockets;
+package dev.nine.ninepanel.websockets.domain;
 
-import dev.nine.ninepanel.infrastructure.websockets.exception.UnauthorizedHandshakeException;
-import dev.nine.ninepanel.message.websockettoken.WebSocketTokenFacade;
+import dev.nine.ninepanel.websockets.domain.exception.UnauthorizedHandshakeException;
+import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade;
 import java.security.Principal;
 import java.util.Map;
 import org.springframework.http.HttpHeaders;

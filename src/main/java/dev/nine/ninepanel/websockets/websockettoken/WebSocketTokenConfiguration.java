@@ -1,4 +1,4 @@
-package dev.nine.ninepanel.message.websockettoken;
+package dev.nine.ninepanel.websockets.websockettoken;
 
 import dev.nine.ninepanel.token.domain.TokenFacade;
 import org.springframework.context.annotation.Bean;

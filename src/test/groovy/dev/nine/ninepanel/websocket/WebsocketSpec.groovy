@@ -4,8 +4,8 @@ import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.clients.ClientsData
 import dev.nine.ninepanel.clients.domain.dto.ClientDto
 import dev.nine.ninepanel.message.domain.dto.MessageCreationDto
-import dev.nine.ninepanel.message.websockettoken.WebSocketTokenFacade
 import dev.nine.ninepanel.token.domain.dto.TokenDto
+import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade
 import org.junit.Assert
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value

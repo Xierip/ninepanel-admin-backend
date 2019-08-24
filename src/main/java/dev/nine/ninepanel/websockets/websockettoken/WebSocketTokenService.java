@@ -1,10 +1,10 @@
-package dev.nine.ninepanel.message.websockettoken;
+package dev.nine.ninepanel.websockets.websockettoken;
 
-import dev.nine.ninepanel.infrastructure.websockets.StompPrincipal;
 import dev.nine.ninepanel.token.domain.TokenFacade;
 import dev.nine.ninepanel.token.domain.TokenType;
 import dev.nine.ninepanel.token.domain.dto.TokenDto;
 import dev.nine.ninepanel.token.domain.exception.TokenNotFoundException;
+import dev.nine.ninepanel.websockets.domain.StompPrincipal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;

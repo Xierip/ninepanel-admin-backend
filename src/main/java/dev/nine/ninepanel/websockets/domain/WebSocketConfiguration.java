@@ -1,6 +1,6 @@
-package dev.nine.ninepanel.infrastructure.websockets;
+package dev.nine.ninepanel.websockets.domain;
 
-import dev.nine.ninepanel.message.websockettoken.WebSocketTokenFacade;
+import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

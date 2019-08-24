@@ -1,4 +1,4 @@
-package dev.nine.ninepanel.infrastructure.websockets;
+package dev.nine.ninepanel.websockets.domain;
 
 import java.security.Principal;
 import javax.security.auth.Subject;

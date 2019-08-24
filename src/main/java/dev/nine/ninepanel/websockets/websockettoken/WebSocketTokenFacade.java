@@ -1,7 +1,7 @@
-package dev.nine.ninepanel.message.websockettoken;
+package dev.nine.ninepanel.websockets.websockettoken;
 
-import dev.nine.ninepanel.infrastructure.websockets.StompPrincipal;
 import dev.nine.ninepanel.token.domain.dto.TokenDto;
+import dev.nine.ninepanel.websockets.domain.StompPrincipal;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpHeaders;
 

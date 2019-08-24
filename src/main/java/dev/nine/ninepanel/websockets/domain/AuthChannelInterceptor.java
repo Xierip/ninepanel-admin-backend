@@ -1,6 +1,6 @@
-package dev.nine.ninepanel.infrastructure.websockets;
+package dev.nine.ninepanel.websockets.domain;
 
-import dev.nine.ninepanel.infrastructure.websockets.exception.UnauthorizedSubscriptionException;
+import dev.nine.ninepanel.websockets.domain.exception.UnauthorizedSubscriptionException;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
