@@ -14,7 +14,9 @@ class WebSocketConfiguration {
 
   @Bean
   AuthHandshakeHandler authHandshakeHandler(WebSocketTokenFacade webSocketTokenFacade) {
-    return new AuthHandshakeHandler(webSocketTokenFacade);
+    WebSocketTokenProvider webSocketTokenProvider = new WebSocketTokenProvider(webSocketTokenFacade);
+    WebSocketAuthService webSocketAuthService = new WebSocketAuthService(webSocketTokenProvider);
+    return new AuthHandshakeHandler(webSocketAuthService);
   }
 
 }

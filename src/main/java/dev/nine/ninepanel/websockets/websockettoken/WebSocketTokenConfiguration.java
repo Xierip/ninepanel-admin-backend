@@ -9,7 +9,7 @@ class WebSocketTokenConfiguration {
 
   @Bean
   WebSocketTokenFacade webSocketTokenFacade(TokenFacade tokenFacade) {
-    return new WebSocketTokenFacade(new WebSocketTokenService(tokenFacade, new WebSocketTokenProvider(tokenFacade)));
+    return new WebSocketTokenFacade(new WebSocketTokenService(tokenFacade));
   }
 
 }

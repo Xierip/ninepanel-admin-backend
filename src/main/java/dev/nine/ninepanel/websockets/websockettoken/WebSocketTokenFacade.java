@@ -1,9 +1,7 @@
 package dev.nine.ninepanel.websockets.websockettoken;
 
 import dev.nine.ninepanel.token.domain.dto.TokenDto;
-import dev.nine.ninepanel.websockets.domain.StompPrincipal;
 import org.bson.types.ObjectId;
-import org.springframework.http.HttpHeaders;
 
 public class WebSocketTokenFacade {
 
@@ -13,20 +11,15 @@ public class WebSocketTokenFacade {
     this.webSocketTokenService = webSocketTokenService;
   }
 
-  public TokenDto getMaybeCreateToken(ObjectId userId) {
+  public TokenDto getOrAddToken(ObjectId userId) {
     if (webSocketTokenService.existsForUser(userId)) {
-      return webSocketTokenService.get(userId);
+      return webSocketTokenService.getToken(userId);
     } else {
-      return webSocketTokenService.add(userId);
+      return webSocketTokenService.addToken(userId);
     }
   }
 
-
-  public TokenDto getOrThrow(String body) {
-    return webSocketTokenService.getOrThrow(body);
-  }
-
-  public StompPrincipal getStompPrincipal(HttpHeaders headers) {
-    return webSocketTokenService.parseAuthHeaders(headers);
+  public TokenDto get(String body) {
+    return webSocketTokenService.getToken(body);
   }
 }

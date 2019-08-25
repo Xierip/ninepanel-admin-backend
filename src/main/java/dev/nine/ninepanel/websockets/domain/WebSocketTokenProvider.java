@@ -1,27 +1,25 @@
-package dev.nine.ninepanel.websockets.websockettoken;
+package dev.nine.ninepanel.websockets.domain;
 
-import dev.nine.ninepanel.token.domain.TokenFacade;
-import dev.nine.ninepanel.token.domain.TokenType;
 import dev.nine.ninepanel.token.domain.dto.TokenDto;
-import dev.nine.ninepanel.websockets.domain.StompPrincipal;
+import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade;
 
 class WebSocketTokenProvider {
 
-  private final static String      TOKEN_PREFIX = "PIZDA ";
-  private final        TokenFacade tokenFacade;
+  private final static String               TOKEN_PREFIX = "PIZDA ";
+  private final        WebSocketTokenFacade webSocketTokenFacade;
 
-  WebSocketTokenProvider(TokenFacade tokenFacade) {
-    this.tokenFacade = tokenFacade;
+  WebSocketTokenProvider(WebSocketTokenFacade webSocketTokenFacade) {
+    this.webSocketTokenFacade = webSocketTokenFacade;
   }
 
-  StompPrincipal obtainStompPrincipal(String authHeaderString) {
+  StompPrincipal obtainStompPrincipalFromAuthHeader(String authHeaderString) {
     String token = obtainWebsocketAccessToken(authHeaderString);
 
     if (token == null) {
       return null;
     }
 
-    TokenDto tokenDto = tokenFacade.getTokenByBodyAndTokenType(token, TokenType.WEBSOCKET_TOKEN);
+    TokenDto tokenDto = webSocketTokenFacade.get(token);
 
     boolean admin = tokenDto.getOptionalData() != null &&
         tokenDto.getOptionalData().containsKey("role") &&

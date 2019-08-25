@@ -4,42 +4,35 @@ import dev.nine.ninepanel.token.domain.TokenFacade;
 import dev.nine.ninepanel.token.domain.TokenType;
 import dev.nine.ninepanel.token.domain.dto.TokenDto;
 import dev.nine.ninepanel.token.domain.exception.TokenNotFoundException;
-import dev.nine.ninepanel.websockets.domain.StompPrincipal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 import org.bson.types.ObjectId;
-import org.springframework.http.HttpHeaders;
 
 class WebSocketTokenService {
 
   private static final int                    TOKEN_DURATION_DAYS = 1;
   private final        TokenFacade            tokenFacade;
-  private final        WebSocketTokenProvider webSocketTokenProvider;
 
-  WebSocketTokenService(TokenFacade tokenFacade, WebSocketTokenProvider webSocketTokenProvider) {
+  WebSocketTokenService(TokenFacade tokenFacade) {
     this.tokenFacade = tokenFacade;
-    this.webSocketTokenProvider = webSocketTokenProvider;
   }
 
   boolean existsForUser(ObjectId userId) {
     return tokenFacade.checkIfSpecifiedTokenExistForUser(userId, TokenType.WEBSOCKET_TOKEN);
   }
 
-  TokenDto get(ObjectId userId) {
+  TokenDto getToken(ObjectId userId) {
     return tokenFacade.getTokensByUserIdAndTokenType(userId, TokenType.WEBSOCKET_TOKEN)
         .stream()
         .findFirst()
-        .orElseThrow(
-            TokenNotFoundException::new
-        );
+        .orElseThrow(TokenNotFoundException::new);
   }
 
-  TokenDto getOrThrow(String body) {
-    return tokenFacade.getTokenByBody(body);
+  TokenDto getToken(String body) {
+    return tokenFacade.getTokenByBodyAndTokenType(body, TokenType.WEBSOCKET_TOKEN);
   }
 
-  TokenDto add(ObjectId userId) {
+  TokenDto addToken(ObjectId userId) {
     return tokenFacade.addToken(buildWebsocketToken(userId));
   }
 
@@ -56,15 +49,4 @@ class WebSocketTokenService {
         .build();
   }
 
-  public StompPrincipal parseAuthHeaders(HttpHeaders headers) {
-    List<String> authorization = headers.get("Authorization");
-
-    if (authorization == null) {
-      throw new TokenNotFoundException();
-    }
-
-    String authHeaderString = authorization.stream().findFirst().get();
-
-    return webSocketTokenProvider.obtainStompPrincipal(authHeaderString);
-  }
 }

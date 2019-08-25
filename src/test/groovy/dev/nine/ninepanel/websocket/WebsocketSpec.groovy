@@ -60,7 +60,7 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
     TokenDto tokenDto = tokenFacade.addToken(TokenDto.builder().userId(clientDto.id).tokenType(TokenType.WEBSOCKET_TOKEN).build())
 
     /* admin token */
-    TokenDto token = webSocketTokenFacade.getMaybeCreateToken(authenticatedUser.id)
+    TokenDto token = webSocketTokenFacade.getOrAddToken(authenticatedUser.id)
 
     stompClient.setMessageConverter(new MappingJackson2MessageConverter())
     webSocketHttpHeaders = new WebSocketHttpHeaders()

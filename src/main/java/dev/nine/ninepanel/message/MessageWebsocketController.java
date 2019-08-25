@@ -24,6 +24,7 @@ class MessageWebsocketController {
   @MessageMapping("/chat.{userId}")
   void chatMessage(Principal principal, MessageCreationDto messageCreationDto, @DestinationVariable ObjectId userId) {
     StompPrincipal user = (StompPrincipal) principal;
+
     if (user.getAdmin()) {
       simpMessagingTemplate.convertAndSend("/topic/chat." + userId,
           messageFacade.addAdminMessage(messageCreationDto.getBody(), userId));
