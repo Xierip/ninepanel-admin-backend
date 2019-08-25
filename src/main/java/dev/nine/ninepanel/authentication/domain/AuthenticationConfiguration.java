@@ -34,5 +34,4 @@ class AuthenticationConfiguration {
     return new AuthenticationTokenFilter(tokenProperties, tokenValidator, tokenProvider, userDetailsService);
   }
 
-
 }

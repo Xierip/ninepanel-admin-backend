@@ -45,7 +45,8 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             ApiLayers.SESSIONS + "/refresh",
             ApiLayers.USERS + "/forgot-password",
             ApiLayers.USERS + "/reset-password",
-            ApiLayers.USERS + "/register"
+            ApiLayers.USERS + "/register",
+            ApiLayers.WEBSOCKETS + "/**"
         ).permitAll()
         .anyRequest().authenticated()
         .and()

@@ -35,6 +35,10 @@ dependencies {
 
 	implementation("com.squareup.okhttp3:okhttp:4.0.1")
 
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile('org.springframework.boot:spring-boot-starter-amqp')
+	compile('org.springframework.boot:spring-boot-starter-reactor-netty')
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
