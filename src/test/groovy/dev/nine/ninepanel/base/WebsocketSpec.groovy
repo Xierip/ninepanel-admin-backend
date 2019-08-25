@@ -43,13 +43,8 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
 
     WEBSOCKET_URI = "ws://localhost:${port}/ws"
 
-    stompClient = new WebSocketStompClient(
-        new SockJsClient(
-            Collections.singletonList(
-                new WebSocketTransport(new StandardWebSocketClient())
-            )
-        )
-    )
+    SockJsClient sockJsClient = new SockJsClient(Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient())))
+    stompClient = new WebSocketStompClient(sockJsClient)
 
     clientWebsocketToken = tokenFacade.addToken(TokenDto.builder()
         .userId(websocketUserClient.id)

@@ -3,9 +3,13 @@ package dev.nine.ninepanel.websockets.domain;
 import java.security.Principal;
 import javax.security.auth.Subject;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 
 @Builder
+@Getter
+@Setter
 public class StompPrincipal implements Principal {
 
   private String   name;
@@ -17,14 +21,6 @@ public class StompPrincipal implements Principal {
     this.name = name;
     this.admin = admin;
     this.id = id;
-  }
-
-  public ObjectId getId() {
-    return id;
-  }
-
-  public boolean getAdmin() {
-    return admin;
   }
 
   @Override

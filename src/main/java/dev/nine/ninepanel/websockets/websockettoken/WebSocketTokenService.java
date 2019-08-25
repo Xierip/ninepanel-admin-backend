@@ -10,8 +10,8 @@ import org.bson.types.ObjectId;
 
 class WebSocketTokenService {
 
-  private static final int                    TOKEN_DURATION_DAYS = 1;
-  private final        TokenFacade            tokenFacade;
+  private static final int         TOKEN_DURATION_DAYS = 1;
+  private final        TokenFacade tokenFacade;
 
   WebSocketTokenService(TokenFacade tokenFacade) {
     this.tokenFacade = tokenFacade;
@@ -41,11 +41,7 @@ class WebSocketTokenService {
         .userId(userId)
         .tokenType(TokenType.WEBSOCKET_TOKEN)
         .expirationDate(LocalDateTime.now().plusDays(TOKEN_DURATION_DAYS))
-        .optionalData(
-            Map.of(
-                "role", "admin"
-            )
-        )
+        .optionalData(Map.of("role", "admin"))
         .build();
   }
 

@@ -1,5 +1,6 @@
 package dev.nine.ninepanel.message;
 
+import dev.nine.ninepanel.infrastructure.constant.MessageMappings;
 import dev.nine.ninepanel.message.domain.MessageFacade;
 import dev.nine.ninepanel.message.domain.dto.MessageCreationDto;
 import dev.nine.ninepanel.websockets.domain.StompPrincipal;
@@ -16,22 +17,23 @@ class MessageWebsocketController {
   private final MessageFacade         messageFacade;
   private final SimpMessagingTemplate simpMessagingTemplate;
 
-  public MessageWebsocketController(MessageFacade messageFacade, SimpMessagingTemplate simpMessagingTemplate) {
+  MessageWebsocketController(MessageFacade messageFacade, SimpMessagingTemplate simpMessagingTemplate) {
     this.messageFacade = messageFacade;
     this.simpMessagingTemplate = simpMessagingTemplate;
   }
 
-  @MessageMapping("/chat.{userId}")
+  @MessageMapping(MessageMappings.CHAT + ".{userId}")
   void chatMessage(Principal principal, MessageCreationDto messageCreationDto, @DestinationVariable ObjectId userId) {
     StompPrincipal user = (StompPrincipal) principal;
 
-    if (user.getAdmin()) {
-      simpMessagingTemplate.convertAndSend("/topic/chat." + userId,
+    if (user.isAdmin()) {
+      simpMessagingTemplate.convertAndSend(MessageMappings.CHAT_TOPIC + "." + userId,
           messageFacade.addAdminMessage(messageCreationDto.getBody(), userId));
-    } else {
-      simpMessagingTemplate.convertAndSend("/topic/chat." + userId,
-          messageFacade.addClientMessage(messageCreationDto.getBody(), userId));
+      return;
     }
+
+    simpMessagingTemplate.convertAndSend(MessageMappings.CHAT_TOPIC + "." + userId,
+        messageFacade.addClientMessage(messageCreationDto.getBody(), userId));
 
   }
 

@@ -21,14 +21,14 @@ class WebSocketTokenProvider {
 
     TokenDto tokenDto = webSocketTokenFacade.get(token);
 
-    boolean admin = tokenDto.getOptionalData() != null &&
+    boolean hasAdminRole = tokenDto.getOptionalData() != null &&
         tokenDto.getOptionalData().containsKey("role") &&
         tokenDto.getOptionalData().get("role").equals("admin");
 
     return StompPrincipal.builder()
         .id(tokenDto.getUserId())
         .name(tokenDto.getUserId().toHexString())
-        .admin(admin)
+        .admin(hasAdminRole)
         .build();
   }
 

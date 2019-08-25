@@ -1,5 +1,6 @@
 package dev.nine.ninepanel.websockets.domain;
 
+import dev.nine.ninepanel.infrastructure.constant.ApiLayers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +35,7 @@ class WebSocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
 
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/ws")
+    registry.addEndpoint(ApiLayers.WEBSOCKETS)
         .setHandshakeHandler(authHandshakeHandler)
         .setAllowedOrigins(frontendUrl)
         .withSockJS();

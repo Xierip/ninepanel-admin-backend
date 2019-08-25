@@ -19,7 +19,7 @@ class AuthChannelInterceptor implements ChannelInterceptor {
 
   @Override
   public Message<?> preSend(final Message<?> message, final MessageChannel channel) throws AuthenticationException {
-    final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+    StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
     if (StompCommand.SUBSCRIBE.equals(accessor.getCommand()) || StompCommand.SEND.equals(accessor.getCommand())) {
 
@@ -29,7 +29,7 @@ class AuthChannelInterceptor implements ChannelInterceptor {
         throw new UnauthorizedChannelAccessException();
       }
 
-      if (!user.getAdmin() && !channelUserIdMatcher.matches(user, accessor.getDestination())) {
+      if (!user.isAdmin() && !channelUserIdMatcher.matches(user, accessor.getDestination())) {
         throw new UnauthorizedChannelAccessException();
       }
 

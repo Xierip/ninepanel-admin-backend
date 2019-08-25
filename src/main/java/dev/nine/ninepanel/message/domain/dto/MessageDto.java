@@ -24,6 +24,6 @@ public class MessageDto {
   private ObjectId      senderId;
   @JsonSerialize(using = ToStringSerializer.class)
   private ObjectId      recipientId;
-  private Boolean       read;
+  private boolean       read;
   private LocalDateTime createdDate;
 }

@@ -17,7 +17,7 @@ class MessageController {
 
   private final MessageFacade messageFacade;
 
-  public MessageController(MessageFacade messageFacade) {
+  MessageController(MessageFacade messageFacade) {
     this.messageFacade = messageFacade;
   }
 

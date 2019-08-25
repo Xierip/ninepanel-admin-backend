@@ -20,7 +20,7 @@ class Message {
   private String        body;
   private ObjectId      senderId;
   private ObjectId      recipientId;
-  private Boolean       read;
+  private boolean       read;
   @CreatedDate
   private LocalDateTime createdDate;
 
