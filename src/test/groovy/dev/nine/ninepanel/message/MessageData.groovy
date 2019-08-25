@@ -20,12 +20,7 @@ trait MessageData {
     mongoTemplate.insert(new BasicDBObject(client), MongoCollections.CLIENTS)
   }
 
-
   MessageCreationDto validMessageCreationDto = MessageCreationDto.builder()
-      .body("test")
-      .build()
-
-  MessageCreationDto noUserMessageCreationDto = MessageCreationDto.builder()
       .body("test")
       .build()
 
