@@ -25,7 +25,7 @@ class MessageControllerSpec extends IntegrationSpec implements MessageData {
       messageFacade.addAdminMessage(validMessageCreationDto.body, clientId)
       messageFacade.addClientMessage(validMessageCreationDto.body, clientId)
     when: "i ask for the messages for this user"
-      ResultActions request = requestAsUser(get(ApiLayers.MESSAGES)
+      ResultActions request = requestAsRoot(get(ApiLayers.MESSAGES)
           .param("userId", clientId.toHexString()))
     then: "the request should return 2 messages"
       request

@@ -13,17 +13,17 @@ class WebSocketAuthService {
   }
 
   StompPrincipal getStompPrincipal(HttpHeaders headers) {
-    List<String> authorization = headers.get("Authorization");
+    String cookies = headers.get("cookie").get(0);
+    int lastIndexOfToken = cookies.lastIndexOf("websocketToken=");
 
-    if (authorization == null) {
+    if (lastIndexOfToken == -1) {
       throw new TokenNotFoundException();
     }
 
-    String authHeaderString = authorization.stream()
-        .findFirst()
-        .orElseThrow(TokenNotFoundException::new);
+    String rawToken = cookies.substring(lastIndexOfToken);
+    String websocketToken = rawToken.substring(0, rawToken.indexOf(';')).replace("websocketToken=", "");
 
-    return webSocketTokenProvider.obtainStompPrincipalFromAuthHeader(authHeaderString);
+    return webSocketTokenProvider.obtainStompPrincipalFromAuthHeader(websocketToken);
   }
 
 }

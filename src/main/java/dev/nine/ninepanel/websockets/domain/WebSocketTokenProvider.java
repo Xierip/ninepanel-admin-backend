@@ -5,16 +5,13 @@ import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade;
 
 class WebSocketTokenProvider {
 
-  private final static String               TOKEN_PREFIX = "PIZDA ";
   private final        WebSocketTokenFacade webSocketTokenFacade;
 
   WebSocketTokenProvider(WebSocketTokenFacade webSocketTokenFacade) {
     this.webSocketTokenFacade = webSocketTokenFacade;
   }
 
-  StompPrincipal obtainStompPrincipalFromAuthHeader(String authHeaderString) {
-    String token = obtainWebsocketAccessToken(authHeaderString);
-
+  StompPrincipal obtainStompPrincipalFromAuthHeader(String token) {
     if (token == null) {
       return null;
     }
@@ -30,15 +27,6 @@ class WebSocketTokenProvider {
         .name(tokenDto.getUserId().toHexString())
         .admin(hasAdminRole)
         .build();
-  }
-
-  private String obtainWebsocketAccessToken(String authHeaderString) {
-
-    if (!authHeaderString.contains(TOKEN_PREFIX)) {
-      return null;
-    }
-
-    return authHeaderString.substring(TOKEN_PREFIX.length());
   }
 
 }
