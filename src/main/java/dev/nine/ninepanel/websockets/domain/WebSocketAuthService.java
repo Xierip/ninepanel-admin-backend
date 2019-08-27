@@ -21,7 +21,9 @@ class WebSocketAuthService {
     }
 
     String rawToken = cookies.substring(lastIndexOfToken);
-    String websocketToken = rawToken.substring(0, rawToken.indexOf(';')).replace("websocketToken=", "");
+    int semicolonPosition = !rawToken.contains(";") ? rawToken.length() : rawToken.indexOf(";");
+
+    String websocketToken = rawToken.substring(0, semicolonPosition).replace("websocketToken=", "");
 
     return webSocketTokenProvider.obtainStompPrincipalFromAuthHeader(websocketToken);
   }
