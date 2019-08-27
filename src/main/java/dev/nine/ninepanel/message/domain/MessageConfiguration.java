@@ -9,7 +9,10 @@ class MessageConfiguration {
 
   @Bean
   MessageFacade messageFacade(MessageRepository messageRepository, ClientsFacade clientsFacade) {
-    return new MessageFacade(messageRepository, new MessageCreator(), clientsFacade);
+    MessageService messageService = new MessageService(clientsFacade);
+    MessageCreator messageCreator = new MessageCreator();
+
+    return new MessageFacade(messageRepository, messageService, messageCreator, clientsFacade);
   }
 
 }

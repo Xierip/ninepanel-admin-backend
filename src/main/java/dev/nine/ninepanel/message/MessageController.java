@@ -34,7 +34,7 @@ class MessageController {
       @AuthenticatedUser UserDetails userDetails) {
     return ResponseEntity.ok(Map.of(
         "websocketToken", this.webSocketTokenFacade.getOrAddToken(UserHelper.getUserId(userDetails)),
-        "conversations", this.messageFacade.showAll(pageable, userId))
+        "conversations", this.messageFacade.showAll(userId))
     );
   }
 

@@ -24,7 +24,6 @@ class WebSocketAuthService {
     int semicolonPosition = !rawToken.contains(";") ? rawToken.length() : rawToken.indexOf(";");
 
     String websocketToken = rawToken.substring(0, semicolonPosition).replace("websocketToken=", "");
-
     return webSocketTokenProvider.obtainStompPrincipalFromAuthHeader(websocketToken);
   }
 
