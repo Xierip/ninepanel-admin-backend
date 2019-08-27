@@ -60,7 +60,7 @@ public class MessageFacade {
       return value;
     }
   }
-as
+
   public MessageDto addAdminMessage(String messageBody, ObjectId recipientId) {
     this.clientsFacade.checkIfExists(recipientId);
     return this.messageRepository.save(this.messageCreator.from(messageBody, recipientId, null))
