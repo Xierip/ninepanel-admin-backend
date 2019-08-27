@@ -26,23 +26,7 @@ public class MessageFacade {
 
 
   public Set<Map<String, Object>> showAll(ObjectId userId) {
-    Set<Map<String, Object>> jsonResponse = new HashSet<>();
-
-    if (userId != null) {
-      Set<Message> messages = this.messageRepository.findAllBySenderIdOrRecipientIdOrderByCreatedDateDesc(userId, userId);
-      messageService.addConversation(jsonResponse, userId, messages);
-      return jsonResponse;
-    }
-
-    Map<ObjectId, Set<Message>> messages = new HashMap<>();
-
-    this.messageRepository.findAll().forEach(message -> {
-      ObjectId clientId = message.getRecipientId() == null ? message.getSenderId() : message.getRecipientId();
-      messages.compute(clientId, (key, value) -> messageService.computeMessagesCallback(value, message));
-    });
-
-    messages.forEach((key, value) -> messageService.addConversation(jsonResponse, key, value));
-    return jsonResponse;
+    return this.messageService.showAll(userId);
   }
 
   public MessageDto addAdminMessage(String messageBody, ObjectId recipientId) {
