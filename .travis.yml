@@ -1,0 +1,7 @@
+language: java
+jdk:
+  - openjdk11
+script:
+  - export SERVER_PORT=3000
+  - export FRONTEND_URL=http://example.com
+  - ./gradlew check
