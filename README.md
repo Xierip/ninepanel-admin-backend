@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.com/nine-dev/ninepanel-admin-backend.svg?token=1BSs221ax5tpfSsY3inX&branch=master)](https://travis-ci.com/nine-dev/ninepanel-admin-backend)
