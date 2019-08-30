@@ -34,7 +34,7 @@ class MessageWebsocketControllerSpec extends WebsocketSpec implements MessageDat
       stompSession.send("/app/chat.${websocketUserClient.id}", validMessageCreationDto)
 
     then: "i should receive this message from my subscription"
-      completableFuture.get(1, TimeUnit.SECONDS) != null
+      completableFuture.get(10, TimeUnit.SECONDS) != null
   }
 
   def "chat endpoint client successful scenario"() {
@@ -51,7 +51,7 @@ class MessageWebsocketControllerSpec extends WebsocketSpec implements MessageDat
       stompSession.send("/app/chat.${websocketUserClient.id}", validMessageCreationDto)
 
     then: "i should receive this message from my subscription"
-      completableFuture.get(1, TimeUnit.SECONDS) != null
+      completableFuture.get(10, TimeUnit.SECONDS) != null
   }
 
   def "chat endpoint client fail scenario"() {
