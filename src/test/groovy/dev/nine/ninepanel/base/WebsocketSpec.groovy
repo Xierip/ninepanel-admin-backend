@@ -58,7 +58,7 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
 
   StompSession connectAsClient() {
     WebSocketHttpHeaders webSocketHttpHeaders = new WebSocketHttpHeaders()
-    webSocketHttpHeaders.set("cookie", clientWebsocketToken.body)
+    webSocketHttpHeaders.set("cookie", "websocketToken=${clientWebsocketToken.body}")
 
     return stompClient
         .connect(WEBSOCKET_URI, webSocketHttpHeaders, new StompSessionHandlerAdapter() {})

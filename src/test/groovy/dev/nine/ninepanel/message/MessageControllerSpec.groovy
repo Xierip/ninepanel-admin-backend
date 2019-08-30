@@ -30,7 +30,7 @@ class MessageControllerSpec extends IntegrationSpec implements MessageData {
     then: "the request should return 2 messages"
       request
           .andExpect(status().isOk())
-          .andExpect(jsonPath("\$.messages", hasSize(2)))
+          .andExpect(jsonPath("\$.conversations.[0].messages", hasSize(2)))
   }
 
   def "fail messages access scenario"() {
