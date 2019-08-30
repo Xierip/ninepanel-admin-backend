@@ -16,6 +16,7 @@ trait MessageData {
   void setupMessages() {
     Map<String, Object> client = new HashMap<>()
     client.put("_id", clientId)
+    client.put("displayName", "display name")
 
     mongoTemplate.insert(new BasicDBObject(client), MongoCollections.CLIENTS)
   }

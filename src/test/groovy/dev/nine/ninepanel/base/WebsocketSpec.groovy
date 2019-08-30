@@ -58,7 +58,7 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
 
   StompSession connectAsClient() {
     WebSocketHttpHeaders webSocketHttpHeaders = new WebSocketHttpHeaders()
-    webSocketHttpHeaders.set("Authorization", "PIZDA ${clientWebsocketToken.body}")
+    webSocketHttpHeaders.set("cookie", clientWebsocketToken.body)
 
     return stompClient
         .connect(WEBSOCKET_URI, webSocketHttpHeaders, new StompSessionHandlerAdapter() {})

@@ -38,7 +38,7 @@ class MessageService {
     return jsonResponse;
   }
 
-  Set<Message> computeMessagesCallback(Set<Message> value, Message message) {
+  private Set<Message> computeMessagesCallback(Set<Message> value, Message message) {
     if (value == null) {
       return Sets.newHashSet(message);
     } else {
@@ -47,7 +47,7 @@ class MessageService {
     }
   }
 
-  void addConversation(Set<Map<String, Object>> jsonResponse, ObjectId clientId, Set<Message> messages) {
+  private void addConversation(Set<Map<String, Object>> jsonResponse, ObjectId clientId, Set<Message> messages) {
     jsonResponse.add(Map.of(
         "clientId", clientId.toHexString(),
         "clientDisplayName", this.clientsFacade.showById(clientId).getDisplayName(),

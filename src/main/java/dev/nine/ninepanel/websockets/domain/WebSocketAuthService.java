@@ -1,7 +1,6 @@
 package dev.nine.ninepanel.websockets.domain;
 
 import dev.nine.ninepanel.token.domain.exception.TokenNotFoundException;
-import java.util.List;
 import org.springframework.http.HttpHeaders;
 
 class WebSocketAuthService {
@@ -13,6 +12,10 @@ class WebSocketAuthService {
   }
 
   StompPrincipal getStompPrincipal(HttpHeaders headers) {
+    if (headers.get("cookie") == null) {
+      throw new TokenNotFoundException();
+    }
+
     String cookies = headers.get("cookie").get(0);
     int lastIndexOfToken = cookies.lastIndexOf("websocketToken=");
 
