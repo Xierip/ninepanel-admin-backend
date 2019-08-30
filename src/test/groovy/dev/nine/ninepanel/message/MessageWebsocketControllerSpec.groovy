@@ -57,6 +57,7 @@ class MessageWebsocketControllerSpec extends WebsocketSpec implements MessageDat
       completableFuture.get(1, TimeUnit.SECONDS) != null
   }
 
+  @UncompilableByCI
   def "chat endpoint client fail scenario"() {
     ObjectId otherClientId = new ObjectId()
 
