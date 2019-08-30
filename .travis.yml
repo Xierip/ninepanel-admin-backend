@@ -3,7 +3,7 @@ dist: trusty
 language: java
 jdk:
   - openjdk11
-  
+
 services:
   - rabbitmq
 addons:
@@ -20,4 +20,4 @@ script:
   - sudo service stompserver start
   - export MONGO_URI=mongodb://127.0.0.1:27017/ninepanel
   - export SERVER_PORT=3000
-  - ./gradlew check
+  - ./gradlew ciTest

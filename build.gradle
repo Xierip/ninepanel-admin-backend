@@ -58,4 +58,13 @@ test {
     testLogging {
         exceptionFormat = 'full'
     }
+    systemProperty "spring.profiles.active", "nonCI"
 }
+
+class ContinuousIntegrationTest extends Test {
+    ContinuousIntegrationTest() {
+        systemProperty "spring.profiles.active", "test"
+    }
+}
+
+task ciTest(type: ContinuousIntegrationTest) {}

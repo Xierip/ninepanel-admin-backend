@@ -1,5 +1,6 @@
 package dev.nine.ninepanel.message
 
+import dev.nine.ninepanel.base.UncompilableByCI
 import dev.nine.ninepanel.base.WebsocketSpec
 import org.bson.types.ObjectId
 import org.springframework.lang.Nullable
@@ -20,6 +21,7 @@ class MessageWebsocketControllerSpec extends WebsocketSpec implements MessageDat
     completableFuture = new CompletableFuture<>()
   }
 
+  @UncompilableByCI
   def "chat endpoint admin successful scenario"() {
     when: "i try to connect to websocket server"
       StompSession stompSession = connectAsAdmin()
@@ -37,6 +39,7 @@ class MessageWebsocketControllerSpec extends WebsocketSpec implements MessageDat
       completableFuture.get(1, TimeUnit.SECONDS) != null
   }
 
+  @UncompilableByCI
   def "chat endpoint client successful scenario"() {
     when: "i try to connect to websocket server"
       StompSession stompSession = connectAsClient()
