@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @TypeChecked
-@SpringBootTest(classes = AppRunner)
+@SpringBootTest
 @ActiveProfiles("test")
 abstract class IntegrationSpec extends Specification {
 

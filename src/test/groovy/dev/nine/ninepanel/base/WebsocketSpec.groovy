@@ -41,7 +41,7 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
   void setup() {
     websocketUserClient = setUpClient("some@client.com")
 
-    WEBSOCKET_URI = "ws://localhost:${port}/ws"
+    WEBSOCKET_URI = "http://localhost:${port}/ws"
 
     SockJsClient sockJsClient = new SockJsClient(Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient())))
     stompClient = new WebSocketStompClient(sockJsClient)

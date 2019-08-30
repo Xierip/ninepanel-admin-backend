@@ -1,7 +1,10 @@
+sudo: required
+dist: trusty
 language: java
 jdk:
   - openjdk11
+
 script:
+  - export MONGO_URI=mongodb://127.0.0.1:27017/ninepanel
   - export SERVER_PORT=3000
-  - export FRONTEND_URL=http://example.com
-  - ./gradlew check
+  - ./gradlew ciTest
