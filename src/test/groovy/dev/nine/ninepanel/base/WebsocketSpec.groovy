@@ -6,7 +6,6 @@ import dev.nine.ninepanel.token.domain.TokenFacade
 import dev.nine.ninepanel.token.domain.TokenType
 import dev.nine.ninepanel.token.domain.dto.TokenDto
 import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade
-import groovy.transform.TypeChecked
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest

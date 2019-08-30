@@ -26,6 +26,26 @@ class MessageWebsocketControllerSpec extends WebsocketSpec implements MessageDat
 
     then: "i should be connected"
       stompSession.isConnected()
+      println "I am connected ${stompSession}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
 
     when: "i subscribe to some user's chat endpoint"
       stompSession.subscribe("/topic/chat.${websocketUserClient.id}", new MessageStompFrameHandler())
@@ -34,7 +54,7 @@ class MessageWebsocketControllerSpec extends WebsocketSpec implements MessageDat
       stompSession.send("/app/chat.${websocketUserClient.id}", validMessageCreationDto)
 
     then: "i should receive this message from my subscription"
-      completableFuture.get(10, TimeUnit.SECONDS) != null
+      completableFuture.get(1, TimeUnit.SECONDS) != null
   }
 
   def "chat endpoint client successful scenario"() {
@@ -43,6 +63,26 @@ class MessageWebsocketControllerSpec extends WebsocketSpec implements MessageDat
 
     then: "i should be connected"
       stompSession.isConnected()
+      println "I am connected ${stompSession}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
+      println "I am connected ${stompSession.isConnected()}"
 
     when: "i subscribe to my chat endpoint"
       stompSession.subscribe("/topic/chat.${websocketUserClient.id}", new MessageStompFrameHandler())
@@ -51,7 +91,7 @@ class MessageWebsocketControllerSpec extends WebsocketSpec implements MessageDat
       stompSession.send("/app/chat.${websocketUserClient.id}", validMessageCreationDto)
 
     then: "i should receive this message from my subscription"
-      completableFuture.get(10, TimeUnit.SECONDS) != null
+      completableFuture.get(1, TimeUnit.SECONDS) != null
   }
 
   def "chat endpoint client fail scenario"() {
