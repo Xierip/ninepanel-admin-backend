@@ -6,6 +6,7 @@ import dev.nine.ninepanel.token.domain.TokenFacade
 import dev.nine.ninepanel.token.domain.TokenType
 import dev.nine.ninepanel.token.domain.dto.TokenDto
 import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade
+import groovy.transform.TypeChecked
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
@@ -41,7 +42,7 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
   void setup() {
     websocketUserClient = setUpClient("some@client.com")
 
-    WEBSOCKET_URI = "ws://localhost:${port}/ws"
+    WEBSOCKET_URI = "http://localhost:${port}/ws"
 
     SockJsClient sockJsClient = new SockJsClient(Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient())))
     stompClient = new WebSocketStompClient(sockJsClient)
