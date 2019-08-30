@@ -21,8 +21,8 @@ class WebSocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
   private final AuthChannelInterceptor   authChannelInterceptor;
   private final AuthHandshakeHandler     authHandshakeHandler;
 
-  @Value("${frontend_url}")
-  private String frontendUrl;
+  @Value("${allowedOrigins}")
+  private String[] allowedOrigins;
 
   @Autowired
   WebSocketBrokerConfiguration(MessageBrokerCredentials messageBrokerCredentials,
@@ -37,7 +37,7 @@ class WebSocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
   public void registerStompEndpoints(StompEndpointRegistry registry) {
     registry.addEndpoint(ApiLayers.WEBSOCKETS)
         .setHandshakeHandler(authHandshakeHandler)
-        .setAllowedOrigins(frontendUrl)
+        .setAllowedOrigins(allowedOrigins)
         .withSockJS();
   }
 

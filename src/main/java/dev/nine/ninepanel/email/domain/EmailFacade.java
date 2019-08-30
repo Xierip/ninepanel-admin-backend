@@ -1,15 +1,11 @@
 package dev.nine.ninepanel.email.domain;
 
 import javax.mail.MessagingException;
-import org.springframework.beans.factory.annotation.Value;
 
 public class EmailFacade {
 
   private final EmailCreationService emailCreationService;
   private final EmailSender          emailSender;
-
-  @Value("${frontend_url}")
-  private String frontendUrl;
 
   EmailFacade(EmailCreationService emailCreationService, EmailSender emailSender) {
     this.emailCreationService = emailCreationService;
