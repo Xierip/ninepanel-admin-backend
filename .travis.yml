@@ -4,4 +4,6 @@ language: java
 jdk:
   - openjdk11
 script:
+  - export MONGO_URI=mongodb://127.0.0.1:27017/ninepanel
+  - export SERVER_PORT=3000
   - ./gradlew check
