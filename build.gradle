@@ -68,3 +68,9 @@ class ContinuousIntegrationTest extends Test {
 }
 
 task ciTest(type: ContinuousIntegrationTest) {}
+
+
+bootJar {
+    launchScript()
+}
+
