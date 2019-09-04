@@ -12,6 +12,7 @@ public final class ApiLayers {
   public static final String HOSTINGS      = API_ROOT + "hostings";
   public static final String MESSAGES      = API_ROOT + "messages";
   public static final String WEBSOCKETS    = "/ws";
+  public static final String ERROR         = "/error";
 
   private ApiLayers() {
   }
