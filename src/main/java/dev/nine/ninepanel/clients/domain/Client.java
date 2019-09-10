@@ -4,12 +4,14 @@ import dev.nine.ninepanel.clients.addressdetails.AddressDetails;
 import dev.nine.ninepanel.clients.companydetails.CompanyDetails;
 import dev.nine.ninepanel.clients.domain.dto.ClientDto;
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,6 +37,9 @@ class Client {
   private AddressDetails   address;
   private CompanyDetails   companyDetails;
   private GrantedAuthority role;
+
+  @CreatedDate
+  private LocalDateTime createdAt;
 
   ClientDto dto() {
     return ClientDto
