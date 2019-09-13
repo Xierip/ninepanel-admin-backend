@@ -1,5 +1,6 @@
 package dev.nine.ninepanel.clients.domain;
 
+import dev.nine.ninepanel.token.domain.TokenFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 class ClientsConfiguration {
 
   @Bean
-  ClientsFacade clientsFacade(ClientsRepository clientsRepository) {
-    return new ClientsFacade(clientsRepository, new ClientCreator());
+  ClientsFacade clientsFacade(ClientsRepository clientsRepository, TokenFacade tokenFacade) {
+    return new ClientsFacade(clientsRepository, new ClientCreator(), tokenFacade);
   }
 }
