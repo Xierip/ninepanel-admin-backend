@@ -16,6 +16,7 @@ class ClientCreator {
         .surname(clientDto.getSurname())
         .displayName(clientDto.getName() + " " + clientDto.getSurname())
         .role(clientDto.getRole())
+        .createdAt(oldClient.getCreatedAt())
         .build();
   }
 

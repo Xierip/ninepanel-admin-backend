@@ -11,6 +11,7 @@ import dev.nine.ninepanel.clients.companydetails.CompanyDetails;
 import dev.nine.ninepanel.infrastructure.jackson.GrantedAuthorityDeserializer;
 import dev.nine.ninepanel.infrastructure.validation.role.IsValidRole;
 import dev.nine.ninepanel.infrastructure.validation.role.RoleType;
+import java.time.LocalDateTime;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -53,6 +54,8 @@ public class ClientDto {
   @IsValidRole(RoleType.CLIENT)
   @NotNull
   private GrantedAuthority role;
+
+  private LocalDateTime createdAt;
 
   public boolean isCompany() {
     return companyDetails != null;

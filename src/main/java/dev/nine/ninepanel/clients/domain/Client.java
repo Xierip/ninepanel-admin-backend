@@ -54,6 +54,7 @@ class Client {
         .companyDetails(companyDetails)
         .role(role)
         .displayName(displayName)
+        .createdAt(createdAt)
         .build();
   }
 
