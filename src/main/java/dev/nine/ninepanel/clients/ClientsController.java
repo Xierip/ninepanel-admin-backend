@@ -29,12 +29,14 @@ class ClientsController {
 
   @RequiresAuthenticated
   @GetMapping
-  ResponseEntity<?> showAll(Pageable pageable, @RequestParam(required = false) String search) {
-    if (search == null) {
-      return ResponseEntity.ok(clientsFacade.showAll(pageable));
-    } else {
+  ResponseEntity<?> showAll(Pageable pageable, @RequestParam(required = false) String search, @RequestParam(required = false) String code) {
+    if (search != null) {
       return ResponseEntity.ok(clientsFacade.showAllMatching(search));
     }
+    if (code != null) {
+      return ResponseEntity.ok(clientsFacade.showByStaffCode(code));
+    }
+    return ResponseEntity.ok(clientsFacade.showAll(pageable));
   }
 
   @RequiresAuthenticated

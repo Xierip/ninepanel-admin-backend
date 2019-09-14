@@ -3,15 +3,24 @@ package dev.nine.ninepanel.clients
 import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.clients.domain.dto.ClientDto
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers
+import dev.nine.ninepanel.token.domain.TokenFacade
+import dev.nine.ninepanel.token.domain.TokenType
+import dev.nine.ninepanel.token.domain.dto.TokenDto
 import org.bson.types.ObjectId
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
+
+import java.time.LocalDateTime
 
 import static org.hamcrest.Matchers.hasSize
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
+
+  @Autowired
+  private TokenFacade tokenFacade
 
   def "successful fetch clients list scenario"() {
     given: "there are 2 clients in the system"
@@ -43,6 +52,36 @@ class ClientsControllerSpec extends IntegrationSpec implements ClientsData {
           .andExpect(status().isOk())
           .andExpect(content().json(objectToJson(clientDto)))
   }
+
+  def "successful fetch client by staff code scenario"() {
+    given: "there is a client and staff code in the system"
+      ClientDto clientDto = setUpClient("test@test.com")
+      TokenDto tokenDto = tokenFacade.addToken(TokenDto.builder().userId(clientDto.getId()).expirationDate(LocalDateTime.now().plusMinutes(2))
+          .tokenType(TokenType.STAFF_TOKEN).build())
+    when: "i ask for the client"
+      ResultActions request = requestAsRoot(get(ApiLayers.CLIENTS + "/?code=${tokenDto.body}"))
+    then: "i should get the specified client"
+      request
+          .andExpect(status().isOk())
+          .andExpect(content().json(objectToJson(clientDto)))
+  }
+
+  def "fail fetch client by staff code scenario"() {
+    given: "there is code for not exists user in the system"
+      TokenDto tokenDto = tokenFacade.addToken(TokenDto.builder().userId(new ObjectId()).expirationDate(LocalDateTime.now().plusMinutes(2))
+          .tokenType(TokenType.STAFF_TOKEN).build())
+    when: "i ask for the client"
+      ResultActions request = requestAsRoot(get(ApiLayers.CLIENTS + "/?code=${tokenDto.body}"))
+    then: "the request should throw 404"
+      request
+          .andExpect(status().isNotFound())
+    when: "i ask for the client by bad code"
+      request = requestAsRoot(get(ApiLayers.CLIENTS + "/?code=666666"))
+    then: "the request should throw 404"
+      request
+          .andExpect(status().isNotFound())
+  }
+
 
   def "fail fetch client scenario"() {
     when: "i ask for a client that doesn't exist"
