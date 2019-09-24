@@ -9,7 +9,7 @@ public final class MongoCollections {
   public static final String RESET_PASSWORD_REQUESTS = "reset_password_requests";
   public static final String SERVICES                = "services";
   public static final String SERVICE_TYPES           = "service_types";
-  public static final String NOTIFICATIONS           = "notifications";
+  public static final String ALERTS                  = "alerts";
   public static final String HOSTINGS                = "hostings";
   public static final String MESSAGES                = "messages";
 

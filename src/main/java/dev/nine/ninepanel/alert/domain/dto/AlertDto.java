@@ -1,10 +1,9 @@
-package dev.nine.ninepanel.notification.domain.dto;
+package dev.nine.ninepanel.alert.domain.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,13 +16,11 @@ import org.bson.types.ObjectId;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationDto {
+public class AlertDto {
 
   @JsonSerialize(using = ToStringSerializer.class)
-  private ObjectId         id;
+  private ObjectId      id;
   @NotEmpty
-  private String           message;
-  @NotNull
-  private NotificationType type;
-  private LocalDateTime    createdDate;
+  private String        message;
+  private LocalDateTime createdDate;
 }

@@ -3,7 +3,6 @@ package dev.nine.ninepanel.base
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.icegreen.greenmail.util.GreenMail
 import com.icegreen.greenmail.util.ServerSetup
-import dev.nine.ninepanel.AppRunner
 import dev.nine.ninepanel.authentication.domain.dto.SignInDto
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections
 import dev.nine.ninepanel.user.domain.UserFacade
@@ -69,7 +68,7 @@ abstract class IntegrationSpec extends Specification {
     mongoTemplate.dropCollection(MongoCollections.SERVICE_TYPES)
     mongoTemplate.dropCollection(MongoCollections.TOKENS)
     mongoTemplate.dropCollection(MongoCollections.USERS)
-    mongoTemplate.dropCollection(MongoCollections.NOTIFICATIONS)
+    mongoTemplate.dropCollection(MongoCollections.ALERTS)
     mongoTemplate.dropCollection(MongoCollections.CLIENTS)
     mongoTemplate.dropCollection(MongoCollections.MESSAGES)
   }
