@@ -57,6 +57,7 @@ class Client {
         .role(role)
         .displayName(displayName)
         .createdAt(createdAt)
+        .notificationsReadAt(notificationsReadAt)
         .build();
   }
 
