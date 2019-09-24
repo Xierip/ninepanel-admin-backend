@@ -40,4 +40,17 @@ class Notification {
         .createdDate(createdDate)
         .build();
   }
+
+  NotificationDto dto(LocalDateTime lastRead) {
+    return NotificationDto
+        .builder()
+        .id(id)
+        .clientId(clientId)
+        .message(message)
+        .link(link)
+        .clicked(clicked)
+        .read(lastRead.isAfter(createdDate))
+        .createdDate(createdDate)
+        .build();
+  }
 }

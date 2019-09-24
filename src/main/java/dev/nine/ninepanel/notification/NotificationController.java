@@ -24,6 +24,7 @@ class NotificationController {
   @RequiresAuthenticated
   @PostMapping
   ResponseEntity<?> createNotification(@Valid @RequestBody CreateNotificationDto createNotificationDto) {
-    return ResponseEntity.ok(notificationFacade.create(createNotificationDto));
+    return ResponseEntity.ok(notificationFacade.createAndSend(createNotificationDto));
   }
+
 }
