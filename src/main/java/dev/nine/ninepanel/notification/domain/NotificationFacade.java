@@ -26,4 +26,8 @@ public class NotificationFacade {
   public Page<NotificationDto> showAllForClient(ObjectId clientId, Pageable pageable) {
     return notificationService.showAllForClient(clientId, pageable);
   }
+
+  public void delete(ObjectId id) {
+    notificationRepository.deleteByIdOrThrow(id);
+  }
 }
