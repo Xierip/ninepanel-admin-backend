@@ -1,4 +1,4 @@
-package dev.nine.ninepanel.notification.domain.dto;
+package dev.nine.ninepanel.alert.domain.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -17,13 +17,13 @@ import org.bson.types.ObjectId;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationDto {
+public class AlertDto {
 
   @JsonSerialize(using = ToStringSerializer.class)
-  private ObjectId         id;
+  private ObjectId      id;
   @NotEmpty
-  private String           message;
+  private String        message;
   @NotNull
-  private NotificationType type;
-  private LocalDateTime    createdDate;
+  private AlertType     type;
+  private LocalDateTime createdDate;
 }

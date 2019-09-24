@@ -1,8 +1,8 @@
-package dev.nine.ninepanel.notification.domain;
+package dev.nine.ninepanel.alert.domain;
 
+import dev.nine.ninepanel.alert.domain.dto.AlertDto;
+import dev.nine.ninepanel.alert.domain.dto.AlertType;
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections;
-import dev.nine.ninepanel.notification.domain.dto.NotificationDto;
-import dev.nine.ninepanel.notification.domain.dto.NotificationType;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,18 +19,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Setter
 @Getter
-@Document(MongoCollections.NOTIFICATIONS)
-class Notification {
+@Document(MongoCollections.ALERTS)
+class Alert {
 
   @Id
-  private ObjectId         id;
-  private String           message;
-  private NotificationType type;
+  private ObjectId      id;
+  private String        message;
+  private AlertType     type;
   @CreatedDate
-  private LocalDateTime    createdDate;
+  private LocalDateTime createdDate;
 
-  NotificationDto dto() {
-    return NotificationDto
+  AlertDto dto() {
+    return AlertDto
         .builder()
         .id(id)
         .message(message)

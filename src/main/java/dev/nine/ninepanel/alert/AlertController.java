@@ -1,9 +1,9 @@
-package dev.nine.ninepanel.notification;
+package dev.nine.ninepanel.alert;
 
+import dev.nine.ninepanel.alert.domain.AlertFacade;
+import dev.nine.ninepanel.alert.domain.dto.AlertDto;
 import dev.nine.ninepanel.authentication.domain.annotation.RequiresAuthenticated;
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers;
-import dev.nine.ninepanel.notification.domain.NotificationFacade;
-import dev.nine.ninepanel.notification.domain.dto.NotificationDto;
 import java.util.List;
 import javax.validation.Valid;
 import org.bson.types.ObjectId;
@@ -17,32 +17,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(ApiLayers.NOTIFICATIONS)
-class NotificationController {
+@RequestMapping(ApiLayers.ALERTS)
+class AlertController {
 
-  private NotificationFacade notificationFacade;
+  private AlertFacade alertFacade;
 
-  NotificationController(NotificationFacade notificationFacade) {
-    this.notificationFacade = notificationFacade;
+  AlertController(AlertFacade alertFacade) {
+    this.alertFacade = alertFacade;
   }
 
   @RequiresAuthenticated
   @GetMapping
   ResponseEntity<?> getNotifications() {
-    List<NotificationDto> notifications = notificationFacade.showAll();
+    List<AlertDto> notifications = alertFacade.showAll();
     return ResponseEntity.ok(notifications);
   }
 
   @RequiresAuthenticated
   @PostMapping
-  ResponseEntity<?> addNotification(@Valid @RequestBody NotificationDto notificationDto) {
-    return ResponseEntity.ok(notificationFacade.add(notificationDto));
+  ResponseEntity<?> addNotification(@Valid @RequestBody AlertDto alertDto) {
+    return ResponseEntity.ok(alertFacade.add(alertDto));
   }
 
   @RequiresAuthenticated
   @DeleteMapping("{id}")
   ResponseEntity<?> deleteNotification(@PathVariable ObjectId id) {
-    notificationFacade.delete(id);
+    alertFacade.delete(id);
     return ResponseEntity.noContent().build();
   }
 
