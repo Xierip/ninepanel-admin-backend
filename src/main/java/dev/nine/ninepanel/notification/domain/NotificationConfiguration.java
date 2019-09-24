@@ -10,6 +10,6 @@ class NotificationConfiguration {
   @Bean
   NotificationFacade notificationFacade(NotificationRepository notificationRepository, UserFacade userFacade) {
     NotificationService notificationService = new NotificationService(notificationRepository);
-    return new NotificationFacade(notificationRepository, userFacade, notificationService);
+    return new NotificationFacade(notificationRepository, userFacade, notificationService, notificationCreator);
   }
 }

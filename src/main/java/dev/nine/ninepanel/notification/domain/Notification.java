@@ -28,7 +28,7 @@ class Notification {
   @CreatedDate
   private LocalDateTime createdDate;
 
-  NotificationDto dto(LocalDateTime lastRead) {
+  NotificationDto dto() {
     return NotificationDto
         .builder()
         .id(id)
@@ -36,7 +36,7 @@ class Notification {
         .message(message)
         .link(link)
         .clicked(clicked)
-        .read(lastRead.isAfter(createdDate))
+        .read(false)
         .createdDate(createdDate)
         .build();
   }
