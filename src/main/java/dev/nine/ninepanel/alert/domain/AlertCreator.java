@@ -9,7 +9,6 @@ class AlertCreator {
         .builder()
         .id(alertDto.getId())
         .message(alertDto.getMessage())
-        .type(alertDto.getType())
         .build();
   }
 

@@ -28,20 +28,20 @@ class AlertController {
 
   @RequiresAuthenticated
   @GetMapping
-  ResponseEntity<?> getNotifications() {
+  ResponseEntity<?> getAlerts() {
     List<AlertDto> notifications = alertFacade.showAll();
     return ResponseEntity.ok(notifications);
   }
 
   @RequiresAuthenticated
   @PostMapping
-  ResponseEntity<?> addNotification(@Valid @RequestBody AlertDto alertDto) {
+  ResponseEntity<?> addAlert(@Valid @RequestBody AlertDto alertDto) {
     return ResponseEntity.ok(alertFacade.add(alertDto));
   }
 
   @RequiresAuthenticated
   @DeleteMapping("{id}")
-  ResponseEntity<?> deleteNotification(@PathVariable ObjectId id) {
+  ResponseEntity<?> deleteAlert(@PathVariable ObjectId id) {
     alertFacade.delete(id);
     return ResponseEntity.noContent().build();
   }

@@ -1,7 +1,6 @@
 package dev.nine.ninepanel.alert.domain;
 
 import dev.nine.ninepanel.alert.domain.dto.AlertDto;
-import dev.nine.ninepanel.alert.domain.dto.AlertType;
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -25,7 +24,6 @@ class Alert {
   @Id
   private ObjectId      id;
   private String        message;
-  private AlertType     type;
   @CreatedDate
   private LocalDateTime createdDate;
 
@@ -34,7 +32,6 @@ class Alert {
         .builder()
         .id(id)
         .message(message)
-        .type(type)
         .build();
   }
 
