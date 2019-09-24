@@ -41,6 +41,8 @@ class Client {
   @CreatedDate
   private LocalDateTime createdAt;
 
+  private LocalDateTime notificationsReadAt;
+
   ClientDto dto() {
     return ClientDto
         .builder()

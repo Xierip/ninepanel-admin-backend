@@ -17,6 +17,7 @@ class ClientCreator {
         .displayName(clientDto.getName() + " " + clientDto.getSurname())
         .role(clientDto.getRole())
         .createdAt(oldClient.getCreatedAt())
+        .notificationsReadAt(oldClient.getNotificationsReadAt())
         .build();
   }
 
