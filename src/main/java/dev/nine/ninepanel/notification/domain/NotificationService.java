@@ -1,7 +1,11 @@
 package dev.nine.ninepanel.notification.domain;
 
 import dev.nine.ninepanel.clients.domain.ClientsFacade;
+import dev.nine.ninepanel.clients.domain.dto.ClientDto;
 import dev.nine.ninepanel.notification.domain.dto.NotificationDto;
+import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 class NotificationService {
 
@@ -23,4 +27,8 @@ class NotificationService {
     return notificationDto;
   }
 
+  Page<NotificationDto> showAllForClient(ObjectId clientId, Pageable pageable) {
+    ClientDto clientDto = clientsFacade.showById(clientId);
+    return notificationRepository.findAllByClientId(clientId, pageable).map(notification -> notification.dto(clientDto.getNotificationsReadAt()));
+  }
 }

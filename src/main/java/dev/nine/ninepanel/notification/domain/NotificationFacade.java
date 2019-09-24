@@ -2,6 +2,9 @@ package dev.nine.ninepanel.notification.domain;
 
 import dev.nine.ninepanel.notification.domain.dto.CreateNotificationDto;
 import dev.nine.ninepanel.notification.domain.dto.NotificationDto;
+import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public class NotificationFacade {
 
@@ -20,4 +23,7 @@ public class NotificationFacade {
     return notificationService.createAndSend(notificationCreator.from(createNotificationDto));
   }
 
+  public Page<NotificationDto> showAllForClient(ObjectId clientId, Pageable pageable) {
+    return notificationService.showAllForClient(clientId, pageable);
+  }
 }
