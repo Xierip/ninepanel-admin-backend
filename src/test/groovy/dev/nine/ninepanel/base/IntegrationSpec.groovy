@@ -71,6 +71,7 @@ abstract class IntegrationSpec extends Specification {
     mongoTemplate.dropCollection(MongoCollections.ALERTS)
     mongoTemplate.dropCollection(MongoCollections.CLIENTS)
     mongoTemplate.dropCollection(MongoCollections.MESSAGES)
+    mongoTemplate.dropCollection(MongoCollections.NOTIFICATIONS)
   }
 
   String objectToJson(Object object) {

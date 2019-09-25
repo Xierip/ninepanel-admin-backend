@@ -56,6 +56,8 @@ public class ClientDto {
   private GrantedAuthority role;
 
   private LocalDateTime createdAt;
+  
+  private LocalDateTime notificationsReadAt;
 
   public boolean isCompany() {
     return companyDetails != null;

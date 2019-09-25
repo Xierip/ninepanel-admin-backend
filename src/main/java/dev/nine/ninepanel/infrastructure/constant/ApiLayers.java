@@ -13,6 +13,7 @@ public final class ApiLayers {
   public static final String MESSAGES      = API_ROOT + "messages";
   public static final String WEBSOCKETS    = "/ws";
   public static final String ERROR         = "/error";
+  public static final String NOTIFICATIONS = "/notifications";
 
   private ApiLayers() {
   }

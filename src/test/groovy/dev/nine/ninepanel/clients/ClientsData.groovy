@@ -9,6 +9,8 @@ import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.MongoTemplate
 
+import java.time.LocalDateTime
+
 trait ClientsData {
 
   @Autowired
@@ -36,6 +38,8 @@ trait ClientsData {
         .companyDetails(null)
         .displayName("test name test surname")
         .role(ClientRoles.DEMO)
+        .createdAt(LocalDateTime.now())
+        .notificationsReadAt(LocalDateTime.now())
         .build()
 
     client.put("_id", id)
@@ -48,6 +52,8 @@ trait ClientsData {
     client.put("companyDetails", dto.companyDetails)
     client.put("displayName", dto.name + " " + dto.surname)
     client.put("role", ClientRoles.DEMO)
+    client.put("createdAt", dto.createdAt)
+    client.put("notificationsReadAt", dto.notificationsReadAt)
 
     mongoTemplate.insert(new BasicDBObject(client), MongoCollections.CLIENTS)
     return dto

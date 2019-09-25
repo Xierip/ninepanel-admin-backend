@@ -41,6 +41,8 @@ class Client {
   @CreatedDate
   private LocalDateTime createdAt;
 
+  private LocalDateTime notificationsReadAt;
+
   ClientDto dto() {
     return ClientDto
         .builder()
@@ -55,6 +57,7 @@ class Client {
         .role(role)
         .displayName(displayName)
         .createdAt(createdAt)
+        .notificationsReadAt(notificationsReadAt)
         .build();
   }
 
