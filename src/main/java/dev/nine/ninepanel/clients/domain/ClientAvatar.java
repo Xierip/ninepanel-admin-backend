@@ -3,7 +3,7 @@ package dev.nine.ninepanel.clients.domain;
 
 import dev.nine.ninepanel.clients.domain.dto.AvatarDto;
 
-enum UserAvatar {
+enum ClientAvatar {
 
   DEFAULT(""),
   VICTORIA_SECRET_ANGEL("icons8-victoria-secret-angel.svg"),
@@ -19,7 +19,7 @@ enum UserAvatar {
 
   private final AvatarDto dto;
 
-  UserAvatar(String fileName) {
+  ClientAvatar(String fileName) {
     this.dto = new AvatarDto(this.name(), "https://panel.nine.dev/avatars/" + fileName);
   }
 
