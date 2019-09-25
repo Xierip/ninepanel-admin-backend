@@ -2,6 +2,7 @@ package dev.nine.ninepanel.clients.domain;
 
 import dev.nine.ninepanel.clients.addressdetails.AddressDetails;
 import dev.nine.ninepanel.clients.companydetails.CompanyDetails;
+import dev.nine.ninepanel.clients.domain.dto.AvatarDto;
 import dev.nine.ninepanel.clients.domain.dto.ClientDto;
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections;
 import java.time.LocalDateTime;
@@ -38,6 +39,8 @@ class Client {
   private CompanyDetails   companyDetails;
   private GrantedAuthority role;
 
+  private AvatarDto avatar;
+
   @CreatedDate
   private LocalDateTime createdAt;
 
@@ -55,6 +58,7 @@ class Client {
         .addressDetails(address)
         .companyDetails(companyDetails)
         .role(role)
+        .avatar(avatar)
         .displayName(displayName)
         .createdAt(createdAt)
         .notificationsReadAt(notificationsReadAt)
