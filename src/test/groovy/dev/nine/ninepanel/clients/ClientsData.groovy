@@ -2,6 +2,7 @@ package dev.nine.ninepanel.clients
 
 import com.mongodb.BasicDBObject
 import dev.nine.ninepanel.clients.addressdetails.AddressDetails
+import dev.nine.ninepanel.clients.domain.ClientAvatar
 import dev.nine.ninepanel.clients.domain.ClientRoles
 import dev.nine.ninepanel.clients.domain.dto.ClientDto
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections
@@ -40,6 +41,7 @@ trait ClientsData {
         .role(ClientRoles.DEMO)
         .createdAt(LocalDateTime.now())
         .notificationsReadAt(LocalDateTime.now())
+        .avatar(ClientAvatar.DEFAULT.dto())
         .build()
 
     client.put("_id", id)
@@ -54,6 +56,7 @@ trait ClientsData {
     client.put("role", ClientRoles.DEMO)
     client.put("createdAt", dto.createdAt)
     client.put("notificationsReadAt", dto.notificationsReadAt)
+    client.put("avatar", dto.avatar)
 
     mongoTemplate.insert(new BasicDBObject(client), MongoCollections.CLIENTS)
     return dto

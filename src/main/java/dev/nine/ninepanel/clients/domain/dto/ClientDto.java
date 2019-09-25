@@ -55,6 +55,8 @@ public class ClientDto {
   @NotNull
   private GrantedAuthority role;
 
+  private AvatarDto avatar;
+
   private LocalDateTime createdAt;
   
   private LocalDateTime notificationsReadAt;
