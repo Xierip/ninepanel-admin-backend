@@ -15,6 +15,6 @@ import lombok.Setter;
 public class MessageCreationDto {
 
   @NotEmpty
-  private String   body;
+  private String body;
 
 }

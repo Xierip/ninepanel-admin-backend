@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ApiLayers.MESSAGES)
 class MessageController {
 
-  private final MessageFacade messageFacade;
+  private final MessageFacade        messageFacade;
   private final WebSocketTokenFacade webSocketTokenFacade;
 
   MessageController(MessageFacade messageFacade, WebSocketTokenFacade webSocketTokenFacade) {

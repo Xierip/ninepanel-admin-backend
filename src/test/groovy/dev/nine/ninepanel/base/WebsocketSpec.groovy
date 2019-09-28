@@ -24,9 +24,9 @@ import java.util.concurrent.TimeUnit
 class WebsocketSpec extends IntegrationSpec implements ClientsData {
 
   @Autowired
-  WebSocketTokenFacade webSocketTokenFacade;
+  WebSocketTokenFacade webSocketTokenFacade
   @Autowired
-  TokenFacade tokenFacade;
+  TokenFacade tokenFacade
 
   @Value("\${local.server.port}")
   String port

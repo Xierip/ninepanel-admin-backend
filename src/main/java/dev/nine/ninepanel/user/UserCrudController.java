@@ -29,7 +29,7 @@ class UserCrudController {
 
   private final UserFacade userFacade;
 
-  public UserCrudController(UserFacade userFacade) {
+  UserCrudController(UserFacade userFacade) {
     this.userFacade = userFacade;
   }
 

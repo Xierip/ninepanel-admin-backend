@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.icegreen.greenmail.util.GreenMail
 import com.icegreen.greenmail.util.ServerSetup
 import dev.nine.ninepanel.authentication.domain.dto.SignInDto
+import dev.nine.ninepanel.infrastructure.constant.ApiLayers
 import dev.nine.ninepanel.infrastructure.constant.MongoCollections
 import dev.nine.ninepanel.user.domain.UserFacade
 import dev.nine.ninepanel.user.domain.UserRoles
@@ -97,7 +98,7 @@ abstract class IntegrationSpec extends Specification {
         .deviceId("testDevice")
         .build()
 
-    ResultActions result = mockMvc.perform(post("/api/sessions")
+    ResultActions result = mockMvc.perform(post(ApiLayers.SESSIONS)
         .content(objectToJson(signInDto))
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .accept(MediaType.APPLICATION_JSON_UTF8))

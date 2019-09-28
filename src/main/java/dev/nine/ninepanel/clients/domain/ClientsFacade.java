@@ -17,7 +17,7 @@ public class ClientsFacade {
   private final ClientCreator     clientCreator;
   private final TokenFacade       tokenFacade;
 
-  public ClientsFacade(ClientsRepository clientsRepository, ClientCreator clientCreator, TokenFacade tokenFacade) {
+  ClientsFacade(ClientsRepository clientsRepository, ClientCreator clientCreator, TokenFacade tokenFacade) {
     this.clientsRepository = clientsRepository;
     this.clientCreator = clientCreator;
     this.tokenFacade = tokenFacade;

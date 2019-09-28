@@ -50,7 +50,7 @@ class GoogleResponse {
     return false;
   }
 
-  static enum ErrorCode {
+  enum ErrorCode {
     MissingSecret, InvalidSecret,
     MissingResponse, InvalidResponse;
 

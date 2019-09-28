@@ -32,7 +32,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
   def "successful user info access scenario"() {
     given: "i am a user in the system"
     when: "i request user info with access token"
-      ResultActions request2 = requestAsRoot(get("/api/users/me"))
+      ResultActions request2 = requestAsRoot(get("$ApiLayers.USERS/me"))
     then: "i should get user info"
       request2.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
     and: "the user info should match with database"
@@ -41,7 +41,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
 
   def "fail user info access scenario"() {
     when: "i request user info without access token"
-      ResultActions request = requestAsAnonymous(get("/api/users/me"))
+      ResultActions request = requestAsAnonymous(get("$ApiLayers.USERS/me"))
     then: "i should get a 401 unauthorized"
       request.andExpect(status().isUnauthorized())
   }
@@ -52,7 +52,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
       ChangePasswordDto changePasswordDto = new ChangePasswordDto(authenticatedUser.password, newPassword)
 
     when: "i send a request to update password"
-      ResultActions request = requestAsRoot(post("/api/users/change-password")
+      ResultActions request = requestAsRoot(post("$ApiLayers.USERS/change-password")
           .content(objectToJson(changePasswordDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
@@ -68,7 +68,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
       ChangePasswordDto changePasswordDto = new ChangePasswordDto("wrongPassword", "newPassword")
 
     when: "i send a request to update password with a wrong user password"
-      ResultActions request = requestAsRoot(post("/api/users/change-password")
+      ResultActions request = requestAsRoot(post("$ApiLayers.USERS/change-password")
           .content(objectToJson(changePasswordDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
@@ -79,7 +79,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
   def "successful user creation scenario"() {
     given: "i have valid user creation data"
     when: "i register a new user"
-      ResultActions request = requestAsRoot(post("/api/users")
+      ResultActions request = requestAsRoot(post(ApiLayers.USERS)
           .content(objectToJson(sampleSignUpDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the user should be registered"
@@ -94,7 +94,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
       UserCreationDto signUpDto = sampleSignUpDto
       signUpDto.password = "bad"
     when: "i try to register a new user with invalid data"
-      ResultActions request = requestAsRoot(post("/api/users")
+      ResultActions request = requestAsRoot(post(ApiLayers.USERS)
           .content(objectToJson(signUpDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should fail"
@@ -156,7 +156,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
 
   private void logIn(String email, String password) {
     SignInDto sign = SignInDto.builder().email(email).password(password).deviceId("someDevice").build()
-    ResultActions logInRequest = requestAsAnonymous(post("/api/sessions")
+    ResultActions logInRequest = requestAsAnonymous(post(ApiLayers.SESSIONS)
         .content(objectToJson(sign))
         .contentType(MediaType.APPLICATION_JSON_UTF8))
     logInRequest.andExpect(status().isOk())

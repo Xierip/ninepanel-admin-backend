@@ -20,7 +20,7 @@ class UserActionsController {
   private final UserFacade    userFacade;
   private final CaptchaFacade captchaFacade;
 
-  public UserActionsController(UserFacade userFacade, CaptchaFacade captchaFacade) {
+  UserActionsController(UserFacade userFacade, CaptchaFacade captchaFacade) {
     this.userFacade = userFacade;
     this.captchaFacade = captchaFacade;
   }

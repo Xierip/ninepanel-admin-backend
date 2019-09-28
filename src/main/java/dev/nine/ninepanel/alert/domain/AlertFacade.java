@@ -10,7 +10,7 @@ public class AlertFacade {
   private AlertRepository alertRepository;
   private AlertCreator    alertCreator;
 
-  public AlertFacade(AlertRepository alertRepository,
+  AlertFacade(AlertRepository alertRepository,
       AlertCreator alertCreator) {
     this.alertRepository = alertRepository;
     this.alertCreator = alertCreator;

@@ -3,6 +3,7 @@ package dev.nine.ninepanel.authentication
 import dev.nine.ninepanel.authentication.domain.dto.SignInDto
 import dev.nine.ninepanel.authentication.refreshtoken.dto.RefreshTokenRequestDto
 import dev.nine.ninepanel.base.IntegrationSpec
+import dev.nine.ninepanel.infrastructure.constant.ApiLayers
 import org.bson.types.ObjectId
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
@@ -20,7 +21,7 @@ class AuthControllerSpec extends IntegrationSpec {
           .deviceId("x")
           .build()
     when: "i try to log in with an existent user credentials"
-      ResultActions request2 = requestAsAnonymous(post("/api/sessions")
+      ResultActions request2 = requestAsAnonymous(post(ApiLayers.SESSIONS)
           .content(objectToJson(signInDto2))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the login should be successful"
@@ -36,7 +37,7 @@ class AuthControllerSpec extends IntegrationSpec {
           .deviceId("x")
           .build()
     when: "i try to log in with wrong credentials"
-      ResultActions request = requestAsAnonymous(post("/api/sessions")
+      ResultActions request = requestAsAnonymous(post(ApiLayers.SESSIONS)
           .content(objectToJson(signInDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the login should fail"
@@ -48,7 +49,7 @@ class AuthControllerSpec extends IntegrationSpec {
       Map<String, String> refreshTokenMap = ["refreshToken": refreshToken]
 
     when: "i try to delete my token"
-      ResultActions request = requestAsRoot(delete("/api/sessions")
+      ResultActions request = requestAsRoot(delete(ApiLayers.SESSIONS)
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
@@ -61,7 +62,7 @@ class AuthControllerSpec extends IntegrationSpec {
       Map<String, String> refreshTokenMap = ["refreshToken": "lmaoImNotAToken"]
 
     when: "i try to delete a non-existent token"
-      ResultActions request = requestAsRoot(delete("/api/sessions")
+      ResultActions request = requestAsRoot(delete(ApiLayers.SESSIONS)
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
@@ -69,7 +70,7 @@ class AuthControllerSpec extends IntegrationSpec {
       request.andExpect(status().isNotFound())
 
     when: "i try to delete a token without being logged in"
-      ResultActions request2 = requestAsAnonymous(delete("/api/sessions")
+      ResultActions request2 = requestAsAnonymous(delete(ApiLayers.SESSIONS)
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should return unauthorized"
@@ -77,7 +78,7 @@ class AuthControllerSpec extends IntegrationSpec {
 
     when: "i don't send a token"
       refreshTokenMap.remove("refreshToken")
-      ResultActions request3 = requestAsRoot(delete("/api/sessions")
+      ResultActions request3 = requestAsRoot(delete(ApiLayers.SESSIONS)
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should fail"
@@ -88,7 +89,7 @@ class AuthControllerSpec extends IntegrationSpec {
     given: "i have a refresh token in the system"
       RefreshTokenRequestDto refreshTokenRequestDto = new RefreshTokenRequestDto(authenticatedUser.id, refreshToken)
     when: "i send my refresh token"
-      ResultActions request2 = requestAsAnonymous(post("/api/sessions/refresh")
+      ResultActions request2 = requestAsAnonymous(post("$ApiLayers.SESSIONS/refresh")
           .content(objectToJson(refreshTokenRequestDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should be ok"
@@ -97,7 +98,7 @@ class AuthControllerSpec extends IntegrationSpec {
       String resultString = request2.andReturn().getResponse().getContentAsString()
       Map<String, String> tokens = objectMapper.readValue(resultString, Map.class)
     when: "i try to get my data using new token"
-      ResultActions request3 = requestAsRoot(get("/api/users/me"), tokens.get("accessToken") as String)
+      ResultActions request3 = requestAsRoot(get("$ApiLayers.USERS/me"), tokens.get("accessToken") as String)
     then: "i should get user info"
       request3.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
     and: "the user info should match with database"
@@ -111,14 +112,14 @@ class AuthControllerSpec extends IntegrationSpec {
       RefreshTokenRequestDto refreshTokenRequestDto2 = new RefreshTokenRequestDto(authenticatedUser.id, "Fv454ycc45y4cx4ccacegr")
 
     when: "i send my refresh token with other UserId"
-      ResultActions request1 = requestAsAnonymous(post("/api/sessions/refresh")
+      ResultActions request1 = requestAsAnonymous(post("$ApiLayers.SESSIONS/refresh")
           .content(objectToJson(refreshTokenRequestDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the system should not found this token"
       request1.andExpect(status().isNotFound())
 
     when: "i send bad refresh token with my UserId"
-      ResultActions request2 = requestAsAnonymous(post("/api/sessions/refresh")
+      ResultActions request2 = requestAsAnonymous(post("$ApiLayers.SESSIONS/refresh")
           .content(objectToJson(refreshTokenRequestDto2))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the system should not found this token"

@@ -10,7 +10,7 @@ public class ServiceTypeFacade {
   private final ServiceTypeRepository serviceTypeRepository;
   private final ServiceTypeCreator    serviceTypeCreator;
 
-  public ServiceTypeFacade(ServiceTypeRepository serviceTypeRepository, ServiceTypeCreator serviceTypeCreator) {
+  ServiceTypeFacade(ServiceTypeRepository serviceTypeRepository, ServiceTypeCreator serviceTypeCreator) {
     this.serviceTypeRepository = serviceTypeRepository;
     this.serviceTypeCreator = serviceTypeCreator;
   }
