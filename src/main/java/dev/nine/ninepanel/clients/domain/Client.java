@@ -45,6 +45,7 @@ class Client {
   private LocalDateTime createdAt;
 
   private LocalDateTime notificationsReadAt;
+  private LocalDateTime alertsReadAt;
 
   ClientDto dto() {
     return ClientDto
@@ -62,6 +63,7 @@ class Client {
         .displayName(displayName)
         .createdAt(createdAt)
         .notificationsReadAt(notificationsReadAt)
+        .alertsReadAt(alertsReadAt)
         .build();
   }
 

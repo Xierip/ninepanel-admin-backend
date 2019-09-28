@@ -19,6 +19,7 @@ class ClientCreator {
         .avatar(oldClient.getAvatar())
         .createdAt(oldClient.getCreatedAt())
         .notificationsReadAt(oldClient.getNotificationsReadAt())
+        .alertsReadAt(oldClient.getAlertsReadAt())
         .build();
   }
 

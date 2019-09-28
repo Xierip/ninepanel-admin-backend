@@ -32,6 +32,7 @@ class Alert {
         .builder()
         .id(id)
         .message(message)
+        .createdDate(createdDate)
         .build();
   }
 
