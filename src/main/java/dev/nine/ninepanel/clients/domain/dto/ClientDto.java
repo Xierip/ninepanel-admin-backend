@@ -58,8 +58,9 @@ public class ClientDto {
   private AvatarDto avatar;
 
   private LocalDateTime createdAt;
-  
+
   private LocalDateTime notificationsReadAt;
+  private LocalDateTime alertsReadAt;
 
   public boolean isCompany() {
     return companyDetails != null;
