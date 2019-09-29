@@ -12,7 +12,7 @@ public class ServiceFacade {
   private ServiceCreator    serviceCreator;
   private ClientsFacade     clientsFacade;
 
-  public ServiceFacade(ServiceRepository serviceRepository, ServiceCreator serviceCreator, ClientsFacade clientsFacade) {
+  ServiceFacade(ServiceRepository serviceRepository, ServiceCreator serviceCreator, ClientsFacade clientsFacade) {
     this.serviceRepository = serviceRepository;
     this.serviceCreator = serviceCreator;
     this.clientsFacade = clientsFacade;

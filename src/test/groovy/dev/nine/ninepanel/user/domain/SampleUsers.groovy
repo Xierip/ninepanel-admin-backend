@@ -26,7 +26,7 @@ trait SampleUsers {
       "testCaptcha",
       UserRoles.ROOT
   )
-  
+
   static private createUserDto(String email, String password, String name, String surname) {
     return UserDto.builder()
         .email(email)

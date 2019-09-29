@@ -5,7 +5,7 @@ import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade;
 
 class WebSocketTokenProvider {
 
-  private final        WebSocketTokenFacade webSocketTokenFacade;
+  private final WebSocketTokenFacade webSocketTokenFacade;
 
   WebSocketTokenProvider(WebSocketTokenFacade webSocketTokenFacade) {
     this.webSocketTokenFacade = webSocketTokenFacade;

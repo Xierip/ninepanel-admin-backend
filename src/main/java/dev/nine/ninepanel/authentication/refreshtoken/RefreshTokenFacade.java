@@ -16,7 +16,7 @@ public class RefreshTokenFacade {
   private final RefreshTokenCreator refreshTokenCreator;
   private final TokenFacade         tokenFacade;
 
-  public RefreshTokenFacade(RefreshTokenCreator refreshTokenCreator, TokenFacade tokenFacade) {
+  RefreshTokenFacade(RefreshTokenCreator refreshTokenCreator, TokenFacade tokenFacade) {
     this.refreshTokenCreator = refreshTokenCreator;
     this.tokenFacade = tokenFacade;
   }

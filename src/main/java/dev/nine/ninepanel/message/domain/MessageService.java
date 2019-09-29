@@ -10,7 +10,7 @@ import org.bson.types.ObjectId;
 
 class MessageService {
 
-  private final ClientsFacade clientsFacade;
+  private final ClientsFacade     clientsFacade;
   private final MessageRepository messageRepository;
 
   MessageService(ClientsFacade clientsFacade, MessageRepository messageRepository) {

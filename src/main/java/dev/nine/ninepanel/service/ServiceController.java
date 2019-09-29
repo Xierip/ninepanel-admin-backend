@@ -25,7 +25,7 @@ class ServiceController {
 
   private final ServiceFacade serviceFacade;
 
-  public ServiceController(ServiceFacade serviceFacade) {
+  ServiceController(ServiceFacade serviceFacade) {
     this.serviceFacade = serviceFacade;
   }
 
