@@ -1,5 +1,6 @@
 package dev.nine.ninepanel.notification.domain;
 
+import dev.nine.ninepanel.infrastructure.constant.MessageMappings;
 import dev.nine.ninepanel.notification.domain.dto.NotificationDto;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
@@ -12,6 +13,6 @@ class NotificationSender {
   }
 
   void sendNotification(NotificationDto notification) {
-    simpMessagingTemplate.convertAndSend("notifications." + notification.getClientId().toHexString(), notification);
+    simpMessagingTemplate.convertAndSend(MessageMappings.NOTIFICATIONS_TOPIC + "." + notification.getClientId().toHexString(), notification);
   }
 }

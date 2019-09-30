@@ -31,6 +31,7 @@ class Alert {
     return AlertDto
         .builder()
         .id(id)
+        .createdDate(createdDate)
         .message(message)
         .createdDate(createdDate)
         .build();
