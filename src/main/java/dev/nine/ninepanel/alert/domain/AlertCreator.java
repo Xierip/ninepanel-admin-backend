@@ -10,7 +10,6 @@ class AlertCreator {
         .builder()
         .id(alertDto.getId())
         .message(alertDto.getMessage())
-        .createdDate(LocalDateTime.now())
         .build();
   }
 
