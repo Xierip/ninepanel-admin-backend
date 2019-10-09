@@ -13,18 +13,18 @@ class RefreshTokenSpec extends IntegrationSpec implements RefreshTokenData {
       for (int i = 1; i <= refreshTokenProperties.getToken().getLimit(); ++i) {
         refreshTokenFacade.create(someUserId, "device" + i)
       }
-    when: "i add a token to the system"
+    when: "i add a adminToken to the system"
       refreshTokenFacade.create(someUserId, "brandNewDevice")
     then: "there should still be the max amount of requests in the system"
       refreshTokenFacade.getUserTokens(someUserId).size() == refreshTokenProperties.getToken().getLimit()
   }
 
   def "should refresh same deviceId refresh token"() {
-    given: "there is a token in the system"
+    given: "there is a adminToken in the system"
       refreshTokenFacade.create(someUserId, "device")
-    when: "i add a new token with the same deviceId"
+    when: "i add a new adminToken with the same deviceId"
       refreshTokenFacade.create(someUserId, "device")
-    then: "there should be one token in the system"
+    then: "there should be one adminToken in the system"
       refreshTokenFacade.getUserTokens(someUserId).size() == 1
   }
 

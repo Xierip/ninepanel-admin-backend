@@ -12,9 +12,9 @@ class TokenSpec extends IntegrationSpec implements SampleTokens {
   private TokenFacade tokenFacade
 
   def "should show token"() {
-    given: "system has token"
+    given: "system has adminToken"
       TokenDto tokenDto = tokenFacade.addToken(randomRefreshToken)
-    expect: "system returns token"
+    expect: "system returns adminToken"
       tokenFacade.getTokenByBody(tokenDto.body).id == tokenDto.id
   }
 
@@ -28,18 +28,18 @@ class TokenSpec extends IntegrationSpec implements SampleTokens {
   }
 
   def "should delete token"() {
-    given: "system has token"
+    given: "system has adminToken"
       TokenDto tokenDto = tokenFacade.addToken(randomRefreshToken)
-    and: "we delete the token"
+    and: "we delete the adminToken"
       tokenFacade.deleteToken(tokenDto.body)
-    when: "system is asked for the token"
+    when: "system is asked for the adminToken"
       tokenFacade.getTokenByBody(tokenDto.body)
     then: "should throw exception"
       thrown(TokenNotFoundException)
   }
 
   def "should throw exception when asked for token that's not in the system"() {
-    when: "system is asked for a token that doesn't exist"
+    when: "system is asked for a adminToken that doesn't exist"
       tokenFacade.getTokenByBody("hawajskaToZłaPizza")
     then: "should throw exception"
       thrown(TokenNotFoundException)

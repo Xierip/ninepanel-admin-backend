@@ -38,7 +38,8 @@ class WebSocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
     registry.addEndpoint(ApiLayers.WEBSOCKETS)
         .setHandshakeHandler(authHandshakeHandler)
         .setAllowedOrigins(allowedOrigins)
-        .withSockJS();
+        .withSockJS()
+        .setWebSocketEnabled(true);
   }
 
   @Override

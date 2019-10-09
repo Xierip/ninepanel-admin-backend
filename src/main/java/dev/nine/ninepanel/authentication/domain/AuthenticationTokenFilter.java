@@ -30,7 +30,7 @@ class AuthenticationTokenFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws IOException, ServletException {
     String jwtToken = this.obtainJwtTokenFromRequest(request);
-    String secretToken = this.tokenProperties.getToken().getSecret();
+    String secretToken = this.tokenProperties.getAdminToken().getSecret();
 
     if (jwtToken != null) {
       boolean validate = this.tokenValidator.validate(jwtToken, secretToken);

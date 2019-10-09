@@ -5,7 +5,6 @@ import dev.nine.ninepanel.clients.domain.dto.ClientDto
 import dev.nine.ninepanel.token.domain.TokenFacade
 import dev.nine.ninepanel.token.domain.TokenType
 import dev.nine.ninepanel.token.domain.dto.TokenDto
-import dev.nine.ninepanel.websockets.websockettoken.WebSocketTokenFacade
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
@@ -23,8 +22,6 @@ import java.util.concurrent.TimeUnit
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class WebsocketSpec extends IntegrationSpec implements ClientsData {
 
-  @Autowired
-  WebSocketTokenFacade webSocketTokenFacade
   @Autowired
   TokenFacade tokenFacade
 
@@ -51,7 +48,6 @@ class WebsocketSpec extends IntegrationSpec implements ClientsData {
         .tokenType(TokenType.WEBSOCKET_TOKEN)
         .build())
 
-    adminWebsocketToken = webSocketTokenFacade.getOrAddToken(authenticatedUser.id)
 
     stompClient.setMessageConverter(new MappingJackson2MessageConverter())
   }

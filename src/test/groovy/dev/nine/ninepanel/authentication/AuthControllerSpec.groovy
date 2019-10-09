@@ -45,38 +45,38 @@ class AuthControllerSpec extends IntegrationSpec {
   }
 
   def "successful delete token scenario"() {
-    given: "i have token"
+    given: "i have adminToken"
       Map<String, String> refreshTokenMap = ["refreshToken": refreshToken]
 
-    when: "i try to delete my token"
+    when: "i try to delete my adminToken"
       ResultActions request = requestAsRoot(delete(ApiLayers.SESSIONS)
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
-    then: "the token should be deleted"
+    then: "the adminToken should be deleted"
       request.andExpect(status().isOk())
   }
 
   def "fail delete token scenario"() {
-    given: "i have a non-existent token"
+    given: "i have a non-existent adminToken"
       Map<String, String> refreshTokenMap = ["refreshToken": "lmaoImNotAToken"]
 
-    when: "i try to delete a non-existent token"
+    when: "i try to delete a non-existent adminToken"
       ResultActions request = requestAsRoot(delete(ApiLayers.SESSIONS)
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
 
-    then: "the token should not be found"
+    then: "the adminToken should not be found"
       request.andExpect(status().isNotFound())
 
-    when: "i try to delete a token without being logged in"
+    when: "i try to delete a adminToken without being logged in"
       ResultActions request2 = requestAsAnonymous(delete(ApiLayers.SESSIONS)
           .content(objectToJson(refreshTokenMap))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
     then: "the request should return unauthorized"
       request2.andExpect(status().isUnauthorized())
 
-    when: "i don't send a token"
+    when: "i don't send a adminToken"
       refreshTokenMap.remove("refreshToken")
       ResultActions request3 = requestAsRoot(delete(ApiLayers.SESSIONS)
           .content(objectToJson(refreshTokenMap))
@@ -86,9 +86,9 @@ class AuthControllerSpec extends IntegrationSpec {
   }
 
   def "successful refresh token scenario"() {
-    given: "i have a refresh token in the system"
+    given: "i have a refresh adminToken in the system"
       RefreshTokenRequestDto refreshTokenRequestDto = new RefreshTokenRequestDto(authenticatedUser.id, refreshToken)
-    when: "i send my refresh token"
+    when: "i send my refresh adminToken"
       ResultActions request2 = requestAsAnonymous(post("$ApiLayers.SESSIONS/refresh")
           .content(objectToJson(refreshTokenRequestDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -97,7 +97,7 @@ class AuthControllerSpec extends IntegrationSpec {
     and: "i parse new tokens from response"
       String resultString = request2.andReturn().getResponse().getContentAsString()
       Map<String, String> tokens = objectMapper.readValue(resultString, Map.class)
-    when: "i try to get my data using new token"
+    when: "i try to get my data using new adminToken"
       ResultActions request3 = requestAsRoot(get("$ApiLayers.USERS/me"), tokens.get("accessToken") as String)
     then: "i should get user info"
       request3.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -111,18 +111,18 @@ class AuthControllerSpec extends IntegrationSpec {
       RefreshTokenRequestDto refreshTokenRequestDto = new RefreshTokenRequestDto(new ObjectId(), refreshToken)
       RefreshTokenRequestDto refreshTokenRequestDto2 = new RefreshTokenRequestDto(authenticatedUser.id, "Fv454ycc45y4cx4ccacegr")
 
-    when: "i send my refresh token with other UserId"
+    when: "i send my refresh adminToken with other UserId"
       ResultActions request1 = requestAsAnonymous(post("$ApiLayers.SESSIONS/refresh")
           .content(objectToJson(refreshTokenRequestDto))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
-    then: "the system should not found this token"
+    then: "the system should not found this adminToken"
       request1.andExpect(status().isNotFound())
 
-    when: "i send bad refresh token with my UserId"
+    when: "i send bad refresh adminToken with my UserId"
       ResultActions request2 = requestAsAnonymous(post("$ApiLayers.SESSIONS/refresh")
           .content(objectToJson(refreshTokenRequestDto2))
           .contentType(MediaType.APPLICATION_JSON_UTF8))
-    then: "the system should not found this token"
+    then: "the system should not found this adminToken"
       request2.andExpect(status().isNotFound())
   }
 

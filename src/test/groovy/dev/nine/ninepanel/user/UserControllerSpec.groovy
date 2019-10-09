@@ -1,5 +1,6 @@
 package dev.nine.ninepanel.user
 
+
 import dev.nine.ninepanel.authentication.domain.dto.SignInDto
 import dev.nine.ninepanel.base.IntegrationSpec
 import dev.nine.ninepanel.infrastructure.constant.ApiLayers
@@ -31,7 +32,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
 
   def "successful user info access scenario"() {
     given: "i am a user in the system"
-    when: "i request user info with access token"
+    when: "i request user info with access adminToken"
       ResultActions request2 = requestAsRoot(get("$ApiLayers.USERS/me"))
     then: "i should get user info"
       request2.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -40,7 +41,7 @@ class UserControllerSpec extends IntegrationSpec implements SampleUsers {
   }
 
   def "fail user info access scenario"() {
-    when: "i request user info without access token"
+    when: "i request user info without access adminToken"
       ResultActions request = requestAsAnonymous(get("$ApiLayers.USERS/me"))
     then: "i should get a 401 unauthorized"
       request.andExpect(status().isUnauthorized())

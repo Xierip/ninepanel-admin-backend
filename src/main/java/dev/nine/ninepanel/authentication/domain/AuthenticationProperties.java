@@ -7,12 +7,17 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "auth")
 @PropertySource("classpath:auth.properties")
-class AuthenticationProperties {
+public class AuthenticationProperties {
 
-  private final Token token = new Token();
+  private final Token adminToken = new Token();
+  private final Token userToken  = new Token();
 
-  public Token getToken() {
-    return this.token;
+  public Token getAdminToken() {
+    return this.adminToken;
+  }
+
+  public Token getUserToken() {
+    return this.userToken;
   }
 
   public static class Token {
