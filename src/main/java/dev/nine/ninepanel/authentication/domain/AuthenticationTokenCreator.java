@@ -31,13 +31,13 @@ class AuthenticationTokenCreator {
   }
 
   private String create(String userIdString) {
-    Date expirationDate = Date.from(Instant.now().plus(this.authenticationProperties.getToken().getExpiration(), ChronoUnit.SECONDS));
+    Date expirationDate = Date.from(Instant.now().plus(this.authenticationProperties.getAdminToken().getExpiration(), ChronoUnit.SECONDS));
     Date now = new Date();
     return Jwts.builder()
         .setExpiration(expirationDate)
         .setIssuedAt(now)
         .setSubject(userIdString)
-        .signWith(SignatureAlgorithm.HS512, this.authenticationProperties.getToken().getSecret())
+        .signWith(SignatureAlgorithm.HS512, this.authenticationProperties.getAdminToken().getSecret())
         .compact();
   }
 }

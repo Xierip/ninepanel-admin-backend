@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
 public class UnauthorizedChannelAccessException extends RuntimeException {
 
-  public UnauthorizedChannelAccessException() {
-    super("You can't access this channel");
+  public UnauthorizedChannelAccessException(int xd) {
+    super("You can't access this channel" + xd);
   }
 
 
